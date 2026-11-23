@@ -1,0 +1,2998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jules Nguyen</title>
+  <meta name="description" content="Jules Nguyen — a wannabe storyteller. Marketing strategist and creative content producer in London: cinematic video, photography and content that builds brands.">
+  <link rel="canonical" href="https://julesnguyenstoryteller.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://julesnguyenstoryteller.com/">
+  <meta property="og:title" content="Jules Nguyen — A wannabe storyteller">
+  <meta property="og:description" content="Marketing strategist and creative content producer in London. Stay inspired — live boldly!">
+  <meta property="og:image" content="https://julesnguyenstoryteller.com/web-media/homepage/thao-intro-poster.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,300;1,9..40,400&family=Geist+Mono:wght@400;500&family=Tinos:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #f7f5f0;
+      --surf:    #efebe3;
+      --surf2:   #e6e1d6;
+      --border:  #dcd6c9;
+      --text:    #1f1f1f;
+      --muted:   #6b6b6b;
+      --muted2:  #8f8a80;
+      --accent:  #15803d;
+      --ink:     #0a0a0a;
+      --on-media: #ffffff;
+      --max:     1160px;
+      --pad:     24px;
+      /* section names: Times New Roman (Tinos is its free twin for phones that don't have it) */
+      --serif:   'Times New Roman', Times, 'Tinos', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--pad);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(247,245,240,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 var(--pad);
+      height: 44px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand {
+      font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink);
+    }
+    .nav-links {
+      display: flex; gap: 24px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 12px; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-dd { position: relative; }
+    .nav-dd > a::after { content: ' ▾'; font-size: 0.85em; }
+    .nav-sub {
+      position: absolute; top: 100%; left: -16px; z-index: 5;
+      list-style: none; min-width: 170px; padding: 6px 0;
+      background: var(--bg); border: 1px solid var(--border);
+      opacity: 0; visibility: hidden; transform: translateY(4px);
+      transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+    }
+    /* invisible bridge so the menu doesn't close while the mouse moves down to it */
+    .nav-sub::before { content: ''; position: absolute; left: 0; right: 0; top: -16px; height: 16px; }
+    .nav-dd:hover .nav-sub, .nav-dd:focus-within .nav-sub {
+      opacity: 1; visibility: visible; transform: none;
+    }
+    .nav-sub a { display: block; padding: 12px 16px; }
+    .nav-sub a:hover { color: var(--accent); }
+    .hamburger {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      cursor: pointer; padding: 4px 10px; min-width: 44px; min-height: 44px;
+      background: none; border: 0;
+    }
+    .hamburger span { display: block; width: 18px; height: 1px; background: var(--muted); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; height: 88vh; min-height: 520px;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+    .hero-video.is-active { opacity: 0.85; }
+    .hero { background: #111; }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.05) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      width: 100%; max-width: var(--max);
+      margin: 0 auto; padding: 0 var(--pad) 56px;
+    }
+    .hero-label {
+      font-size: 12px; text-transform: uppercase;
+      letter-spacing: 0.15em; color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .hero-name {
+      font-size: clamp(40px, 7vw, 84px);
+      font-weight: 800; line-height: 0.88;
+      letter-spacing: -0.03em; color: var(--on-media);
+      margin-bottom: 28px;
+    }
+    .hero-meta {
+      display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    }
+    .hero-role {
+      font-size: 12px; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--muted);
+    }
+    .hero-sep { width: 1px; height: 10px; background: rgba(255,255,255,0.4); }
+    .hero-label, .hero-role { color: rgba(255,255,255,0.78); }
+
+    /* ── AVAILABILITY ── */
+    .avail-bar {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      background: var(--surf);
+    }
+    .avail-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 var(--pad);
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .avail-left {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .avail-label {
+      font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--muted);
+    }
+    .avail-bars {
+      display: flex; align-items: flex-end; gap: 2px; height: 18px;
+    }
+    .avail-bar-item {
+      width: 4px; border-radius: 1px;
+      background: var(--accent);
+      animation: barPulse 1.8s ease-in-out infinite;
+    }
+    .avail-bar-item:nth-child(1)  { height: 8px;  animation-delay: 0s; }
+    .avail-bar-item:nth-child(2)  { height: 14px; animation-delay: 0.1s; }
+    .avail-bar-item:nth-child(3)  { height: 18px; animation-delay: 0.2s; }
+    .avail-bar-item:nth-child(4)  { height: 12px; animation-delay: 0.3s; }
+    .avail-bar-item:nth-child(5)  { height: 16px; animation-delay: 0.4s; }
+    .avail-bar-item:nth-child(6)  { height: 10px; animation-delay: 0.5s; }
+    .avail-bar-item:nth-child(7)  { height: 18px; animation-delay: 0.6s; }
+    .avail-bar-item:nth-child(8)  { height: 13px; animation-delay: 0.7s; }
+    .avail-bar-item:nth-child(9)  { height: 7px;  animation-delay: 0.8s; }
+    .avail-bar-item:nth-child(10) { height: 15px; animation-delay: 0.9s; }
+    .avail-bar-item:nth-child(11) { height: 11px; animation-delay: 1.0s; }
+    .avail-bar-item:nth-child(12) { height: 18px; animation-delay: 1.1s; }
+    @keyframes barPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    .avail-status-text {
+      font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--accent); font-weight: 600;
+    }
+    .avail-right {
+      font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--muted);
+    }
+
+    /* ── SECTION BASE ── */
+    .section {
+      border-top: 1px solid var(--border);
+      padding: 52px 0;
+    }
+    .section-hd {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px 24px;
+      margin-bottom: 40px;
+    }
+    .sec-label {
+      font-family: var(--serif);
+      font-size: clamp(16px, 2.5vw, 31px);
+      font-weight: 400; line-height: 1.1;
+      letter-spacing: -0.01em; color: var(--ink);
+    }
+    .sec-link {
+      font-size: 12px; padding-bottom: 6px; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--muted2);
+      transition: color 0.2s;
+    }
+    .sec-link:hover { color: var(--ink); }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start;
+    }
+    .about-bio {
+      font-size: 16px; color: var(--muted);
+      line-height: 1.75; margin-bottom: 28px;
+    }
+    .about-bio b { color: var(--text); font-weight: 500; }
+    .about-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      border-top: 1px solid var(--border); padding-top: 24px;
+      margin-bottom: 28px;
+    }
+    .stat-n {
+      font-family: 'Geist Mono', monospace;
+      font-size: 28px; font-weight: 500; color: var(--ink);
+      line-height: 1; margin-bottom: 8px;
+    }
+    .stat-l {
+      font-size: 11px; text-transform: uppercase; line-height: 1.4;
+      letter-spacing: 0.1em; color: var(--muted);
+    }
+    .edu-cards { display: flex; gap: 12px; }
+    .edu-card {
+      flex: 1; background: var(--surf);
+      border: 1px solid var(--border); padding: 18px;
+    }
+    .edu-yr {
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px; color: var(--accent); margin-bottom: 8px;
+    }
+    .edu-deg {
+      font-size: 15px; font-weight: 600; color: var(--ink);
+      line-height: 1.3; margin-bottom: 3px;
+    }
+    .edu-sch { font-size: 12px; color: var(--muted); }
+    .edu-badge {
+      display: inline-block; font-size: 10px;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--accent); border: 1px solid var(--accent);
+      padding: 2px 6px; margin-top: 8px;
+    }
+    .about-photo {
+      aspect-ratio: 3/2; background: var(--surf2);
+      overflow: hidden; position: relative;
+    }
+    .about-photo img { object-fit: cover; object-position: center; }
+    .photo-ph {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 12px;
+      background: linear-gradient(160deg, var(--surf) 0%, var(--surf2) 100%);
+    }
+    .photo-ph svg { opacity: 0.35; }
+    .photo-ph span {
+      font-size: 8px; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--muted);
+    }
+
+    /* ── PROJECTS / PHOTOGRAPHY (warm off-white, auto-scrolling strip) ── */
+    .proj-sec {
+      background: var(--bg); color: var(--ink);
+      padding: 88px 0 0; border-bottom: 1px solid var(--border); overflow: hidden;
+    }
+    .proj-hd { padding-bottom: 56px; }
+    .proj-label {
+      display: block; margin-bottom: 18px;
+      font-size: 12px; text-transform: uppercase;
+      letter-spacing: 0.15em; color: #666666;
+    }
+    .proj-title {
+      font-family: var(--serif);
+      font-size: clamp(16px, 2.5vw, 31px);
+      font-weight: 400; line-height: 1.1;
+      letter-spacing: -0.01em; color: #0a0a0a;
+      margin-bottom: 24px;
+    }
+    .proj-tags {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; line-height: 1.8; color: #0a0a0a;
+      margin-bottom: 18px;
+    }
+    .proj-intro { max-width: 680px; font-size: 15px; line-height: 1.75; color: #444444; }
+    .proj-marquee { overflow: hidden; }
+    /* the strip is moved by JS (auto-slide right → left, pauses on hover, glides to a tile when a dot is pressed) */
+    .proj-track { display: flex; width: max-content; will-change: transform; }
+    .proj-dots { display: flex; justify-content: center; gap: 4px; margin-top: 20px; }
+    .proj-dot {
+      width: 44px; height: 44px; padding: 0; border: 0; background: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .proj-dot::before {
+      content: ''; width: 12px; height: 12px; border-radius: 50%;
+      border: 1.5px solid var(--muted2); background: transparent;
+      transition: background-color 0.25s ease, transform 0.25s ease;
+    }
+    .proj-dot:hover::before, .proj-dot.active::before { background: var(--muted2); }
+    .proj-dot:focus-visible { outline: none; }
+    .proj-dot:focus-visible::before { background: var(--muted2); box-shadow: 0 0 0 3px var(--bg), 0 0 0 4.5px var(--ink); }
+    .proj-tile {
+      position: relative; flex: 0 0 auto;
+      width: 34vw; aspect-ratio: 16/10;
+      overflow: hidden; background: #e8e5dd;
+      border: 0; padding: 0; margin: 0; cursor: pointer;
+      font: inherit; color: inherit; display: block;
+    }
+    .proj-tile:focus-visible { outline: 2px solid #0a0a0a; outline-offset: -4px; }
+    .proj-tile img { transition: transform 0.6s ease; }
+    .proj-tile:hover img { transform: scale(1.04); }
+    .proj-tile::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(0,0,0,0.3); transition: background 0.3s;
+    }
+    .proj-tile:hover::after { background: rgba(0,0,0,0.15); }
+    .proj-tile-label {
+      position: absolute; inset: 0; z-index: 1;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.2em; color: #ffffff;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.35);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .gal-item, .gal-album { opacity: 1; transform: none; transition: none; }
+      .lb, .lb-stage { transition: none; }
+      .proj-marquee { overflow-x: auto; scroll-snap-type: x mandatory; }
+      .proj-tile { scroll-snap-align: start; }
+      .proj-tile[aria-hidden="true"] { display: none; }
+    }
+
+    /* ── VIDEO ── */
+    .vid-grid {
+      display: grid; grid-template-columns: 1fr; gap: 12px; align-items: start;
+    }
+    .vid-card { background: var(--surf); overflow: hidden; cursor: pointer; }
+    .vid-thumb {
+      position: relative; aspect-ratio: 16/9; overflow: hidden; background: #000;
+    }
+    .vid-thumb video {
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 1; transition: opacity 0.3s;
+      display: block;
+    }
+    .vid-card:hover .vid-thumb video { opacity: 0.92; }
+    .vid-thumb { cursor: zoom-in; }
+    .vid-thumb-ph {
+      width: 100%; height: 100%; aspect-ratio: 16/9;
+    }
+    .vid-meta { padding: 18px; }
+    .vid-cat {
+      font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--accent); margin-bottom: 4px;
+    }
+    .vid-title { font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+    .vid-desc { font-size: 14px; color: var(--muted); }
+
+    /* ── WORK / EXPERIENCE (one block per company; click opens its detail page) ── */
+    .exp-intro {
+      max-width: 640px; font-size: 16px; line-height: 1.75; color: var(--muted);
+      margin-bottom: 36px;
+    }
+    .exp-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+      margin-bottom: 12px;
+    }
+    .exp-card {
+      display: flex; flex-direction: column; align-items: stretch; text-align: left;
+      background: var(--surf); border: 1px solid var(--border); padding: 14px 14px 18px;
+      font: inherit; color: inherit; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .exp-card:hover { border-color: var(--muted2); background: var(--surf2); }
+    .exp-card:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    /* click: a small, soft hop before the detail page opens */
+    .exp-card.jump { animation: expJump 0.42s cubic-bezier(0.3, 0.7, 0.4, 1); }
+    @keyframes expJump {
+      0%   { transform: translateY(0); }
+      45%  { transform: translateY(-12px); }
+      100% { transform: translateY(0); }
+    }
+    .exp-logo {
+      display: flex; align-items: center; justify-content: center;
+      aspect-ratio: 1 / 1; overflow: hidden; margin-bottom: 16px;
+      background: var(--bg); border: 1px solid var(--border);
+    }
+    .exp-logo img {
+      width: 62%; height: 62%; object-fit: contain;
+      transition: transform 0.35s cubic-bezier(0.3, 0.7, 0.4, 1);
+    }
+    .exp-logo.wide img { width: 80%; height: 40%; }
+    .exp-card:hover .exp-logo img, .exp-card:focus-visible .exp-logo img { transform: scale(1.08); }
+    .exp-co { font-size: 16px; font-weight: 700; color: var(--ink); line-height: 1.25; margin-bottom: 4px; }
+    .exp-ro { font-size: 13px; color: var(--muted); line-height: 1.4; margin-bottom: 10px; }
+    .exp-yr {
+      font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--muted2);
+      margin-top: auto;
+    }
+    .exp-more {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--muted); margin-top: 10px; transition: color 0.2s;
+    }
+    .exp-card:hover .exp-more { color: var(--accent); }
+
+    /* ── PERSONAL PROJECTS (cover cards; click opens the project page) ── */
+    .pp-intro { max-width: 640px; font-size: 16px; line-height: 1.75; color: var(--muted); margin-bottom: 36px; }
+    /* one tall card on the left, two stacked on the right */
+    .pp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .pp-card {
+      display: flex; flex-direction: column; text-align: left;
+      background: var(--surf); border: 1px solid var(--border); padding: 0;
+      font: inherit; color: inherit; cursor: pointer;
+    }
+    .pp-card:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    .pp-card.jump { animation: expJump 0.42s cubic-bezier(0.3, 0.7, 0.4, 1); }
+    .pp-cover { display: block; position: relative; overflow: hidden; aspect-ratio: 16 / 10; }
+    .pp-cover img { transition: transform 0.6s cubic-bezier(0.3, 0.7, 0.4, 1); }
+    .pp-card:hover .pp-cover img, .pp-card:focus-visible .pp-cover img { transform: scale(1.05); }
+    .pp-text { display: block; padding: 16px 16px 18px; }
+    .pp-name { display: block; font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    .pp-sub { display: block; font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+    .pp-more { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); transition: color 0.2s; }
+    .pp-card:hover .pp-more { color: var(--accent); }
+
+    /* ── TIKTOK ── */
+    .tt-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      align-items: start;
+    }
+    .tt-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+    .tt-stat {
+      padding: 18px; background: var(--surf); border: 1px solid var(--border);
+    }
+    .tt-n {
+      font-family: 'Geist Mono', monospace;
+      font-size: 34px; font-weight: 500; color: var(--ink);
+      line-height: 1; margin-bottom: 8px;
+    }
+    .tt-d {
+      font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--muted);
+    }
+    .tt-info { display: flex; flex-direction: column; gap: 14px; }
+    .tt-handle {
+      font-family: 'Geist Mono', monospace;
+      font-size: 16px; color: var(--accent);
+    }
+    .tt-desc { font-size: 15px; color: var(--muted); line-height: 1.7; }
+    .tt-desc b { color: var(--text); font-weight: 500; }
+    .tt-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--muted); border: 1px solid var(--border);
+      padding: 14px 20px; min-height: 44px; transition: all 0.2s; width: fit-content;
+    }
+    .tt-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+    /* ── TESTIMONIALS ── */
+    .test-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    }
+    .test-card {
+      background: var(--surf); border: 1px solid var(--border); padding: 22px;
+    }
+    .test-rule { width: 20px; height: 2px; background: var(--accent); margin-bottom: 14px; }
+    .test-q {
+      font-size: 14px; color: var(--muted); line-height: 1.7;
+      font-style: italic; margin-bottom: 18px;
+    }
+    .test-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+    .test-role {
+      font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--muted);
+    }
+
+    /* ── QUOTE ── */
+    .quote-sec {
+      border-top: 1px solid var(--border);
+      padding: 72px 0; text-align: center;
+    }
+    .quote-mark {
+      font-size: 48px; color: var(--surf2); line-height: 1;
+      margin-bottom: 16px; font-family: Georgia, serif;
+    }
+    .quote-text {
+      font-size: clamp(19px, 2.8vw, 30px);
+      font-weight: 300; color: var(--muted);
+      line-height: 1.55; max-width: 720px; margin: 0 auto;
+    }
+    .quote-text b { color: var(--ink); font-weight: 600; }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    }
+    .contact-hl {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 800; letter-spacing: -0.02em;
+      color: var(--ink); line-height: 1.05; margin-bottom: 28px;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 8px; }
+    .contact-info a {
+      font-size: 15px; color: var(--muted);
+      transition: color 0.2s; border-bottom: 1px solid transparent;
+      width: fit-content;
+    }
+    .contact-info a:hover { color: var(--ink); border-bottom-color: var(--border); }
+    .contact-loc {
+      font-size: 12px; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--muted2); margin-top: 16px;
+    }
+    .contact-links { display: flex; flex-direction: column; }
+    .contact-link {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 0; min-height: 44px; border-bottom: 1px solid var(--border);
+      transition: opacity 0.2s;
+    }
+    .contact-link:hover { opacity: 0.65; }
+    .cl-name {
+      font-size: 11px; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--muted); min-width: 80px;
+    }
+    .cl-val {
+      font-family: 'Geist Mono', monospace;
+      font-size: 14px; color: var(--text); flex: 1; padding: 0 16px; min-width: 0; overflow-wrap: anywhere;
+    }
+    .cl-arr { font-size: 14px; color: var(--muted2); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border); padding: 20px 0;
+    }
+    .foot-inner {
+      max-width: var(--max); margin: 0 auto; padding: 0 var(--pad);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .foot-copy {
+      font-size: 12px; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--muted2);
+    }
+    .foot-brand {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--muted2);
+    }
+
+    /* ── MOBILE MENU ── */
+    .mob-menu {
+      display: none; position: fixed; inset: 0;
+      background: var(--bg); z-index: 200;
+      flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+    }
+    .mob-menu.open { display: flex; }
+    .mob-menu { gap: 6px; }
+    .mob-menu a {
+      font-size: 22px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--muted); transition: color 0.2s;
+      min-height: 48px; display: flex; align-items: center;
+    }
+    .mob-menu a:hover { color: var(--ink); }
+    .mob-menu a.mob-sub {
+      font-size: 15px; font-weight: 500; letter-spacing: 0.14em;
+      min-height: 44px; margin-top: -6px;
+    }
+    .mob-menu a.mob-sub::before { content: '— '; color: var(--muted2); }
+    .mob-close {
+      position: absolute; top: 4px; right: 8px;
+      min-width: 44px; min-height: 44px;
+      font-size: 20px; color: var(--muted); cursor: pointer;
+      background: none; border: none; font-family: inherit;
+    }
+
+    /* ── FULL-SCREEN GALLERY (categories + videos) ── */
+    body.gal-open { overflow: hidden; }
+    .gal {
+      position: fixed; inset: 0; z-index: 300;
+      background: var(--bg); overflow-y: auto;
+      overscroll-behavior: contain;
+      opacity: 0; transition: opacity 0.35s ease;
+    }
+    .gal[hidden] { display: none; }
+    .gal.open { opacity: 1; }
+    .gal-bar {
+      position: sticky; top: 0; z-index: 3;
+      height: 56px; padding: 0 var(--pad);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      background: rgba(247,245,240,0.92); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .gal-btn {
+      min-width: 44px; min-height: 44px;
+      background: none; border: 0; cursor: pointer;
+      font-family: inherit; font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--muted); transition: color 0.2s;
+    }
+    .gal-btn:hover, .gal-btn:focus-visible { color: var(--ink); }
+    .gal-x { font-size: 18px; letter-spacing: 0; }
+    .gal-title {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.18em; color: var(--ink); text-align: center;
+    }
+    .gal-count {
+      font-family: 'Geist Mono', monospace; font-weight: 400;
+      letter-spacing: 0; color: var(--muted); margin-left: 10px;
+    }
+    .gal-grid { display: flex; align-items: flex-start; gap: 6px; padding: 6px; }
+    .gal-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+    .gal-item {
+      position: relative; aspect-ratio: 16/10; overflow: hidden; cursor: zoom-in;
+      background: var(--surf);
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .gal-item.in { opacity: 1; transform: none; }
+    .gal-item img, .gal-item video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.6s ease;
+    }
+    .gal-item:hover img, .gal-item:hover video { transform: scale(1.03); }
+    .gal-item::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: rgba(0,0,0,0.18); transition: background 0.3s;
+    }
+    .gal-item:hover::after { background: rgba(0,0,0,0); }
+    /* ── COMPANY DETAIL PAGE (full-screen, hash-routed: #work/<slug>) ── */
+    .wk {
+      position: fixed; inset: 0; z-index: 300;
+      background: var(--bg); overflow-y: auto; overscroll-behavior: contain;
+      opacity: 0; transition: opacity 0.35s ease;
+    }
+    .wk[hidden] { display: none; }
+    .wk.open { opacity: 1; }
+    .wk-page {
+      max-width: var(--max); margin: 0 auto; padding: 56px var(--pad) 96px;
+      transform: translateY(24px); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .wk.open .wk-page { transform: none; }
+    .wk-hd { display: flex; align-items: flex-end; gap: 28px; margin-bottom: 40px; flex-wrap: wrap; }
+    .wk-logo {
+      width: 112px; height: 112px; flex: 0 0 auto;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--surf); border: 1px solid var(--border);
+    }
+    .wk-logo img { width: 72%; height: 72%; object-fit: contain; }
+    .wk-logo.wide img { width: 86%; height: 50%; }
+    .wk-kicker {
+      display: block; font-size: 12px; text-transform: uppercase;
+      letter-spacing: 0.15em; color: var(--muted); margin-bottom: 10px;
+    }
+    .wk-name {
+      font-size: clamp(40px, 7vw, 88px); font-weight: 800; line-height: 0.95;
+      letter-spacing: -0.03em; color: var(--ink); margin-bottom: 14px;
+    }
+    .wk-meta { font-family: 'Geist Mono', monospace; font-size: 13px; color: var(--muted); }
+    .wk-meta b { font-family: 'DM Sans', sans-serif; font-weight: 600; color: var(--accent); }
+    .wk-lead {
+      font-size: clamp(18px, 2.2vw, 22px); line-height: 1.55; color: var(--text);
+      max-width: 820px; margin-bottom: 40px; padding-top: 32px; border-top: 1px solid var(--border);
+    }
+    .wk-partners { max-width: 380px; margin: -16px 0 40px; }
+    .wk-partners img { width: 100%; height: auto; object-fit: contain; }
+    .wk-body { display: grid; grid-template-columns: 1.5fr 1fr; gap: 56px; margin-bottom: 64px; }
+    .wk-block { margin-bottom: 32px; }
+    .wk-block:last-child { margin-bottom: 0; }
+    .wk-block h3 {
+      font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em;
+      color: var(--ink); margin-bottom: 12px;
+    }
+    .wk-block p, .wk-block li { font-size: 16px; line-height: 1.75; color: var(--muted); }
+    .wk-block ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .wk-block li { position: relative; padding-left: 20px; }
+    .wk-block li::before {
+      content: ''; position: absolute; left: 0; top: 0.8em;
+      width: 8px; height: 1px; background: var(--accent);
+    }
+    .wk-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .wk-link {
+      display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px;
+      font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--ink); border: 1px solid var(--ink); transition: background 0.2s, color 0.2s;
+    }
+    .wk-link:hover, .wk-link:focus-visible { background: var(--ink); color: var(--bg); }
+    .wk-side { display: flex; flex-direction: column; gap: 12px; }
+    .wk-stat { padding: 20px; background: var(--surf); border: 1px solid var(--border); }
+    .wk-stat-n {
+      font-family: 'Geist Mono', monospace; font-size: 40px; font-weight: 500;
+      color: var(--ink); line-height: 1; margin-bottom: 8px;
+    }
+    .wk-stat-d { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .wk-quote { padding: 24px; border: 1px solid var(--border); border-left: 2px solid var(--accent); }
+    .wk-quote p { font-size: 15px; font-style: italic; line-height: 1.7; color: var(--muted); margin-bottom: 16px; }
+    .wk-quote-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+    .wk-quote-role { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+    .wk-work-hd {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+      border-top: 1px solid var(--border); padding-top: 32px; margin-bottom: 20px;
+    }
+    .wk-work-hd h3 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+    .wk-work-hd span { font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--muted); }
+    .wk-work { columns: 3; column-gap: 12px; }
+    .wk-item {
+      break-inside: avoid; margin: 0 0 12px; display: block; width: 100%;
+      background: none; border: 0; padding: 0; text-align: left; cursor: zoom-in; font: inherit;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .wk-item.in { opacity: 1; transform: none; }
+    .wk-media { display: block; position: relative; overflow: hidden; }
+    .wk-media img, .wk-media video { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
+    .wk-item:hover .wk-media img, .wk-item:hover .wk-media video { transform: scale(1.03); }
+    .wk-item:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    .wk-cap { display: block; font-size: 13px; color: var(--muted); padding: 8px 2px 0; line-height: 1.4; }
+    .wk-client { padding: 24px 0 28px; border-bottom: 1px solid var(--border); }
+    .wk-client:last-of-type { margin-bottom: 40px; }
+    .wk-client-hd { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+    .wk-client-hd h4 { font-size: clamp(22px, 2.6vw, 30px); font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+    .wk-client-sector {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent);
+    }
+    .wk-client-note { font-size: 15px; line-height: 1.7; color: var(--muted); max-width: 720px; margin-bottom: 16px; }
+    .wk-client-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; align-items: start; margin-top: 16px;
+    }
+    .wk-client-grid .wk-item { margin: 0; }
+    .wk-next {
+      display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      border-top: 1px solid var(--border); margin-top: 52px; padding-top: 24px;
+    }
+    .wk-next button {
+      background: none; border: 0; cursor: pointer; font: inherit; min-height: 44px;
+      font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted);
+      transition: color 0.2s;
+    }
+    .wk-next button:hover, .wk-next button:focus-visible { color: var(--ink); }
+    @media (max-width: 900px) {
+      .wk-body { grid-template-columns: 1fr; gap: 36px; }
+      .wk-work { columns: 2; }
+      .wk-client-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .wk-page { padding-top: 32px; }
+      .wk-hd { gap: 18px; }
+      .wk-logo { width: 80px; height: 80px; }
+      .wk-work { columns: 1; }
+      .wk-client-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .exp-card.jump, .pp-card.jump { animation: none; }
+      .wk, .wk-page, .wk-item { transition: none; transform: none; }
+      .wk-item { opacity: 1; }
+    }
+
+    /* Wedding: a page of albums, name in the middle of each cover */
+    .gal-albums {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 6px;
+    }
+    .gal-album {
+      position: relative; aspect-ratio: 4/3; overflow: hidden;
+      border: 0; padding: 0; margin: 0; cursor: pointer;
+      background: var(--surf); font: inherit; display: block; width: 100%;
+    }
+    .gal-album { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .gal-album.in { opacity: 1; transform: none; }
+    .gal-album img { transition: transform 0.6s ease; }
+    .gal-album:hover img { transform: scale(1.04); }
+    .gal-album::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(0,0,0,0.32); transition: background 0.3s;
+    }
+    .gal-album:hover::after { background: rgba(0,0,0,0.18); }
+    .gal-album:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; }
+    .gal-album-name {
+      position: absolute; inset: 0; z-index: 1;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      font-size: clamp(18px, 2.2vw, 26px); font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--on-media); text-align: center; padding: 0 16px;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.35);
+    }
+    .gal-album-name small {
+      font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 400;
+      letter-spacing: 0.06em; text-transform: none; opacity: 0.85;
+    }
+    @media (max-width: 900px) { .gal-albums { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .gal-albums { grid-template-columns: 1fr; gap: 4px; padding: 4px; } }
+    /* ── LIGHTBOX (zoomed photo/video over a blurred page) ── */
+    body.lb-open { overflow: hidden; }
+    .lb {
+      position: fixed; inset: 0; z-index: 500;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(247,245,240,0.45);
+      -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px);
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .lb[hidden] { display: none; }
+    .lb.open { opacity: 1; }
+    .lb-stage {
+      margin: 0; display: flex; align-items: center; justify-content: center;
+      transform: scale(0.94); transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1);
+    }
+    .lb.open .lb-stage { transform: none; }
+    .lb-stage img, .lb-stage video {
+      width: auto; height: auto; max-width: 92vw; max-height: 88vh;
+      object-fit: contain; display: block; background: #000;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.22);
+    }
+    .lb-stage img { background: none; }
+    .lb-btn {
+      position: absolute; z-index: 2;
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.75); border: 1px solid var(--border);
+      color: var(--ink); font-size: 20px; line-height: 1; cursor: pointer;
+      font-family: inherit; transition: background 0.2s;
+    }
+    .lb-btn:hover, .lb-btn:focus-visible { background: #fff; }
+    .lb-btn[hidden] { display: none; }
+    .lb-x { top: 16px; right: 16px; font-size: 16px; }
+    .lb-prev { left: 16px; top: 50%; transform: translateY(-50%); }
+    .lb-next { right: 16px; top: 50%; transform: translateY(-50%); }
+    .lb-count {
+      position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+      font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--muted);
+    }
+    @media (max-width: 600px) {
+      .lb-stage img, .lb-stage video { max-width: 96vw; max-height: 80vh; }
+      .lb-prev, .lb-next { top: auto; bottom: 10px; transform: none; }
+      .lb-prev { left: 12px; } .lb-next { right: 12px; }
+    }
+
+    /* "tap for sound" hint — only shown until the visitor's first click/tap */
+    .snd-pill {
+      position: fixed; left: 50%; bottom: 20px; z-index: 400;
+      transform: translate(-50%, 12px); opacity: 0;
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+      background: rgba(22,22,22,0.94); color: var(--on-media);
+      border: 1px solid rgba(255,255,255,0.12); border-radius: 999px;
+      padding: 10px 18px; font-size: 11px; letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .snd-pill.show { opacity: 1; transform: translate(-50%, 0); }
+
+    /* ── SCROLL REVEAL ── */
+    .rv {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .rv.vis { opacity: 1; transform: translateY(0); }
+    .rv.d1 { transition-delay: 0.1s; }
+    .rv.d2 { transition-delay: 0.18s; }
+    .rv.d3 { transition-delay: 0.26s; }
+    .rv.d4 { transition-delay: 0.34s; }
+
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .about-grid    { grid-template-columns: 1fr; gap: 40px; }
+      .about-photo   { aspect-ratio: 3/2; }
+      .exp-grid      { grid-template-columns: repeat(3, 1fr); }
+      .tt-grid       { grid-template-columns: 1fr; }
+      .test-grid     { grid-template-columns: 1fr; gap: 10px; }
+      .contact-grid  { grid-template-columns: 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      .nav-links     { display: none; }
+      .hamburger     { display: flex; }
+      .hero { height: 70vh; }
+      .hero-name     { font-size: clamp(36px, 11vw, 60px); }
+      .avail-right   { display: none; }
+      .vid-grid      { grid-template-columns: 1fr; }
+      .edu-cards     { flex-direction: column; }
+      .exp-grid      { grid-template-columns: 1fr 1fr; }
+      .about-stats   { gap: 16px; }
+      .section       { padding: 40px 0; }
+      .proj-sec      { padding-top: 48px; }
+      .proj-hd       { padding-bottom: 36px; }
+      .proj-tile     { width: 78vw; }
+    }
+    @media (max-width: 600px) {
+      .gal-grid      { gap: 4px; padding: 4px; }
+      .gal-col       { gap: 4px; }
+      .gal-btn.gal-back { display: none; }
+      .gal.has-parent .gal-btn.gal-back { display: inline-block; }
+    }
+    @media (max-width: 480px) {
+      .tt-stats      { grid-template-columns: 1fr 1fr; }
+      .pp-grid       { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <button type="button" class="mob-close" id="mobClose" aria-label="Close menu">✕</button>
+  <a href="#about"        onclick="closeMob()">About</a>
+  <a href="#experience"   onclick="closeMob()">Experience</a>
+  <a href="#projects"     onclick="closeMob()">Project</a>
+  <a href="#projects"     onclick="closeMob()" class="mob-sub">Photography</a>
+  <a href="#video"        onclick="closeMob()" class="mob-sub">Videography</a>
+  <a href="#personal"     onclick="closeMob()" class="mob-sub">Personal Projects</a>
+  <a href="#testimonials" onclick="closeMob()">Testimonials</a>
+  <a href="#contact"      onclick="closeMob()">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">Jules Nguyen</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li class="nav-dd">
+        <a href="#projects" aria-haspopup="true">Project</a>
+        <ul class="nav-sub">
+          <li><a href="#projects">Photography</a></li>
+          <li><a href="#video">Videography</a></li>
+          <li><a href="#personal">Personal Projects</a></li>
+        </ul>
+      </li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button type="button" class="hamburger" id="ham" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <video class="hero-video is-active" autoplay muted playsinline preload="auto" poster="web-media/homepage/thao-intro-poster.jpg">
+    <source src="web-media/homepage/thao-intro.mp4" type="video/mp4">
+  </video>
+  <video class="hero-video" muted playsinline preload="metadata" poster="web-media/homepage/mau-poster.jpg">
+    <source src="web-media/homepage/mau.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-label">Portfolio — 2026</div>
+    <h1 class="hero-name rv">JULES<br>NGUYEN</h1>
+    <div class="hero-meta rv d1">
+      <span class="hero-role">Marketing Strategist</span>
+      <div class="hero-sep"></div>
+      <span class="hero-role">Creative Producer</span>
+      <div class="hero-sep"></div>
+      <span class="hero-role">London, UK</span>
+    </div>
+  </div>
+</div>
+
+<!-- AVAILABILITY -->
+<div class="avail-bar">
+  <div class="avail-inner">
+    <div class="avail-left">
+      <span class="avail-label">Availability</span>
+      <div class="avail-bars">
+        <div class="avail-bar-item"></div><div class="avail-bar-item"></div>
+        <div class="avail-bar-item"></div><div class="avail-bar-item"></div>
+        <div class="avail-bar-item"></div><div class="avail-bar-item"></div>
+        <div class="avail-bar-item"></div><div class="avail-bar-item"></div>
+        <div class="avail-bar-item"></div><div class="avail-bar-item"></div>
+        <div class="avail-bar-item"></div><div class="avail-bar-item"></div>
+      </div>
+      <span class="avail-status-text">Open to Opportunities</span>
+    </div>
+    <div class="avail-right">A wannabe storyteller — Stay inspired — Live boldly!</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="section-hd">
+      <h2 class="sec-label">About Me</h2>
+      <a href="#contact" class="sec-link">Get in touch →</a>
+    </div>
+    <div class="about-grid">
+      <div class="rv">
+        <p class="about-bio">
+          I'm <b>Thao Nguyen (Jules)</b> — a passionate marketing professional with a deep
+          appreciation for <b>creativity and storytelling</b>. With 3+ years of experience
+          in digital marketing, sales, and customer service, I thrive on creating content that
+          drives results and builds meaningful connections.
+        </p>
+        <p class="about-bio">
+          My expertise in social media marketing stems from a genuine desire to amplify voices,
+          elevate businesses, and foster meaningful engagement. I infuse creativity into every
+          campaign — reflecting the complexity and courage behind every bold idea.
+        </p>
+        <div class="about-stats">
+          <div><div class="stat-n">3+</div><div class="stat-l">Years Exp.</div></div>
+          <div><div class="stat-n">MSc</div><div class="stat-l">Marketing Distinction · UEA</div></div>
+          <div><div class="stat-n">14K</div><div class="stat-l">Followers on TikTok</div></div>
+        </div>
+        <div class="edu-cards">
+          <div class="edu-card">
+            <div class="edu-yr">2023 — 2024</div>
+            <div class="edu-deg">MSc in Marketing</div>
+            <div class="edu-sch">University of East Anglia, UK</div>
+            <span class="edu-badge">Distinction</span>
+          </div>
+          <div class="edu-card">
+            <div class="edu-yr">2018 — 2021</div>
+            <div class="edu-deg">EBBA — English Business Administration</div>
+            <div class="edu-sch">National Economics University, Vietnam</div>
+            <span class="edu-badge">Distinction</span>
+          </div>
+        </div>
+      </div>
+      <div class="rv d2">
+        <div class="about-photo">
+          <img src="web-media/about/about-collage.jpg" alt="Jules Nguyen laughing with headphones on, in a London collage with Big Ben, a Union Jack and a red bus" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK EXPERIENCE -->
+<section class="section" id="experience">
+  <div class="wrap">
+    <div class="section-hd">
+      <h2 class="sec-label">Experience</h2>
+      <a href="#contact" class="sec-link">Let's work →</a>
+    </div>
+    <p class="exp-intro rv">I began my marketing journey with a part-time role during my freshman year at university, driven by a strong passion for the field. That experience sparked my desire to explore diverse, related roles to gain a broader understanding of business operations and strategy.</p>
+    <div class="exp-grid">
+      <button type="button" class="exp-card rv" data-work="viem-studio" aria-label="VieM Studio — open details">
+        <span class="exp-logo"><img src="web-media/experiences/viem-studio/logo.png" alt="VieM Studio logo" loading="lazy" decoding="async"></span>
+        <span class="exp-co">VieM Studio</span>
+        <span class="exp-ro">Marketing Strategist &amp; Executive</span>
+        <span class="exp-yr">07/2025 — Now</span>
+        <span class="exp-more">View details →</span>
+      </button>
+      <button type="button" class="exp-card rv d1" data-work="jpha" aria-label="JPHA — open details">
+        <span class="exp-logo"><img src="web-media/experiences/jpha/logo.png" alt="JPHA logo" loading="lazy" decoding="async"></span>
+        <span class="exp-co">JPHA</span>
+        <span class="exp-ro">Marketing Strategist &amp; Executive</span>
+        <span class="exp-yr">01/2025 — 06/2025</span>
+        <span class="exp-more">View details →</span>
+      </button>
+      <button type="button" class="exp-card rv d2" data-work="hattie-lloyd-home" aria-label="Hattie Lloyd Home — open details">
+        <span class="exp-logo"><img src="web-media/experiences/hattie-lloyd-home/logo.png" alt="Hattie Lloyd Home logo" loading="lazy" decoding="async"></span>
+        <span class="exp-co">Hattie Lloyd Home</span>
+        <span class="exp-ro">Marketing Collaborator</span>
+        <span class="exp-yr">04/2024 — 06/2024</span>
+        <span class="exp-more">View details →</span>
+      </button>
+      <button type="button" class="exp-card rv d3" data-work="tomorrow-marketers" aria-label="Tomorrow Marketers — open details">
+        <span class="exp-logo wide"><img src="web-media/experiences/tomorrow-marketers/logo.png" alt="Tomorrow Marketers logo" loading="lazy" decoding="async"></span>
+        <span class="exp-co">Tomorrow Marketers</span>
+        <span class="exp-ro">Marketing Executive</span>
+        <span class="exp-yr">02/2023 — 10/2023</span>
+        <span class="exp-more">View details →</span>
+      </button>
+      <button type="button" class="exp-card rv d4" data-work="onehousing" aria-label="OneHousing — open details">
+        <span class="exp-logo wide"><img src="web-media/experiences/onehousing/logo.png" alt="OneHousing logo" loading="lazy" decoding="async"></span>
+        <span class="exp-co">OneHousing</span>
+        <span class="exp-ro">Sale Agent</span>
+        <span class="exp-yr">02/2019 — 06/2021</span>
+        <span class="exp-more">View details →</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="proj-sec" id="projects">
+  <div class="wrap">
+    <div class="proj-hd rv">
+      <span class="proj-label">Projects</span>
+      <h2 class="proj-title">Photography</h2>
+      <p class="proj-tags">Events | Landscape | Portrait | Wedding | Product Shooting</p>
+      <p class="proj-intro">
+        I work as a freelance photographer, collaborating with numerous brands on a variety of projects,
+        including product photography, wedding photography and videography, concert events, F&amp;B events,
+        as well as personal branding for clients.
+      </p>
+    </div>
+  </div>
+  <div class="proj-marquee rv d1" aria-label="Photography projects">
+    <div class="proj-track">
+      <button type="button" class="proj-tile" data-gallery="events" aria-label="Open Events gallery">
+        <img src="web-media/the-projects/covers/events-cover.jpg" alt="Jules checking a shot on her camera at an event" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Events</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="landscape" aria-label="Open Landscape gallery">
+        <img src="web-media/the-projects/photography/landscape/img-4543.jpg" alt="Tower Bridge, London, seen from the walkway" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Landscape</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="portrait" aria-label="Open Portrait gallery">
+        <img src="web-media/the-projects/photography/portrait/wilf/editedw2.jpg" alt="Business portrait of a man seated against a deep blue wall" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Portrait</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="wedding" aria-label="Open Wedding gallery">
+        <img src="web-media/the-projects/photography/wedding/raham-rosie/img-5488.jpg" alt="Couple embracing in front of a floral wedding backdrop" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Wedding</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="product" aria-label="Open Product Shooting gallery">
+        <img src="web-media/the-projects/photography/product-shooting/img-4322.jpg" alt="Instant camera styled with lemons and flowers on a woven mat" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Product Shooting</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="events" aria-hidden="true" tabindex="-1">
+        <img src="web-media/the-projects/covers/events-cover.jpg" alt="" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Events</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="landscape" aria-hidden="true" tabindex="-1">
+        <img src="web-media/the-projects/photography/landscape/img-4543.jpg" alt="" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Landscape</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="portrait" aria-hidden="true" tabindex="-1">
+        <img src="web-media/the-projects/photography/portrait/wilf/editedw2.jpg" alt="" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Portrait</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="wedding" aria-hidden="true" tabindex="-1">
+        <img src="web-media/the-projects/photography/wedding/raham-rosie/img-5488.jpg" alt="" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Wedding</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="product" aria-hidden="true" tabindex="-1">
+        <img src="web-media/the-projects/photography/product-shooting/img-4322.jpg" alt="" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Product Shooting</span>
+      </button>
+    </div>
+  </div>
+  <div class="proj-dots rv d2" role="group" aria-label="Jump to a photography category">
+    <button type="button" class="proj-dot" data-target="events" aria-label="Show Events"></button>
+    <button type="button" class="proj-dot" data-target="landscape" aria-label="Show Landscape"></button>
+    <button type="button" class="proj-dot" data-target="portrait" aria-label="Show Portrait"></button>
+    <button type="button" class="proj-dot" data-target="wedding" aria-label="Show Wedding"></button>
+    <button type="button" class="proj-dot" data-target="product" aria-label="Show Product Shooting"></button>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="section" id="video">
+  <div class="wrap">
+    <div class="section-hd">
+      <h2 class="sec-label">Videography</h2>
+      <a href="#gallery/videos" class="sec-link">View all →</a>
+    </div>
+    <div class="vid-grid rv">
+
+      <div class="vid-card">
+        <div class="vid-thumb" data-full="web-media/morocco-v3.mp4" data-poster="web-media/morocco-v3-poster.jpg" role="button" tabindex="0" aria-label="Play Morocco film full screen">
+          <video autoplay muted loop playsinline data-sound poster="web-media/morocco-v3-hero-poster.jpg">
+            <source src="web-media/morocco-v3-hero.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="vid-meta">
+          <div class="vid-cat">Cinematic · Travel · 2024</div>
+          <div class="vid-title">Morocco</div>
+          <div class="vid-desc">A cinematic journey through the landscapes, souks, and golden light of Morocco.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAL PROJECTS -->
+<section class="section" id="personal">
+  <div class="wrap">
+    <div class="section-hd">
+      <h2 class="sec-label">Personal Projects</h2>
+    </div>
+    <div class="pp-grid">
+      <button type="button" class="pp-card rv" data-work="tok" aria-label="TOK — open project">
+        <span class="pp-cover"><img src="web-media/personal-projects/tok/campaign-presentation.jpg" alt="TOK campaign presentation: The Tok Tok Sound of Flavors" loading="lazy" decoding="async"></span>
+        <span class="pp-text">
+          <span class="pp-name">TOK</span>
+          <span class="pp-sub">CMO Competition · Runner-up of 450 teams</span>
+          <span class="pp-more">View project →</span>
+        </span>
+      </button>
+      <button type="button" class="pp-card rv d1" data-work="personal-branding" aria-label="Personal Branding — open project">
+        <span class="pp-cover"><img src="web-media/personal-projects/personal-branding/brand-graphic.jpg" alt="Personal brand graphic of Jules with orange shapes" loading="lazy" decoding="async"></span>
+        <span class="pp-text">
+          <span class="pp-name">Personal Branding</span>
+          <span class="pp-sub">TikTok · @thao.polyglotsomeday</span>
+          <span class="pp-more">View project →</span>
+        </span>
+      </button>
+      <button type="button" class="pp-card rv d2" data-work="beyond-marketing" aria-label="Beyond Marketing — open project">
+        <span class="pp-cover"><img src="web-media/personal-projects/beyond-marketing/starry-night-collage.jpg" alt="Jules in a Starry Night–style collage" loading="lazy" decoding="async"></span>
+        <span class="pp-text">
+          <span class="pp-name">Beyond Marketing</span>
+          <span class="pp-sub">Pixel video · Acting · MC · Drawing</span>
+          <span class="pp-more">View project →</span>
+        </span>
+      </button>
+      <button type="button" class="pp-card rv d3" data-work="freelancer" aria-label="Content Creator · Freelancer — open project">
+        <span class="pp-cover"><img src="web-media/personal-projects/freelancer/nimi/nimi-come-with-us-poster.jpg" alt="A Nimi host smiling at an art fair in London" loading="lazy" decoding="async"></span>
+        <span class="pp-text">
+          <span class="pp-name">Content Creator · Freelancer</span>
+          <span class="pp-sub">Content for clients · Nimi</span>
+          <span class="pp-more">View project →</span>
+        </span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- TIKTOK -->
+<section class="section" id="tiktok">
+  <div class="wrap">
+    <div class="section-hd">
+      <h2 class="sec-label">Personal Brand</h2>
+      <a href="https://www.tiktok.com/@thao.polyglotsomeday" target="_blank" rel="noopener" class="sec-link">View TikTok →</a>
+    </div>
+    <div class="tt-grid rv">
+      <div class="tt-stats">
+        <div class="tt-stat">
+          <div class="tt-n">14K</div>
+          <div class="tt-d">Followers</div>
+        </div>
+        <div class="tt-stat">
+          <div class="tt-n">137.7K</div>
+          <div class="tt-d">Total Likes</div>
+        </div>
+        <div class="tt-stat">
+          <div class="tt-n">2023</div>
+          <div class="tt-d">Year Started</div>
+        </div>
+        <div class="tt-stat">
+          <div class="tt-n">EN/JP</div>
+          <div class="tt-d">Languages</div>
+        </div>
+      </div>
+      <div class="tt-info">
+        <div class="tt-handle">@thao.polyglotsomeday</div>
+        <p class="tt-desc">
+          In 2023, I started creating content on a TikTok channel named “thao.polyglotsomeday”,
+          now with <b>14K followers and 137.7K likes</b>, focusing on <b>language learning</b> —
+          particularly through the advanced shadowing technique. The channel showcases my journey
+          to becoming a polyglot, documenting my learning process and skill development.
+        </p>
+        <a href="https://www.tiktok.com/@thao.polyglotsomeday" target="_blank" rel="noopener" class="tt-btn">
+          Visit Channel →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="testimonials">
+  <div class="wrap">
+    <div class="section-hd">
+      <h2 class="sec-label">Testimonials</h2>
+    </div>
+    <div class="test-grid">
+      <div class="test-card rv">
+        <div class="test-rule"></div>
+        <p class="test-q">"Thao demonstrated outstanding commitment, a strong analytical mindset, and genuine creative initiative throughout our work together."</p>
+        <div class="test-name">Ms. Nam Vu</div>
+        <div class="test-role">Supervisor — Science Research Competition</div>
+      </div>
+      <div class="test-card rv d1">
+        <div class="test-rule"></div>
+        <p class="test-q">"An incredibly reliable teammate with a rare combination of strategic thinking and creative execution. A pleasure to work with."</p>
+        <div class="test-name">Ms. Quynh Trang</div>
+        <div class="test-role">Teammate — CMO Competition</div>
+      </div>
+      <div class="test-card rv d2">
+        <div class="test-rule"></div>
+        <p class="test-q">"Jules brings both data-driven insight and creative vision to her marketing work. Her campaigns consistently exceed expectations."</p>
+        <div class="test-name">Mr. Trung Tran</div>
+        <div class="test-role">General Director — OneHousing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-sec rv">
+  <div class="wrap">
+    <div class="quote-mark">"</div>
+    <p class="quote-text">
+      Is my portfolio not quite there yet?
+      <b>Allow me the chance to show you my value in an interview.</b>
+    </p>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="section-hd">
+      <h2 class="sec-label">Contact</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="rv">
+        <h2 class="contact-hl">Let's work<br>together.</h2>
+        <div class="contact-info">
+          <a href="mailto:ngphuongthao291020@gmail.com">ngphuongthao291020@gmail.com</a>
+          <a href="tel:+447883034282">(+44) 7883034282</a>
+        </div>
+        <div class="contact-loc">Based in London, UK · Available for Remote & On-site</div>
+      </div>
+      <div class="contact-links rv d1">
+        <a href="mailto:ngphuongthao291020@gmail.com" class="contact-link">
+          <span class="cl-name">Email</span>
+          <span class="cl-val">ngphuongthao291020@gmail.com</span>
+          <span class="cl-arr">→</span>
+        </a>
+        <a href="https://www.tiktok.com/@thao.polyglotsomeday" target="_blank" rel="noopener" class="contact-link">
+          <span class="cl-name">TikTok</span>
+          <span class="cl-val">@thao.polyglotsomeday</span>
+          <span class="cl-arr">→</span>
+        </a>
+        <a href="https://www.instagram.com/thaoborntotry2910/" target="_blank" rel="noopener" class="contact-link">
+          <span class="cl-name">Instagram</span>
+          <span class="cl-val">@thaoborntotry2910</span>
+          <span class="cl-arr">→</span>
+        </a>
+        <a href="#" class="contact-link">
+          <span class="cl-name">LinkedIn</span>
+          <span class="cl-val">Jules Nguyen</span>
+          <span class="cl-arr">→</span>
+        </a>
+        <a href="#" class="contact-link">
+          <span class="cl-name">Behance</span>
+          <span class="cl-val">Jules Nguyen</span>
+          <span class="cl-arr">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <span class="foot-copy">© 2026 Jules Nguyen. All rights reserved.</span>
+    <span class="foot-brand">Jules Nguyen</span>
+  </div>
+</footer>
+
+<!-- GALLERY (full-screen; opened from the Photography tiles and Videos "View all") -->
+<div class="gal" id="gal" role="dialog" aria-modal="true" aria-labelledby="galTitle" hidden>
+  <div class="gal-bar">
+    <button type="button" class="gal-btn gal-back" data-gal-close>← Back</button>
+    <div class="gal-title"><span id="galTitle"></span><span class="gal-count" id="galCount"></span></div>
+    <button type="button" class="gal-btn gal-x" data-gal-close aria-label="Close gallery">✕</button>
+  </div>
+  <div class="gal-grid" id="galGrid"></div>
+</div>
+<!-- COMPANY DETAIL PAGE (full-screen; opened from the Experience blocks) -->
+<div class="wk" id="wk" role="dialog" aria-modal="true" aria-labelledby="wkTitle" hidden>
+  <div class="gal-bar">
+    <button type="button" class="gal-btn wk-back">← Back</button>
+    <div class="gal-title"><span id="wkTitle"></span></div>
+    <button type="button" class="gal-btn gal-x wk-x" aria-label="Close">✕</button>
+  </div>
+  <article class="wk-page" id="wkPage"></article>
+</div>
+<!-- Company details — edit text and images here -->
+<script type="application/json" id="work-data">{
+ "viem-studio": {
+  "name": "VieM Studio",
+  "role": "Marketing Strategist & Executive",
+  "dates": "07/2025 — Now",
+  "logo": "web-media/experiences/viem-studio/logo.png",
+  "logoStyle": "fill",
+  "lead": "Growth marketing for a London agency: developed and implemented strategic marketing plans while managing three clients across diverse sectors — a dental clinic, F&B and jewellery — plus more than five small projects.",
+  "blocks": [
+   {
+    "h": "What I did",
+    "ul": [
+     "Produced and managed approximately 50 pieces of creative content per month, making sure each asset was engaging, aligned with the marketing funnel and effective in converting audiences into customers.",
+     "Led integrated growth campaigns across social, influencer, CRM and experiential channels, contributing to 40% growth in reach and a 30% uplift in audience engagement.",
+     "Built and activated a 40+ influencer network to scale UGC-driven acquisition, contributing to a 15% increase in conversion performance.",
+     "Directed creative production and brand storytelling for F&B and lifestyle clients, strengthening brand positioning and increasing audience interaction across digital platforms.",
+     "Localised brand positioning for a Vietnamese specialty coffee brand in the London market, resulting in a 20% increase in brand awareness.",
+     "Directed end-to-end photoshoots for clients, producing 20 on-brand creative assets optimised for multi-channel platforms, and created a unique “Storytelling Series” content format to strengthen brand narrative and emotional connection with audiences.",
+     "Tracked campaign performance via Meta Ads Manager and Google Analytics, delivering data-driven insights that improved ROAS by 30% and lowered CPC by 20%.",
+     "Grew Instagram followers by 2,000 within three months (a 65–80% growth rate) through data-driven content strategy and audience targeting."
+    ]
+   }
+  ],
+  "stats": [
+   {
+    "n": "+40%",
+    "d": "Growth in reach across integrated campaigns"
+   },
+   {
+    "n": "+30%",
+    "d": "Uplift in audience engagement, and 30% better ROAS"
+   },
+   {
+    "n": "+2K",
+    "d": "Instagram followers in 3 months (+65–80%)"
+   },
+   {
+    "n": "40+",
+    "d": "Influencers in the network I built and activated"
+   },
+   {
+    "n": "50+",
+    "d": "Pieces of creative content per month"
+   }
+  ],
+  "work": [
+   {
+    "type": "img",
+    "src": "web-media/experiences/viem-studio/green-summer.jpg",
+    "caption": "Product shoot — A Green Summer Day",
+    "w": 1080,
+    "h": 1350
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/viem-studio/lemon-inspired-look.jpg",
+    "caption": "Product shoot — Lemon-Inspired Look",
+    "w": 1080,
+    "h": 1350
+   }
+  ],
+  "kind": "experience",
+  "clients": [
+   {
+    "name": "ZeroToOne",
+    "sector": "F&B · Vietnamese specialty coffee, London",
+    "note": "Localised the brand's positioning for the London market, contributing to a 20% increase in brand awareness.",
+    "items": [
+     {
+      "type": "video",
+      "src": "web-media/experiences/viem-studio/zerotoone-ice.mp4",
+      "poster": "web-media/experiences/viem-studio/zerotoone-ice-poster.jpg",
+      "caption": "ZeroToOne — Reel",
+      "title": "ZeroToOne — Reel",
+      "w": 720,
+      "h": 1280
+     },
+     {
+      "type": "video",
+      "src": "web-media/experiences/viem-studio/zerotoone-hep-him.mp4",
+      "poster": "web-media/experiences/viem-studio/zerotoone-hep-him-poster.jpg",
+      "caption": "ZeroToOne — Reel",
+      "title": "ZeroToOne — Reel",
+      "w": 720,
+      "h": 1280
+     },
+     {
+      "type": "img",
+      "src": "web-media/experiences/viem-studio/zerotoone-reel.jpg",
+      "caption": "ZeroToOne Cafe — Reel",
+      "w": 334,
+      "h": 597
+     },
+     {
+      "type": "img",
+      "src": "web-media/experiences/viem-studio/zerotoone-instagram.jpg",
+      "caption": "ZeroToOne Cafe — Instagram",
+      "w": 289,
+      "h": 597
+     }
+    ]
+   },
+   {
+    "name": "UltraSmile Dental",
+    "sector": "Dental clinic",
+    "items": [
+     {
+      "type": "img",
+      "src": "web-media/experiences/viem-studio/ultrasmile-reel.jpg",
+      "caption": "UltraSmile Dental — Reel",
+      "w": 335,
+      "h": 597
+     },
+     {
+      "type": "img",
+      "src": "web-media/experiences/viem-studio/ultrasmile-instagram.jpg",
+      "caption": "UltraSmile Dental — Instagram",
+      "w": 289,
+      "h": 597
+     }
+    ]
+   },
+   {
+    "name": "AIRA",
+    "sector": "Jewellery",
+    "items": [
+     {
+      "type": "video",
+      "src": "web-media/experiences/viem-studio/aira-exhausted.mp4",
+      "poster": "web-media/experiences/viem-studio/aira-exhausted-poster.jpg",
+      "caption": "AIRA — Reel",
+      "title": "AIRA — Reel",
+      "w": 720,
+      "h": 1280
+     },
+     {
+      "type": "video",
+      "src": "web-media/experiences/viem-studio/aira-whats-in-your-bag.mp4",
+      "poster": "web-media/experiences/viem-studio/aira-whats-in-your-bag-poster.jpg",
+      "caption": "AIRA — What’s in your bag",
+      "title": "AIRA — What’s in your bag",
+      "w": 720,
+      "h": 1280
+     },
+     {
+      "type": "img",
+      "src": "web-media/experiences/viem-studio/aira-product.jpg",
+      "caption": "AIRA — Product content",
+      "w": 310,
+      "h": 550
+     },
+     {
+      "type": "img",
+      "src": "web-media/experiences/viem-studio/aira-instagram.jpg",
+      "caption": "AIRA — Instagram",
+      "w": 264,
+      "h": 550
+     }
+    ]
+   },
+   {
+    "name": "The Rice Factory London",
+    "sector": "F&B",
+    "items": [
+     {
+      "type": "video",
+      "src": "web-media/experiences/viem-studio/the-rice-factory-intro.mp4",
+      "poster": "web-media/experiences/viem-studio/the-rice-factory-intro-poster.jpg",
+      "caption": "The Rice Factory — Intro",
+      "title": "The Rice Factory — Intro",
+      "w": 720,
+      "h": 1280
+     },
+     {
+      "type": "video",
+      "src": "web-media/experiences/viem-studio/the-rice-factory-chicken-karaage.mp4",
+      "poster": "web-media/experiences/viem-studio/the-rice-factory-chicken-karaage-poster.jpg",
+      "caption": "The Rice Factory — Chicken Karaage",
+      "title": "The Rice Factory — Chicken Karaage",
+      "w": 720,
+      "h": 1280
+     },
+     {
+      "type": "video",
+      "src": "web-media/experiences/viem-studio/the-rice-factory-yuho-sharing.mp4",
+      "poster": "web-media/experiences/viem-studio/the-rice-factory-yuho-sharing-poster.jpg",
+      "caption": "The Rice Factory — Yuho sharing",
+      "title": "The Rice Factory — Yuho sharing",
+      "w": 720,
+      "h": 1280
+     }
+    ]
+   }
+  ]
+ },
+ "jpha": {
+  "name": "JPHA",
+  "role": "Marketing Strategist & Executive",
+  "dates": "01/2025 — 06/2025",
+  "logo": "web-media/experiences/jpha/logo.png",
+  "logoStyle": "fill",
+  "lead": "JPHA is a luxury fine wine & spirits retailer. I joined when its social media presence lacked direction and engagement, and led the brand's multimedia marketing to drive engagement and revenue.",
+  "blocks": [
+   {
+    "h": "The problem",
+    "ul": [
+     "A luxury spirits retailer with a social media presence lacking direction and engagement."
+    ]
+   },
+   {
+    "h": "What I changed",
+    "ul": [
+     "Overhauled the brand's content strategy by introducing high-quality visuals and professional studio shoots.",
+     "Created event videos and engaging content for Facebook and YouTube.",
+     "Led the CEO to embrace content marketing, use performance data and build his personal brand as the face of JPHA."
+    ]
+   },
+   {
+    "h": "Results",
+    "ul": [
+     "Led go-to-market campaigns and experiential activations for the brand, aligning brand positioning with commercial growth objectives.",
+     "Scaled social performance through insight-led content and video strategy, increasing engagement by 40% and tripling video views.",
+     "Drove CRM and lifecycle marketing through Klaviyo automation and customer segmentation, increasing conversion and repeat-purchase rates by 30%.",
+     "Strengthened organic acquisition through SEO and performance optimisation, doubling click-through rate and increasing website traffic by 40%.",
+     "Directed multi-channel creative production and brand communications, contributing to audience growth and revenue uplift."
+    ]
+   },
+   {
+    "h": "My responsibilities",
+    "ul": [
+     "Producing and managing content across social media platforms, from concept to execution.",
+     "Photography, lighting and studio set design.",
+     "Video production for campaigns, events and ads.",
+     "Creating and editing impactful visual content for Facebook and YouTube.",
+     "Overseeing email marketing initiatives that contribute directly to revenue growth.",
+     "Bridging creative direction with performance-driven marketing to elevate JPHA's brand presence."
+    ]
+   }
+  ],
+  "work": [
+   {
+    "type": "img",
+    "src": "web-media/experiences/jpha/youtube-vlogs.jpg",
+    "caption": "YouTube vlogs",
+    "w": 647,
+    "h": 474
+   },
+   {
+    "type": "video",
+    "src": "web-media/experiences/jpha/short-reel-craigellachie-29-yo.mp4",
+    "poster": "web-media/experiences/jpha/short-reel-craigellachie-29-yo-poster.jpg",
+    "caption": "Instagram Reel — Craigellachie 29",
+    "title": "Instagram Reel — Craigellachie 29",
+    "w": 1080,
+    "h": 1920
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/jpha/instagram-reel.jpg",
+    "caption": "Instagram Reels",
+    "w": 392,
+    "h": 606
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/jpha/email-design.jpg",
+    "caption": "Email design & copywriting",
+    "w": 272,
+    "h": 900
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/jpha/product-shoot.jpg",
+    "caption": "Product photo & video shoot",
+    "w": 349,
+    "h": 615
+   }
+  ],
+  "kind": "experience",
+  "stats": [
+   {
+    "n": "+40%",
+    "d": "Social engagement"
+   },
+   {
+    "n": "3×",
+    "d": "Video views"
+   },
+   {
+    "n": "+30%",
+    "d": "Conversion and repeat-purchase rates (Klaviyo CRM)"
+   },
+   {
+    "n": "2× CTR",
+    "d": "Click-through rate, with +40% website traffic"
+   }
+  ]
+ },
+ "hattie-lloyd-home": {
+  "name": "Hattie Lloyd Home",
+  "role": "Marketing Collaborator",
+  "dates": "04/2024 — 06/2024",
+  "logo": "web-media/experiences/hattie-lloyd-home/logo.png",
+  "logoStyle": "fill",
+  "blocks": [
+   {
+    "h": "The problem",
+    "p": "After researching, I realised the company lacked focus on video formats — including Reels and longer videos — which are key to capturing online customers' attention."
+   },
+   {
+    "h": "The solution",
+    "p": "I expanded video content across social platforms, creating engaging videos that showcased the brand and boosted audience engagement, and developed a content organiser to streamline and align marketing plans. As a result, I filmed and edited over 30 video assets for product projects, leading to an increase of 1,700 followers within 2 months."
+   }
+  ],
+  "stats": [
+   {
+    "n": "30+",
+    "d": "Video assets filmed and edited"
+   },
+   {
+    "n": "+1,700",
+    "d": "Followers within 2 months"
+   }
+  ],
+  "quote": {
+   "text": "Beyond her video work, Thao established a highly effective content organizer, which has been invaluable in keeping our marketing plans and goals on track. Thao demonstrated excellent initiative, working independently when needed, and consistently met deadlines. Her enthusiasm, adaptability, and warm personality made her a joy to work with.",
+   "name": "Leanne Corinne Pollard",
+   "role": "Founder & Manager, Hattie Lloyd Home"
+  },
+  "work": [
+   {
+    "type": "img",
+    "src": "web-media/experiences/hattie-lloyd-home/reel-office.jpg",
+    "caption": "Instagram Reels",
+    "w": 542,
+    "h": 535
+   },
+   {
+    "type": "video",
+    "src": "web-media/experiences/hattie-lloyd-home/moodboard.mp4",
+    "poster": "web-media/experiences/hattie-lloyd-home/moodboard-poster.jpg",
+    "caption": "Collaboration moodboard",
+    "title": "Collaboration moodboard",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/hattie-lloyd-home/reel-london-calling.jpg",
+    "caption": "Instagram Reels — London's Calling",
+    "w": 523,
+    "h": 709
+   }
+  ],
+  "kind": "experience"
+ },
+ "tomorrow-marketers": {
+  "name": "Tomorrow Marketers",
+  "role": "Marketing Executive",
+  "dates": "02/2023 — 10/2023",
+  "logo": "web-media/experiences/tomorrow-marketers/logo.png",
+  "logoStyle": "wide",
+  "blocks": [
+   {
+    "h": "The problem",
+    "p": "Tomorrow Marketers Academy is an institution that provides marketing education for all. At that time, however, all training was conducted in person."
+   },
+   {
+    "h": "The solution",
+    "p": "To address this, my team proposed moving the lessons to an online format, so students could learn from anywhere at any time. I started the process by researching, filming and editing a demo online learning video, which became the foundation for the online courses that followed."
+   },
+   {
+    "h": "What I led",
+    "ul": [
+     "Led end-to-end product launches with brand identity, key visuals and sales toolkits, underpinned by strategic copywriting and market research, including competitor benchmarking and customer insights.",
+     "Facilitated 30+ marketing training sessions (online and offline), supporting 500+ learners and earning strong positive feedback across all sessions.",
+     "Directed content strategy and platform positioning, growing organic audiences to 3,000 followers within 3 months.",
+     "Ran an integrated new-product campaign for Business English for Marketers, building and scaling educational marketing communities through content-led growth — contributing to 13,000+ follower growth across platforms."
+    ]
+   }
+  ],
+  "work": [
+   {
+    "type": "img",
+    "src": "web-media/experiences/tomorrow-marketers/online-learning-video.jpg",
+    "caption": "Online learning video (demo)",
+    "w": 548,
+    "h": 293
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/tomorrow-marketers/facebook-ad-video.jpg",
+    "caption": "Facebook ad video",
+    "w": 562,
+    "h": 302
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/tomorrow-marketers/facebook-content-1.jpg",
+    "caption": "Facebook content",
+    "w": 621,
+    "h": 416
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/tomorrow-marketers/facebook-content-2.jpg",
+    "caption": "Facebook content — The Explosion of Clubhouse",
+    "w": 655,
+    "h": 547
+   }
+  ],
+  "kind": "experience",
+  "lead": "Tomorrow Marketers Academy provides marketing education for all. I worked there part-time and then full-time, across product launches, training and community growth.",
+  "stats": [
+   {
+    "n": "30+",
+    "d": "Marketing training sessions facilitated"
+   },
+   {
+    "n": "500+",
+    "d": "Learners supported"
+   },
+   {
+    "n": "13K+",
+    "d": "Follower growth across platforms"
+   },
+   {
+    "n": "3K",
+    "d": "Organic followers within 3 months"
+   }
+  ]
+ },
+ "onehousing": {
+  "name": "OneHousing",
+  "role": "Sale Agent",
+  "dates": "02/2019 — 06/2021",
+  "logo": "web-media/experiences/onehousing/logo.png",
+  "logoStyle": "wide",
+  "lead": "Real estate sales and client growth at OneHousing (One Mount Group), Hanoi, working with partners Masterise Homes, Vinhomes and Techcombank.",
+  "partners": "web-media/experiences/onehousing/partners.png",
+  "blocks": [
+   {
+    "h": "What I did",
+    "p": "I actively maintained good customer and partnership connections, resulting in roughly 25 successful real estate transactions. I also created and presented actionable information that helped customers optimise their budget allocations and achieve a 10% cost reduction, giving recommendations for their own purpose, such as living or short- or long-term investing."
+   },
+   {
+    "h": "Results",
+    "ul": [
+     "Generated £1.25M+ in annual revenue through strategic client relationship management and high-value property consultation.",
+     "Exceeded annual sales targets by 15%, with a peak month of 300% against target.",
+     "Led client engagement initiatives and partnership activations, contributing to stronger customer retention and a 20% uplift in post-event sales performance.",
+     "Coordinated cross-functional stakeholders across luxury real estate projects, strengthening client experience and brand perception."
+    ]
+   }
+  ],
+  "stats": [
+   {
+    "n": "£1.25M+",
+    "d": "Annual revenue generated"
+   },
+   {
+    "n": "300%",
+    "d": "Peak monthly performance against target"
+   },
+   {
+    "n": "+15%",
+    "d": "Above annual sales target"
+   },
+   {
+    "n": "~25",
+    "d": "Successful real estate transactions"
+   },
+   {
+    "n": "10%",
+    "d": "Cost reduction achieved for clients"
+   }
+  ],
+  "work": [
+   {
+    "type": "img",
+    "src": "web-media/experiences/onehousing/masterise-homes-handover.jpg",
+    "caption": "With clients at Masterise Homes",
+    "w": 1600,
+    "h": 1200
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/onehousing/sales-team.jpg",
+    "caption": "The OneHousing sales team",
+    "w": 1206,
+    "h": 855
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/onehousing/client-handover-1.jpg",
+    "caption": "Client handover",
+    "w": 1200,
+    "h": 1600
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/onehousing/partner-visit.jpg",
+    "caption": "Partner visit",
+    "w": 1600,
+    "h": 1200
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/onehousing/showroom-visit.jpg",
+    "caption": "Showroom visit",
+    "w": 1200,
+    "h": 1600
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/onehousing/client-handover-2.jpg",
+    "caption": "Client handover",
+    "w": 1200,
+    "h": 1600
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/onehousing/sales-kickoff.jpg",
+    "caption": "Sales kick-off event",
+    "w": 1600,
+    "h": 1200
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/onehousing/team-outside.jpg",
+    "caption": "Team day",
+    "w": 1276,
+    "h": 956
+   }
+  ],
+  "kind": "experience"
+ },
+ "tok": {
+  "kind": "project",
+  "name": "TOK",
+  "role": "CMO Competition · Runner-up",
+  "dates": "06/2021 — 07/2021",
+  "cover": "web-media/personal-projects/tok/campaign-presentation.jpg",
+  "lead": "My team developed a comprehensive marketing campaign for the new products of TOK, a snack brand from Orion FoodVina — and finished Runner-up out of 450 competing teams.",
+  "blocks": [
+   {
+    "h": "The project",
+    "p": "Through a combination of research, brainstorming, design, and a balanced approach of creativity and practicality, we successfully outpaced 450 competing teams. Our innovative marketing penetration proposal for TOK ultimately earned us the position of Runner-up."
+   },
+   {
+    "h": "Big idea",
+    "p": "The “Tok Tok” Sound of Flavors — Bùng vị giòn tan, đánh bay buồn chán."
+   },
+   {
+    "h": "My role",
+    "p": "We collaborated closely in brainstorming ideas, and I contributed significantly to the project by handling the drawing, design and video production."
+   }
+  ],
+  "stats": [
+   {
+    "n": "Runner-up",
+    "d": "Out of 450 competing teams"
+   }
+  ],
+  "quote": {
+   "text": "She oversees the design of new products and the development of creative strategies, consistently bringing responsible, dependable, and innovative yet practical ideas to the table.",
+   "name": "Ms. Quynh Trang",
+   "role": "Teammate, CMO Competition"
+  },
+  "work": [
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/tok/campaign-presentation.jpg",
+    "caption": "Campaign presentation",
+    "w": 1290,
+    "h": 720
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/tok/tvc-storyboard.jpg",
+    "caption": "TVC storyboard",
+    "w": 981,
+    "h": 548
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/tok/stop-motion-video.jpg",
+    "caption": "Stop-motion video",
+    "w": 600,
+    "h": 332
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/tok/new-package-designs.jpg",
+    "caption": "New package designs for TOK",
+    "w": 621,
+    "h": 369
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/tok/team-hanoi-cypher.jpg",
+    "caption": "Team Hanoi Cypher",
+    "w": 1200,
+    "h": 1200
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/tok/team-member-card.jpg",
+    "caption": "Competition profile",
+    "w": 1245,
+    "h": 712
+   }
+  ]
+ },
+ "personal-branding": {
+  "kind": "project",
+  "name": "Personal Branding",
+  "role": "TikTok · @thao.polyglotsomeday",
+  "dates": "2023 — Now",
+  "cover": "web-media/personal-projects/personal-branding/brand-graphic.jpg",
+  "lead": "A TikTok channel about language learning — particularly the advanced shadowing technique — documenting my journey to becoming a polyglot.",
+  "blocks": [
+   {
+    "h": "The channel",
+    "p": "In 2023, I started creating content on a TikTok channel named “thao.polyglotsomeday”, now with 14K followers and 137.7K likes. The channel showcases my journey to becoming a polyglot, documenting my learning process and skill development."
+   },
+   {
+    "h": "Why it matters",
+    "p": "My TikTok channel is an extension of my personal brand — one that is rooted in creativity, passion for languages, and a commitment to education."
+   }
+  ],
+  "stats": [
+   {
+    "n": "14K",
+    "d": "Followers"
+   },
+   {
+    "n": "137.7K",
+    "d": "Likes"
+   },
+   {
+    "n": "1.5M",
+    "d": "Views on the most-watched video"
+   }
+  ],
+  "links": [
+   {
+    "label": "Visit channel →",
+    "href": "https://www.tiktok.com/@thao.polyglotsomeday"
+   }
+  ],
+  "work": [
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/personal-branding/tiktok-profile.jpg",
+    "caption": "TikTok channel: thao.polyglotsomeday",
+    "w": 1210,
+    "h": 592
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/personal-branding/video-home-alone.jpg",
+    "caption": "“Home alone thì làm gì?” — 1.5M views",
+    "w": 439,
+    "h": 587
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/personal-branding/video-shadowing.jpg",
+    "caption": "Shadowing English — 39.7K views",
+    "w": 450,
+    "h": 592
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/personal-branding/video-home-alone-daytime.jpg",
+    "caption": "“Home alone nhưng vào ban ngày” — 90.4K views",
+    "w": 450,
+    "h": 592
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/personal-branding/brand-graphic.jpg",
+    "caption": "Personal brand visual",
+    "w": 796,
+    "h": 796
+   }
+  ]
+ },
+ "beyond-marketing": {
+  "kind": "project",
+  "name": "Beyond Marketing",
+  "role": "Pixel video · Acting · MC · Drawing",
+  "dates": "",
+  "cover": "web-media/personal-projects/beyond-marketing/starry-night-collage.jpg",
+  "lead": "Other things you should know about me.",
+  "blocks": [
+   {
+    "h": "Why I do it",
+    "p": "As a marketer, I understand the importance of nurturing my creativity and continuously refining my skills, both inside and outside of my professional work. I am committed to my personal growth, seeking to develop myself in both focused and broad ways. This approach allows me to view the world from a variety of perspectives, enriching my ability to create and innovate."
+   },
+   {
+    "h": "What I explore",
+    "ul": [
+     "Pixel video designing",
+     "Acting",
+     "Personal branding",
+     "MC skills",
+     "Drawing"
+    ]
+   },
+   {
+    "h": "And so on…",
+    "p": "I can’t wait to learn more and contribute to the organisation."
+   }
+  ],
+  "work": [
+   {
+    "type": "video",
+    "src": "web-media/pixel-individual-project-behance.mp4",
+    "poster": "web-media/pixel-individual-project-behance-poster.jpg",
+    "caption": "Pixel video designing",
+    "title": "Pixel video designing",
+    "w": 726,
+    "h": 720
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/beyond-marketing/acting.jpg",
+    "caption": "Acting",
+    "w": 1276,
+    "h": 956
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/beyond-marketing/mc.jpg",
+    "caption": "MC",
+    "w": 960,
+    "h": 959
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/beyond-marketing/starry-night-collage.jpg",
+    "caption": "Personal branding — Starry Night collage",
+    "w": 1080,
+    "h": 810
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/beyond-marketing/drawing-1.jpg",
+    "caption": "Drawing",
+    "w": 1262,
+    "h": 1400
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/beyond-marketing/drawing-2.jpg",
+    "caption": "Drawing",
+    "w": 1400,
+    "h": 1009
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/beyond-marketing/drawing-3.jpg",
+    "caption": "Drawing",
+    "w": 1050,
+    "h": 1400
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/beyond-marketing/drawing-4.jpg",
+    "caption": "Drawing",
+    "w": 1050,
+    "h": 1400
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/beyond-marketing/drawing-5.jpg",
+    "caption": "Drawing",
+    "w": 1050,
+    "h": 1400
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/beyond-marketing/drawing-6.jpg",
+    "caption": "Drawing",
+    "w": 647,
+    "h": 1400
+   },
+   {
+    "type": "img",
+    "src": "web-media/personal-projects/beyond-marketing/drawing-7.jpg",
+    "caption": "Drawing",
+    "w": 647,
+    "h": 1400
+   }
+  ]
+ },
+ "freelancer": {
+  "kind": "project",
+  "name": "Content Creator · Freelancer",
+  "role": "Freelance content for clients",
+  "dates": "",
+  "cover": "web-media/personal-projects/freelancer/nimi/nimi-come-with-us-poster.jpg",
+  "lead": "Content I create for other clients.",
+  "blocks": [
+   {
+    "h": "What I do",
+    "p": "As a freelance content creator, I make short-form videos for clients' social channels — capturing the atmosphere of their events and inviting new people to come along."
+   }
+  ],
+  "clients": [
+   {
+    "name": "Nimi",
+    "sector": "Arts & culture social club · London",
+    "note": "A London-based arts and culture social club that brings people together for small-group gallery strolls, museum visits and creative gatherings — no prior art knowledge required.",
+    "items": [
+     {
+      "type": "video",
+      "src": "web-media/personal-projects/freelancer/nimi/nimi-come-with-us.mp4",
+      "poster": "web-media/personal-projects/freelancer/nimi/nimi-come-with-us-poster.jpg",
+      "caption": "Nimi — Come with us",
+      "title": "Nimi — Come with us",
+      "w": 720,
+      "h": 1280
+     },
+     {
+      "type": "video",
+      "src": "web-media/personal-projects/freelancer/nimi/nimi-secret-salon.mp4",
+      "poster": "web-media/personal-projects/freelancer/nimi/nimi-secret-salon-poster.jpg",
+      "caption": "Nimi — Secret Salon",
+      "title": "Nimi — Secret Salon",
+      "w": 720,
+      "h": 1280
+     },
+     {
+      "type": "video",
+      "src": "web-media/personal-projects/freelancer/nimi/nimi-teaser.mp4",
+      "poster": "web-media/personal-projects/freelancer/nimi/nimi-teaser-poster.jpg",
+      "caption": "Nimi — Teaser",
+      "title": "Nimi — Teaser",
+      "w": 720,
+      "h": 1280
+     }
+    ]
+   }
+  ]
+ }
+}</script>
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Media viewer" hidden>
+  <button type="button" class="lb-btn lb-x" aria-label="Close">✕</button>
+  <button type="button" class="lb-btn lb-prev" aria-label="Previous">‹</button>
+  <figure class="lb-stage" id="lbStage"></figure>
+  <button type="button" class="lb-btn lb-next" aria-label="Next">›</button>
+  <div class="lb-count" id="lbCount"></div>
+</div>
+<div class="snd-pill" id="sndPill" role="status">🔊 Tap anywhere to turn on sound</div>
+
+<!-- Gallery file lists — regenerate with: python3 tools/build-manifest.py -->
+<script type="application/json" id="media-manifest">{"events":{"title":"Events","items":[{"type":"img","src":"web-media/the-projects/photography/events/concert/img-1298.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/events/f-and-b/img-0636.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/events/f-and-b/img-0948.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/events/performance/2d5a3255.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/events/performance/img-2952.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-4078-2.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-4091-2.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-4094-2.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-7113.jpg","w":2400,"h":1799},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-7151.jpg","w":2400,"h":1800}]},"landscape":{"title":"Landscape","items":[{"type":"img","src":"web-media/the-projects/photography/landscape/135sr-2025-10-14-095805-453.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/2d5a6200.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/2d5a6286.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/2d5a6317.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/2d5a8204.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/IMG_4868.JPG","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/IMG_5077.JPG","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/IMG_5100.JPG","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/IMG_5182.JPG","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/att-eiar1g6n86esp7kpdwqoa2-9vlqnqss-jmr0dfkddj8.jpg","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/img-0595.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-0629.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-0637.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-1046.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-2468.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-3940.jpg","w":2400,"h":1602},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4169.jpg","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4186.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4210.jpg","w":2400,"h":1800},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4527.jpg","w":2400,"h":1583},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4543.jpg","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4852.jpg","w":1585,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4988.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-5951.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-6063.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-6847.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-8782.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9167.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9850.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9913.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9916.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9919.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9936.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9943.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9945.jpg","w":2400,"h":1600}]},"portrait":{"title":"Portrait","items":[{"type":"img","src":"web-media/the-projects/photography/portrait/2d5a9432.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/4efad8f9-978a-41e0-92ff-bc3fb8d7ab70.jpeg","w":1366,"h":2049},{"type":"img","src":"web-media/the-projects/photography/portrait/635037436-34418356391082956-2711221888483205317-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/portrait/636151711-34418355857749676-6056652900600450512-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/portrait/636650721-34418355884416340-2431250639980013359-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/portrait/636858230-34418356437749618-1779061394552675505-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/portrait/hf-20260802-213427-944c5196-b7c0-4388-947a-d8e4a0e172a1-1.jpg","w":1610,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/img-0249-original.jpg","w":1573,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/img-6948-original.jpg","w":1587,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/img-6991-original.jpg","w":1797,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/wilf/editedw2.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/portrait/wilf/img-1564.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/att-4v98eoh5hvq3o74m43vsqe8cgcuetncdmblm8xgxr1c.jpg","w":1439,"h":1919},{"type":"img","src":"web-media/the-projects/photography/selected/people/att-z-kg2wplptyk7okmjvegcp0dnwaaapezfgdumun2rg0.jpg","w":1080,"h":1080},{"type":"img","src":"web-media/the-projects/photography/selected/people/cover-12.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/cover-13.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0027.jpg","w":1078,"h":1620},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0047.jpg","w":1215,"h":1620},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0078.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0080-1.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0080.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0081.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0083.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0085.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0090.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0100.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0113.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0130.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0218.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0249.jpg","w":1573,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0328.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-2531.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-3880.jpg","w":1568,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-4095.jpg","w":2400,"h":1542},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-4184.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-4590.jpg","w":2400,"h":1804},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-5622.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-5799.jpg","w":1595,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-5804.jpg","w":1591,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-6946.jpg","w":1589,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7113.jpg","w":2400,"h":1798},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7130.jpg","w":1629,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7132.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7152.jpg","w":2400,"h":1800},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7163.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7294.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7314.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7315.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7316.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8376.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8378.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8380.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8848.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8849.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8875.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8876.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8957.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8966.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8995.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9063.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9088.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9098.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9166.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9708.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/relens-img-20250820165015.jpg","w":1600,"h":2400}]},"product":{"title":"Product Shooting","items":[{"type":"img","src":"web-media/the-projects/photography/product-shooting/1.jpg","w":1080,"h":1350},{"type":"img","src":"web-media/the-projects/photography/product-shooting/chloe.jpg","w":1080,"h":1350},{"type":"img","src":"web-media/the-projects/photography/product-shooting/img-4322.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/product-shooting/img-6277.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/product-shooting/img-6991-original.jpg","w":1797,"h":2400},{"type":"img","src":"web-media/the-projects/photography/product-shooting/lemon.jpg","w":1080,"h":1350}]},"videos":{"title":"Videography","items":[{"type":"video","src":"web-media/morocco-v3.mp4","poster":"web-media/morocco-v3-poster.jpg","title":"Morocco","w":1920,"h":1080},{"type":"video","src":"web-media/mallorca-postcard-2.mp4","poster":"web-media/mallorca-postcard-2-poster.jpg","title":"Mallorca Postcard","w":1920,"h":1080},{"type":"video","src":"web-media/lavender-farm-kent.mp4","poster":"web-media/lavender-farm-kent-poster.jpg","title":"Lavender Farm, Kent","w":1280,"h":720},{"type":"video","src":"web-media/the-projects/traveling-videos/a-green-day-4k.mp4","poster":"web-media/the-projects/traveling-videos/a-green-day-4k-poster.jpg","w":1280,"h":720,"title":"A Green Day"},{"type":"video","src":"web-media/the-projects/traveling-videos/all-night-copy-1.mp4","poster":"web-media/the-projects/traveling-videos/all-night-copy-1-poster.jpg","w":1280,"h":720,"title":"All Night"},{"type":"video","src":"web-media/the-projects/traveling-videos/athens-vo-tri.mp4","poster":"web-media/the-projects/traveling-videos/athens-vo-tri-poster.jpg","w":1280,"h":720,"title":"Athens"},{"type":"video","src":"web-media/the-projects/traveling-videos/grr.mp4","poster":"web-media/the-projects/traveling-videos/grr-poster.jpg","w":1920,"h":1080,"title":"Grr"},{"type":"video","src":"web-media/the-projects/traveling-videos/hasting-edit.mp4","poster":"web-media/the-projects/traveling-videos/hasting-edit-poster.jpg","w":1920,"h":1080,"title":"Hastings"},{"type":"video","src":"web-media/the-projects/traveling-videos/so-you-like-blue-copy.mp4","poster":"web-media/the-projects/traveling-videos/so-you-like-blue-copy-poster.jpg","w":1920,"h":1080,"title":"So You Like Blue"},{"type":"video","src":"web-media/the-projects/traveling-videos/sunet.mp4","poster":"web-media/the-projects/traveling-videos/sunet-poster.jpg","w":1280,"h":720,"title":"Sunset"},{"type":"video","src":"web-media/the-projects/traveling-videos/zermatt-intro.mp4","poster":"web-media/the-projects/traveling-videos/zermatt-intro-poster.jpg","w":1920,"h":1080,"title":"Zermatt"},{"type":"video","src":"web-media/the-projects/traveling-videos/zurich-finnnnal.mp4","poster":"web-media/the-projects/traveling-videos/zurich-finnnnal-poster.jpg","w":1920,"h":1080,"title":"Zurich"}]},"wedding-raham-rosie":{"title":"Raham & Rosie","parent":"wedding","items":[{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5415.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5475.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5476.jpg","w":1569,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5479.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5480.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5481.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5482.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5483.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5484.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5485.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5486.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5487.jpg","w":2400,"h":1617},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5488.jpg","w":2400,"h":1632},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5489.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-6597.jpg","w":2400,"h":1600}]},"wedding-sam-ha":{"title":"Sam & Ha","parent":"wedding","items":[{"type":"img","src":"web-media/the-projects/photography/wedding/sam-ha/2d5a1801.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-ha/2d5a1827.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-ha/2d5a1944.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-ha/2d5a2354.jpg","w":2400,"h":1600}]},"wedding-sam-linh":{"title":"Sam & Linh","parent":"wedding","items":[{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/2d5a4605.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/650361839-34352857310995247-635160039677384145-n.jpg","w":1083,"h":1625},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/650409791-34352833427664302-7271065118513884754-n.jpg","w":1322,"h":2048},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/650732973-34352815180999460-9018894141596256759-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/651591965-34352813624332949-1153090883572961566-n.jpg","w":1356,"h":2048},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/651729588-34352848264329485-8571978121797919818-n.jpg","w":1931,"h":1287},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/651766972-34352896384324673-6506119219725394446-n.jpg","w":1366,"h":2048},{"type":"video","src":"web-media/the-projects/photography/wedding/sam-linh/img-0665.mp4","poster":"web-media/the-projects/photography/wedding/sam-linh/img-0665-poster.jpg","w":1080,"h":1920}]},"wedding":{"title":"Wedding","albums":[{"key":"wedding-raham-rosie","title":"Raham & Rosie","cover":"web-media/the-projects/photography/wedding/raham-rosie/img-5488.jpg"},{"key":"wedding-sam-ha","title":"Sam & Ha","cover":"web-media/the-projects/photography/wedding/sam-ha/2d5a1801.jpg"},{"key":"wedding-sam-linh","title":"Sam & Linh","cover":"web-media/the-projects/photography/wedding/sam-linh/2d5a4605.jpg"}],"items":[]}}</script>
+
+<script>
+  // ── SCROLL REVEAL ──
+  const revEls = document.querySelectorAll('.rv');
+  const revObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.08, rootMargin: '0px 0px -48px 0px' });
+  revEls.forEach(el => revObs.observe(el));
+
+  // Hero reveals immediately
+  setTimeout(() => {
+    document.querySelectorAll('.hero .rv').forEach(el => el.classList.add('vis'));
+  }, 120);
+
+  // ── HERO VIDEOS: play in sequence, loop forever ──
+  const heroVids = Array.from(document.querySelectorAll('.hero-video'));
+  function heroShow(i) {
+    const v = heroVids[i];
+    v.currentTime = 0;
+    const p = v.play();
+    if (p && p.catch) p.catch(() => {});
+    const prev = heroVids.find(el => el.classList.contains('is-active'));
+    heroVids.forEach((el, j) => el.classList.toggle('is-active', j === i));
+    if (prev && prev !== v) sound.handoff(prev, v);  // keep the hero's sound going into the next clip
+  }
+  function heroNext(i) {
+    // next clip that hasn't failed; falls back to replaying the current one
+    for (let k = 1; k <= heroVids.length; k++) {
+      const n = (i + k) % heroVids.length;
+      if (!heroVids[n].dataset.failed) return n;
+    }
+    return i;
+  }
+  heroVids.forEach((v, i) => {
+    v.addEventListener('ended', () => heroShow(heroNext(i)));
+    const src = v.querySelector('source');
+    if (src) src.addEventListener('error', () => {
+      v.dataset.failed = '1';
+      if (v.classList.contains('is-active')) {
+        const n = heroNext(i);
+        if (n !== i) heroShow(n);
+      }
+    });
+  });
+
+  // ── VIDEO SOUND: hover (desktop) / most-visible (touch) — one video at a time ──
+  const sound = (() => {
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const pill = document.getElementById('sndPill');
+    if (canHover) pill.textContent = '🔊 Click anywhere to turn on sound';
+    const vids = new Set();
+    const ratios = new Map();
+    const fades = new WeakMap();
+    let current = null, pending = null, activated = false, suspended = false;
+
+    const hasActivation = () => activated ||
+      (navigator.userActivation && navigator.userActivation.hasBeenActive);
+    // while a full-screen page (gallery or company page) is open, only its own videos count
+    const inScope = v => {
+      const open = ['gal', 'wk'].map(id => document.getElementById(id)).find(o => o && !o.hidden);
+      return open ? open.contains(v) : !v.closest('.gal, .wk');
+    };
+    const showPill = on => pill.classList.toggle('show', on);
+    // hero clips: the sequence script owns their playback; only the clip on screen can have sound
+    const isHero = v => v.classList.contains('hero-video');
+    const eligible = v => !isHero(v) || v.classList.contains('is-active');
+
+    function fade(v, target, done) {
+      clearInterval(fades.get(v));
+      let vol = v.volume;
+      const step = target > vol ? 0.06 : -0.08;
+      const t = setInterval(() => {
+        vol = Math.max(0, Math.min(1, vol + step));
+        v.volume = vol;
+        if ((step > 0 && vol >= target) || (step < 0 && vol <= target)) {
+          clearInterval(t);
+          if (done) done();
+        }
+      }, 35);
+      fades.set(v, t);
+    }
+    function focus(v) {
+      if (suspended) return;
+      if (current && current !== v) unfocus(current);
+      current = v;
+      if (!hasActivation()) { pending = v; showPill(true); return; }
+      pending = null; showPill(false);
+      if (!v.muted && v.volume > 0.7) return;
+      if (v.muted) { v.volume = 0; v.muted = false; }
+      const p = v.play();
+      if (p && p.catch) p.catch(() => { v.muted = true; });
+      fade(v, 0.8);
+    }
+    function unfocus(v) {
+      if (pending === v) { pending = null; showPill(false); }
+      if (current === v) current = null;
+      if (v.muted) return;
+      fade(v, 0, () => { v.muted = true; });
+    }
+    function muteAll() { vids.forEach(v => { clearInterval(fades.get(v)); v.muted = true; }); current = pending = null; showPill(false); }
+
+    // touch devices: of the videos ≥60% on screen, the one nearest the middle of the screen gets sound
+    function pickVisible() {
+      let best = null, bestD = Infinity;
+      const mid = innerHeight / 2;
+      ratios.forEach((r, v) => {
+        if (!inScope(v) || !eligible(v) || r < 0.6) return;
+        const b = v.getBoundingClientRect();
+        const d = Math.abs(b.top + b.height / 2 - mid);
+        if (d < bestD) { best = v; bestD = d; }
+      });
+      if (best) { if (best !== current) focus(best); }
+      else if (current) unfocus(current);
+    }
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const v = e.target;
+        ratios.set(v, e.intersectionRatio);
+        if (isHero(v)) { if (!e.isIntersecting && v === current) unfocus(v); return; }
+        if (e.isIntersecting && inScope(v)) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+        else { v.pause(); if (v === current) unfocus(v); }
+      });
+      if (!canHover) pickVisible();
+    }, { threshold: [0, 0.3, 0.6, 0.8, 1] });
+
+    if (!canHover) {
+      let raf = 0;  // re-pick while scrolling (page or gallery), once per frame
+      document.addEventListener('scroll', () => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => { raf = 0; pickVisible(); });
+      }, { capture: true, passive: true });
+    }
+
+    // first click / tap / key anywhere unlocks sound for the rest of the visit
+    ['pointerdown', 'keydown', 'touchend'].forEach(type => addEventListener(type, () => {
+      if (activated) return;
+      activated = true;
+      setTimeout(() => { if (pending) focus(pending); }, 0);
+    }, { capture: true, passive: true }));
+
+    function add(v) {
+      if (vids.has(v)) return;
+      vids.add(v);
+      v.muted = true;
+      io.observe(v);
+      if (canHover) {
+        const host = v.closest('.hero, .vid-card, .gal-item, .wk-item') || v;
+        host.addEventListener('mouseenter', () => { if (eligible(v)) focus(v); });
+        host.addEventListener('mouseleave', () => unfocus(v));
+      }
+    }
+    function remove(v) {
+      if (v === current || v === pending) unfocus(v);
+      clearInterval(fades.get(v));
+      io.unobserve(v); vids.delete(v); ratios.delete(v);
+      v.pause();
+    }
+    // hero sequence moved on: pass the sound (or the waiting-for-a-click state) to the new clip
+    function handoff(from, to) {
+      if (pending === from) { pending = current = to; return; }
+      if (current !== from) return;
+      current = to;
+      clearInterval(fades.get(from));
+      to.volume = from.muted ? 0 : from.volume;
+      to.muted = false; from.muted = true;
+      const p = to.play();
+      if (p && p.catch) p.catch(() => { to.muted = true; });
+      if (to.volume < 0.8) fade(to, 0.8);
+    }
+    const refresh = () => { if (!canHover) pickVisible(); };
+    function suspend(on) { suspended = on; if (on) muteAll(); else refresh(); }
+    return { add, remove, muteAll, refresh, suspend, handoff };
+  })();
+  document.querySelectorAll('video[data-sound]').forEach(v => sound.add(v));
+  heroVids.forEach(v => sound.add(v));
+
+  // ── LIGHTBOX: zoom a photo/video almost full screen over a blurred background ──
+  const lightbox = (() => {
+    const lb = document.getElementById('lb');
+    const stage = document.getElementById('lbStage');
+    const count = document.getElementById('lbCount');
+    const prev = lb.querySelector('.lb-prev'), next = lb.querySelector('.lb-next');
+    let list = [], idx = 0, lastFocus = null, title = '';
+
+    function show(i) {
+      idx = (i + list.length) % list.length;
+      const it = list[idx];
+      const old = stage.querySelector('video'); if (old) old.pause();
+      stage.innerHTML = '';
+      let el;
+      if (it.type === 'img') {
+        el = new Image();
+        el.decoding = 'async';
+        el.alt = `${title} photograph ${idx + 1} of ${list.length}`;
+        el.src = it.src;
+      } else {
+        el = document.createElement('video');
+        el.loop = true; el.playsInline = true; el.setAttribute('playsinline', '');
+        if (it.poster) el.poster = it.poster;
+        if (it.title) el.setAttribute('aria-label', it.title);
+        el.src = it.src;
+        el.volume = 0.8;
+        const p = el.play();   // opened by a click, so sound is allowed
+        if (p && p.catch) p.catch(() => { el.muted = true; el.play().catch(() => {}); });
+        el.addEventListener('click', e => { e.stopPropagation(); el.paused ? el.play() : el.pause(); });
+      }
+      stage.appendChild(el);
+      const many = list.length > 1;
+      prev.hidden = next.hidden = !many;
+      count.textContent = many ? `${idx + 1} / ${list.length}` : '';
+    }
+    function open(items, i, trigger, label) {
+      list = items; title = label || ''; lastFocus = trigger || document.activeElement;
+      sound.suspend(true);
+      lb.hidden = false;
+      document.body.classList.add('lb-open');
+      show(i);
+      requestAnimationFrame(() => lb.classList.add('open'));
+      lb.querySelector('.lb-x').focus({ preventScroll: true });
+    }
+    function close() {
+      if (lb.hidden) return;
+      const v = stage.querySelector('video'); if (v) v.pause();
+      lb.classList.remove('open');
+      document.body.classList.remove('lb-open');
+      setTimeout(() => { lb.hidden = true; stage.innerHTML = ''; }, 300);
+      sound.suspend(false);
+      if (lastFocus) lastFocus.focus({ preventScroll: true });
+    }
+    lb.addEventListener('click', e => { if (e.target === lb || e.target === stage) close(); });
+    lb.querySelector('.lb-x').addEventListener('click', close);
+    prev.addEventListener('click', () => show(idx - 1));
+    next.addEventListener('click', () => show(idx + 1));
+    document.addEventListener('keydown', e => {
+      if (lb.hidden) return;
+      if (e.key === 'Escape') { e.stopImmediatePropagation(); close(); }
+      else if (e.key === 'ArrowLeft' && list.length > 1) show(idx - 1);
+      else if (e.key === 'ArrowRight' && list.length > 1) show(idx + 1);
+    }, true);
+    let x0 = null;  // swipe left/right on phones
+    lb.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', e => {
+      if (x0 === null || list.length < 2) return;
+      const dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+    return { open, close, isOpen: () => !lb.hidden };
+  })();
+
+  // homepage Morocco thumbnail -> full film in the lightbox
+  document.querySelectorAll('.vid-thumb[data-full]').forEach(t => {
+    const go = () => lightbox.open([{ type: 'video', src: t.dataset.full, poster: t.dataset.poster }], 0, t);
+    t.addEventListener('click', go);
+    t.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+  });
+
+  // ── GALLERY (full-screen, hash-routed: #gallery/<key>) ──
+  const gallery = (() => {
+    const manifest = JSON.parse(document.getElementById('media-manifest').textContent || '{}');
+    const gal = document.getElementById('gal');
+    const grid = document.getElementById('galGrid');
+    const titleEl = document.getElementById('galTitle');
+    const countEl = document.getElementById('galCount');
+    let lastTrigger = null, cells = [], curCols = 0, currentKey = null, albumMode = false;
+    // how many gallery screens we pushed onto history (kept in history.state, so the browser Back button stays in sync)
+    const depth = () => (history.state && history.state.galDepth) || 0;
+    const itemObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); itemObs.unobserve(e.target); } });
+    }, { root: gal, threshold: 0.05 });
+
+    function render(key) {
+      const data = manifest[key];
+      if (!data) return false;
+      grid.querySelectorAll('video').forEach(v => sound.remove(v));
+      grid.innerHTML = '';
+      cells = []; currentKey = key;
+      titleEl.textContent = data.title;
+      albumMode = !!data.albums;
+      gal.classList.toggle('has-parent', !!data.parent);
+      if (albumMode) { renderAlbums(data); return true; }
+      const photos = data.items.filter(i => i.type === 'img').length;
+      const clips = data.items.length - photos;
+      countEl.textContent = [photos && photos + (photos === 1 ? ' photo' : ' photos'),
+                             clips && clips + (clips === 1 ? ' video' : ' videos')].filter(Boolean).join(' · ');
+      data.items.forEach((item, i) => {
+        const cell = document.createElement('div');
+        cell.className = 'gal-item';
+        cell.dataset.i = i;
+        if (item.w && item.h) { cell.style.aspectRatio = `${item.w} / ${item.h}`; cell.dataset.r = item.h / item.w; }
+        else cell.dataset.r = 0.625;
+        if (item.type === 'img') {
+          const img = document.createElement('img');
+          img.src = item.src; img.loading = 'lazy'; img.decoding = 'async';
+          img.alt = `${data.title} photograph ${i + 1} of ${data.items.length}`;
+          cell.appendChild(img);
+        } else {
+          const v = document.createElement('video');
+          v.muted = true; v.loop = true; v.playsInline = true;
+          v.setAttribute('playsinline', ''); v.setAttribute('muted', '');
+          v.preload = 'none';
+          if (item.poster) v.poster = item.poster;
+          v.src = item.src;
+          if (item.title) v.setAttribute('aria-label', item.title);
+          cell.appendChild(v);
+        }
+        cells.push(cell);
+      });
+      layout();
+      return true;
+    }
+    // Wedding: one cover per album, name in the middle; clicking opens that album's gallery
+    function renderAlbums(data) {
+      const total = data.albums.reduce((n, a) => n + ((manifest[a.key] || {}).items || []).length, 0);
+      countEl.textContent = `${data.albums.length} albums · ${total} items`;
+      const wrap = document.createElement('div');
+      wrap.className = 'gal-albums';
+      data.albums.forEach(a => {
+        const n = ((manifest[a.key] || {}).items || []).length;
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'gal-album'; b.dataset.album = a.key;
+        b.setAttribute('aria-label', `Open ${a.title} album`);
+        const img = document.createElement('img');
+        img.src = a.cover; img.alt = ''; img.loading = 'lazy'; img.decoding = 'async';
+        const name = document.createElement('span');
+        name.className = 'gal-album-name';
+        name.textContent = a.title;
+        const small = document.createElement('small');
+        small.textContent = `${n} ${n === 1 ? 'item' : 'items'}`;
+        name.appendChild(small);
+        b.append(img, name);
+        wrap.appendChild(b);
+      });
+      grid.replaceChildren(wrap);
+    }
+    // full-size (uncropped) photos in balanced columns: each item goes to the shortest column
+    const colCount = () => innerWidth <= 600 ? 1 : innerWidth <= 900 ? 2 : 3;
+    function layout() {
+      curCols = colCount();
+      const cols = Array.from({ length: curCols }, () => {
+        const c = document.createElement('div'); c.className = 'gal-col'; return c;
+      });
+      const heights = new Array(curCols).fill(0);
+      cells.forEach(cell => {
+        const k = heights.indexOf(Math.min(...heights));
+        cols[k].appendChild(cell);
+        heights[k] += +cell.dataset.r;
+      });
+      grid.replaceChildren(...cols);
+      grid.querySelectorAll('video').forEach(v => {
+        const r = v.getBoundingClientRect();
+        if (r.bottom > 0 && r.top < innerHeight) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+      });
+    }
+    addEventListener('resize', () => { if (!gal.hidden && !albumMode && colCount() !== curCols) layout(); });
+    grid.addEventListener('click', e => {
+      const album = e.target.closest('[data-album]');
+      if (album) { go(album.dataset.album); return; }
+      const cell = e.target.closest('.gal-item');
+      if (!cell || !currentKey) return;
+      lightbox.open(manifest[currentKey].items, +cell.dataset.i, cell, manifest[currentKey].title);
+    });
+    function open(key) {
+      if (!render(key)) return;
+      sound.muteAll();
+      document.querySelectorAll('video[data-sound]').forEach(v => { if (!gal.contains(v)) v.pause(); });
+      gal.hidden = false; gal.scrollTop = 0;
+      document.body.classList.add('gal-open');
+      requestAnimationFrame(() => gal.classList.add('open'));
+      grid.querySelectorAll('.gal-item, .gal-album').forEach(el => itemObs.observe(el));
+      grid.querySelectorAll('video').forEach(v => sound.add(v));
+      gal.querySelector('.gal-x').focus({ preventScroll: true });
+    }
+    function close() {
+      if (gal.hidden) return;
+      grid.querySelectorAll('video').forEach(v => sound.remove(v));
+      gal.classList.remove('open');
+      document.body.classList.remove('gal-open');
+      setTimeout(() => {
+        gal.hidden = true; grid.innerHTML = '';
+        // resume homepage videos that are on screen
+        document.querySelectorAll('video[data-sound]').forEach(v => {
+          const r = v.getBoundingClientRect();
+          if (r.bottom > 0 && r.top < innerHeight) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+        });
+        sound.refresh();
+      }, 300);
+      if (lastTrigger) { lastTrigger.focus({ preventScroll: true }); lastTrigger = null; }
+    }
+    function route() {
+      lightbox.close();
+      const m = location.hash.match(/^#gallery\/([\w-]+)$/);
+      if (m) open(m[1] === 'people' ? 'portrait' : m[1]); else close();  // People now lives inside Portrait
+    }
+    function go(key) {
+      history.pushState({ galDepth: depth() + 1 }, '', '#gallery/' + key);
+      route();
+    }
+    // all = ✕ (close everything); otherwise ← Back / Esc go up one level (album → Wedding albums)
+    function requestClose(all) {
+      const d = depth();
+      const parent = currentKey && manifest[currentKey] && manifest[currentKey].parent;
+      if (!all && parent) {
+        if (d >= 2) history.back();
+        else { history.replaceState({ galDepth: Math.max(d, 1) }, '', '#gallery/' + parent); route(); }
+        return;
+      }
+      if (d) history.go(-d);
+      else { history.replaceState(null, '', location.pathname + location.search); close(); }
+    }
+    document.addEventListener('click', e => {
+      const tile = e.target.closest('[data-gallery]');
+      const link = e.target.closest('a[href^="#gallery/"]');
+      if (!tile && !link) return;
+      e.preventDefault();
+      lastTrigger = tile || link;
+      go(tile ? tile.dataset.gallery : link.getAttribute('href').split('/')[1]);
+    });
+    gal.querySelector('.gal-back').addEventListener('click', () => requestClose(false));
+    gal.querySelector('.gal-x').addEventListener('click', () => requestClose(true));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !gal.hidden && document.getElementById('lb').hidden) requestClose(false);
+    });
+    window.addEventListener('hashchange', route);
+    route();
+  })();
+
+  // ── PHOTOGRAPHY STRIP: slides right → left on its own; the 5 dots glide a category's tile to the centre ──
+  (() => {
+    const marquee = document.querySelector('.proj-marquee');
+    const track = marquee && marquee.querySelector('.proj-track');
+    const dots = [...document.querySelectorAll('.proj-dot')];
+    if (!track || !dots.length) return;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const tiles = [...track.querySelectorAll('.proj-tile')].filter(t => !reduced || !t.hasAttribute('aria-hidden'));
+    const PACE = 45000;            // ms to slide one full set of tiles (same pace as the old CSS animation)
+    const HOLD = 4000;             // ms a chosen tile stays centred before sliding resumes
+    let half = 1, pos = [], offset = 0, last = 0, glide = null, holdUntil = 0;
+    let hover = false, focus = false, visible = true, activeKey = null;
+
+    const measure = () => {
+      half = Math.max(1, track.scrollWidth / (reduced ? 1 : 2));   // the second half repeats the first
+      pos = tiles.map(t => ({ key: t.dataset.gallery, c: t.offsetLeft + t.offsetWidth / 2 }));
+    };
+    const setActive = key => {
+      if (key === activeKey) return;
+      activeKey = key;
+      dots.forEach(d => d.classList.toggle('active', d.dataset.target === key));
+    };
+    const shown = () => reduced ? marquee.scrollLeft : ((offset % half) + half) % half;
+    const nearest = () => {        // the tile closest to the middle of the screen
+      const mid = shown() + marquee.clientWidth / 2;
+      let best = null, bd = Infinity;
+      pos.forEach(p => { const d = Math.abs(p.c - mid); if (d < bd) { bd = d; best = p.key; } });
+      return best;
+    };
+
+    dots.forEach(dot => dot.addEventListener('click', () => {
+      const key = dot.dataset.target;
+      const p = pos.find(q => q.key === key);
+      if (!p) return;
+      const W = marquee.clientWidth;
+      setActive(key);
+      if (reduced) { marquee.scrollTo({ left: Math.max(0, p.c - W / 2) }); return; }
+      let to = p.c - W / 2;
+      while (to < offset) to += half;   // always glide forward, the way the strip already moves
+      glide = { from: offset, to, t0: performance.now(), dur: 700 };
+      holdUntil = Infinity;
+    }));
+
+    measure();
+    addEventListener('resize', measure);
+    addEventListener('load', measure);
+    if (reduced) {                 // no auto-slide: the strip is scrolled by hand, the dots jump
+      marquee.addEventListener('scroll', () => setActive(nearest()), { passive: true });
+      setActive(nearest());
+      return;
+    }
+    marquee.addEventListener('mouseenter', () => { hover = true; });
+    marquee.addEventListener('mouseleave', () => { hover = false; });
+    marquee.addEventListener('focusin', () => { focus = true; });
+    marquee.addEventListener('focusout', () => { focus = false; });
+    new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(marquee);
+
+    const tick = now => {
+      const dt = Math.min(now - (last || now), 64); last = now;
+      if (glide) {
+        const k = Math.min((now - glide.t0) / glide.dur, 1);
+        offset = glide.from + (glide.to - glide.from) * (1 - Math.pow(1 - k, 3));   // ease-out
+        if (k === 1) { glide = null; holdUntil = now + HOLD; }
+      } else if (now > holdUntil && !hover && !focus && visible) {
+        offset += (half / PACE) * dt;
+      }
+      offset = ((offset % half) + half) % half;   // the glide recomputes from its own start/end, so wrapping is safe
+      track.style.transform = `translateX(${-offset}px)`;
+      if (!glide && now > holdUntil) setActive(nearest());
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  })();
+
+  // ── COMPANY DETAIL PAGES (full-screen, hash-routed: #work/<slug>) ──
+  const work = (() => {
+    const data = JSON.parse(document.getElementById('work-data').textContent || '{}');
+    // previous / next stays within the same kind (companies or personal projects)
+    const orderOf = kind => Object.keys(data).filter(k => (data[k].kind || 'experience') === kind);
+    const wk = document.getElementById('wk');
+    const page = document.getElementById('wkPage');
+    const titleEl = document.getElementById('wkTitle');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let current = null, lastTrigger = null;
+    const itemObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); itemObs.unobserve(e.target); } });
+    }, { root: wk, threshold: 0.05 });
+
+    // small helper: element with class and text
+    const el = (tag, cls, text) => {
+      const n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (text != null) n.textContent = text;
+      return n;
+    };
+
+    function render(slug) {
+      const d = data[slug];
+      if (!d) return false;
+      page.querySelectorAll('video').forEach(v => sound.remove(v));
+      page.replaceChildren();
+      current = slug;
+      titleEl.textContent = d.name;
+
+      // header: logo, name, role · dates
+      const isProject = d.kind === 'project';
+      const hd = el('header', 'wk-hd');
+      if (d.logo) {
+        const logo = el('div', 'wk-logo' + (d.logoStyle === 'wide' ? ' wide' : ''));
+        const li = new Image(); li.src = d.logo; li.alt = `${d.name} logo`;
+        logo.appendChild(li);
+        hd.appendChild(logo);
+      }
+      const txt = el('div');
+      txt.append(el('span', 'wk-kicker', d.kicker || (isProject ? 'Personal project' : 'Experience')), el('h2', 'wk-name', d.name));
+      const meta = el('p', 'wk-meta');
+      meta.appendChild(el('b', null, d.role));
+      if (d.dates) meta.appendChild(document.createTextNode('  ·  ' + d.dates));
+      txt.appendChild(meta);
+      hd.appendChild(txt);
+      page.appendChild(hd);
+
+      if (d.lead) page.appendChild(el('p', 'wk-lead', d.lead));
+      if (d.partners) {
+        const pw = el('div', 'wk-partners');
+        const pi = new Image(); pi.src = d.partners; pi.alt = 'Partners: Masterise Homes, Vinhomes, Techcombank';
+        pw.appendChild(pi); page.appendChild(pw);
+      }
+
+      // story (left) + numbers / quote (right)
+      const body = el('div', 'wk-body');
+      const main = el('div');
+      (d.blocks || []).forEach(b => {
+        const blk = el('section', 'wk-block');
+        blk.appendChild(el('h3', null, b.h));
+        if (b.p) blk.appendChild(el('p', null, b.p));
+        if (b.ul) { const ul = el('ul'); b.ul.forEach(t => ul.appendChild(el('li', null, t))); blk.appendChild(ul); }
+        main.appendChild(blk);
+      });
+      if (d.links && d.links.length) {
+        const lk = el('div', 'wk-links');
+        d.links.forEach(l => {
+          const a = el('a', 'wk-link', l.label); a.href = l.href;
+          if (/^https?:/.test(l.href)) { a.target = '_blank'; a.rel = 'noopener'; }
+          lk.appendChild(a);
+        });
+        main.appendChild(lk);
+      }
+      const side = el('aside', 'wk-side');
+      (d.stats || []).forEach(st => {
+        const c = el('div', 'wk-stat');
+        c.append(el('div', 'wk-stat-n', st.n), el('div', 'wk-stat-d', st.d));
+        side.appendChild(c);
+      });
+      if (d.quote) {
+        const q = el('figure', 'wk-quote');
+        q.append(el('p', null, `“${d.quote.text}”`), el('div', 'wk-quote-name', d.quote.name), el('div', 'wk-quote-role', d.quote.role));
+        side.appendChild(q);
+      }
+      body.appendChild(main);
+      if (side.children.length) body.appendChild(side);
+      else body.style.gridTemplateColumns = '1fr';
+      page.appendChild(body);
+
+      // one clickable tile (photo or muted looping video); `list` says which gallery it belongs to
+      const tile = (it, i, list) => {
+          const b = el('button', 'wk-item'); b.type = 'button'; b.dataset.i = i; b.dataset.list = list;
+          b.setAttribute('aria-label', `${it.caption} — view larger`);
+          const m = el('span', 'wk-media');
+          if (it.w && it.h) m.style.aspectRatio = `${it.w} / ${it.h}`;
+          if (it.type === 'video') {
+            const v = document.createElement('video');
+            v.muted = true; v.loop = true; v.playsInline = true;
+            v.setAttribute('playsinline', ''); v.setAttribute('muted', '');
+            v.preload = 'none'; if (it.poster) v.poster = it.poster; v.src = it.src;
+            v.setAttribute('aria-label', it.caption);
+            m.appendChild(v);
+          } else {
+            const im = new Image(); im.src = it.src; im.alt = it.caption; im.loading = 'lazy'; im.decoding = 'async';
+            m.appendChild(im);
+          }
+          b.append(m, el('span', 'wk-cap', it.caption));
+          return b;
+      };
+
+      // clients: one block per client, each with its own small gallery
+      if (d.clients && d.clients.length) {
+        const ch = el('div', 'wk-work-hd');
+        ch.append(el('h3', null, 'Clients'), el('span', null, `${d.clients.length} client${d.clients.length > 1 ? 's' : ''}`));
+        page.appendChild(ch);
+        d.clients.forEach((c, ci) => {
+          const blk = el('section', 'wk-client');
+          const hd2 = el('div', 'wk-client-hd');
+          hd2.append(el('h4', null, c.name), el('span', 'wk-client-sector', c.sector));
+          blk.appendChild(hd2);
+          if (c.note) blk.appendChild(el('p', 'wk-client-note', c.note));
+          const g = el('div', 'wk-client-grid');
+          c.items.forEach((it, i) => g.appendChild(tile(it, i, 'c' + ci)));
+          blk.appendChild(g);
+          page.appendChild(blk);
+        });
+      }
+
+      // selected work: click any item to zoom it in the lightbox
+      if (d.work && d.work.length) {
+        const wh = el('div', 'wk-work-hd');
+        wh.append(el('h3', null, d.clients ? 'More work' : 'Selected work'), el('span', null, `${d.work.length} pieces`));
+        page.appendChild(wh);
+        const grid = el('div', 'wk-work');
+        d.work.forEach((it, i) => grid.appendChild(tile(it, i, 'work')));
+        page.appendChild(grid);
+      }
+
+      // previous / next company
+      const order = orderOf(d.kind || 'experience');
+      const k = order.indexOf(slug);
+      const nav = el('nav', 'wk-next');
+      const prev = order[(k - 1 + order.length) % order.length], next = order[(k + 1) % order.length];
+      const pb = el('button', null, `← ${data[prev].name}`); pb.type = 'button'; pb.dataset.goto = prev;
+      const nb = el('button', null, `${data[next].name} →`); nb.type = 'button'; nb.dataset.goto = next;
+      nav.append(pb, nb);
+      page.appendChild(nav);
+      return true;
+    }
+
+    function open(slug) {
+      if (!render(slug)) return;
+      sound.muteAll();
+      document.querySelectorAll('video[data-sound]').forEach(v => { if (!wk.contains(v)) v.pause(); });
+      wk.hidden = false; wk.scrollTop = 0;
+      document.body.classList.add('gal-open');
+      requestAnimationFrame(() => wk.classList.add('open'));
+      page.querySelectorAll('.wk-item').forEach(n => itemObs.observe(n));
+      page.querySelectorAll('video').forEach(v => sound.add(v));
+      wk.querySelector('.wk-x').focus({ preventScroll: true });
+    }
+    // quiet = another full-screen page (a gallery) is taking over, so don't wake the homepage videos
+    function close(quiet) {
+      if (wk.hidden) return;
+      page.querySelectorAll('video').forEach(v => sound.remove(v));
+      wk.classList.remove('open');
+      document.body.classList.remove('gal-open');
+      current = null;
+      setTimeout(() => {
+        wk.hidden = true; page.replaceChildren();
+        if (quiet) return;
+        document.querySelectorAll('video[data-sound]').forEach(v => {
+          const r = v.getBoundingClientRect();
+          if (r.bottom > 0 && r.top < innerHeight) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+        });
+        sound.refresh();
+      }, 300);
+      if (lastTrigger) { lastTrigger.focus({ preventScroll: true }); lastTrigger = null; }
+    }
+    function route() {
+      const m = location.hash.match(/^#work\/([\w-]+)$/);
+      if (m && m[1] === 'nimi') { history.replaceState(history.state, '', '#work/freelancer'); m[1] = 'freelancer'; }  // Nimi now lives inside Freelancer
+      if (m && data[m[1]]) { if (m[1] !== current) open(m[1]); } else close();
+    }
+    const depth = () => (history.state && history.state.wkDepth) || 0;
+    function go(slug, replace) {
+      const st = { wkDepth: replace ? Math.max(depth(), 1) : depth() + 1 };
+      if (replace) history.replaceState(st, '', '#work/' + slug);
+      else history.pushState(st, '', '#work/' + slug);
+      route();
+    }
+    function requestClose() {
+      const d = depth();
+      if (d) history.go(-d);
+      else { history.replaceState(null, '', location.pathname + location.search); close(); }
+    }
+
+    // homepage blocks: hover grows the logo / cover (CSS); click = a soft hop, then the page opens
+    document.querySelectorAll('[data-work]').forEach(card => {
+      card.addEventListener('click', () => {
+        if (card.classList.contains('jump')) return;
+        lastTrigger = card;
+        if (reduced) { go(card.dataset.work); return; }
+        card.classList.add('jump');
+        setTimeout(() => go(card.dataset.work), 380);
+        card.addEventListener('animationend', () => card.classList.remove('jump'), { once: true });
+      });
+    });
+    page.addEventListener('click', e => {
+      // "See all my videos" → hand over to the gallery (closing this page keeps it in history,
+      // so closing the gallery comes back here)
+      if (e.target.closest('a[href^="#gallery/"]')) { close(true); return; }
+      const nav = e.target.closest('[data-goto]');
+      if (nav) { go(nav.dataset.goto, true); return; }
+      const item = e.target.closest('.wk-item');
+      if (!item || !current) return;
+      const d = data[current];
+      const list = item.dataset.list;
+      if (list && list[0] === 'c') {
+        const c = d.clients[+list.slice(1)];
+        lightbox.open(c.items, +item.dataset.i, item, `${d.name} — ${c.name}`);
+      } else lightbox.open(d.work, +item.dataset.i, item, d.name);
+    });
+    wk.querySelector('.wk-back').addEventListener('click', requestClose);
+    wk.querySelector('.wk-x').addEventListener('click', requestClose);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !wk.hidden && document.getElementById('lb').hidden) requestClose();
+    });
+    window.addEventListener('hashchange', route);
+    route();
+    return { open, close };
+  })();
+
+  // ── MOBILE MENU ──
+  function closeMob() { document.getElementById('mobMenu').classList.remove('open'); }
+  document.getElementById('ham').addEventListener('click', () => {
+    document.getElementById('mobMenu').classList.add('open');
+  });
+  document.getElementById('mobClose').addEventListener('click', closeMob);
+
+  // ── NAV ACTIVE STATE ──
+  const navAs = document.querySelectorAll('.nav-links a');
+  const secs = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    secs.forEach(s => { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
+    navAs.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--ink)' : '';
+    });
+  }, { passive: true });
+</script>
+</body>
+</html>
