@@ -106,8 +106,11 @@
       text-transform: uppercase; color: var(--ink);
     }
     .nav-links {
-      display: flex; gap: 24px; list-style: none;
+      display: flex; gap: 24px; list-style: none; align-items: center; height: 100%;
     }
+    /* every top item is a 44px-tall box with its text centred, so they all sit on one line */
+    .nav-links > li { display: flex; align-items: center; }
+    .nav-links > li > a { display: flex; align-items: center; min-height: 44px; line-height: 1; }
     .nav-links a {
       font-size: 12px; text-transform: uppercase;
       letter-spacing: 0.12em; color: var(--muted);
@@ -115,7 +118,14 @@
     }
     .nav-links a:hover { color: var(--ink); }
     .nav-dd { position: relative; }
-    .nav-dd > a::after { content: ' ▾'; font-size: 0.85em; }
+    .nav-dd-btn {   /* "Project": only opens its list */
+      font: inherit; font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--muted); background: none; border: 0; padding: 0; cursor: pointer; min-height: 44px;
+      display: flex; align-items: center; line-height: 1;
+      transition: color 0.2s;
+    }
+    .nav-dd-btn:hover, .nav-dd:focus-within .nav-dd-btn { color: var(--ink); }
+    .nav-dd-btn::after { content: '▾'; font-size: 0.85em; margin-left: 5px; }
     .nav-sub {
       position: absolute; top: 100%; left: -16px; z-index: 5;
       list-style: none; min-width: 170px; padding: 6px 0;
@@ -128,7 +138,7 @@
     .nav-dd:hover .nav-sub, .nav-dd:focus-within .nav-sub {
       opacity: 1; visibility: visible; transform: none;
     }
-    .nav-sub a { display: block; padding: 12px 16px; }
+    .nav-sub a { display: block; padding: 12px 16px; white-space: nowrap; }
     .nav-sub a:hover { color: var(--accent); }
     .hamburger {
       display: none; flex-direction: column; justify-content: center; gap: 5px;
@@ -509,41 +519,6 @@
     .pp-more { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); transition: color 0.2s; }
     .pp-card:hover .pp-more { color: var(--accent); }
 
-    /* ── TIKTOK ── */
-    .tt-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
-      align-items: start;
-    }
-    .tt-stats {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-    }
-    .tt-stat {
-      padding: 18px; background: var(--surf); border: 1px solid var(--border);
-    }
-    .tt-n {
-      font-family: 'Geist Mono', monospace;
-      font-size: 34px; font-weight: 500; color: var(--ink);
-      line-height: 1; margin-bottom: 8px;
-    }
-    .tt-d {
-      font-size: 11px; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--muted);
-    }
-    .tt-info { display: flex; flex-direction: column; gap: 14px; }
-    .tt-handle {
-      font-family: 'Geist Mono', monospace;
-      font-size: 16px; color: var(--accent);
-    }
-    .tt-desc { font-size: 15px; color: var(--muted); line-height: 1.7; }
-    .tt-desc b { color: var(--text); font-weight: 500; }
-    .tt-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em;
-      color: var(--muted); border: 1px solid var(--border);
-      padding: 14px 20px; min-height: 44px; transition: all 0.2s; width: fit-content;
-    }
-    .tt-btn:hover { color: var(--ink); border-color: var(--ink); }
-
     /* ── TESTIMONIALS ── */
     .test-grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
@@ -646,6 +621,10 @@
       min-height: 48px; display: flex; align-items: center;
     }
     .mob-menu a:hover { color: var(--ink); }
+    .mob-menu .mob-label {   /* "Project" heading over its 3 links (not a link itself) */
+      font-size: 22px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--ink); min-height: 48px; display: flex; align-items: center;
+    }
     .mob-menu a.mob-sub {
       font-size: 15px; font-weight: 500; letter-spacing: 0.14em;
       min-height: 44px; margin-top: -6px;
@@ -710,7 +689,8 @@
       background: rgba(0,0,0,0.18); transition: background 0.3s;
     }
     .gal-item:hover::after { background: rgba(0,0,0,0); }
-    /* ── PHOTOGRAPHY PAGE (full-screen, hash-routed: #photography; reference: photo + centred serif title) ── */
+    /* ── PROJECT PAGES (full-screen, hash-routed: #photography / #videography / #personal-projects;
+          reference: photo + centred serif title, optional italic caption) ── */
     body.ph-open { overflow: hidden; }
     .ph {
       position: fixed; inset: 0; z-index: 250;   /* under galleries (300) so a category opens on top */
@@ -756,6 +736,32 @@
       opacity: 0; transform: translateY(14px); transition: opacity 0.9s ease 0.25s, transform 0.9s ease 0.25s;
     }
     .ph.open .ph-title { opacity: 1; transform: none; }
+    .ph-head {
+      position: relative; z-index: 2; max-width: 700px;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    /* caption under the photo (Videography, Personal Projects): same place and feel as Photography's intro */
+    .ph-intro {
+      max-width: 680px; margin: 0 0 48px;
+      font-family: 'DM Sans', sans-serif; font-style: italic; font-size: 17px; line-height: 1.75; color: var(--text2);
+    }
+    #ph-videography .ph-bg { object-position: 46% 50%; }   /* keeps Jules in frame on phones */
+    #ph-personal-projects .ph-bg { object-position: 24% 62%; }   /* the friends on the hill are on the left */
+    /* Videography page: every film, uncropped, in balanced columns (like the galleries) */
+    .vf-hd { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 56px 0 20px; }
+    .vf-count { font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--muted); }
+    .vf-grid { columns: 3; column-gap: 8px; }
+    .vf-item {
+      display: block; width: 100%; margin: 0 0 8px; padding: 0; border: 0; cursor: zoom-in;
+      break-inside: avoid; background: #000; overflow: hidden; position: relative;
+    }
+    .vf-item video { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .vf-item:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    @media (max-width: 900px) { .vf-grid { columns: 2; } }
+    @media (max-width: 600px) {
+      .vf-grid { columns: 1; }
+      .ph-intro { font-size: 16px; margin-bottom: 36px; }
+    }
     .ph-down {
       position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 2;
       display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 44px; min-height: 44px;
@@ -788,7 +794,7 @@
     .wk-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .wk-hero::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.22) 45%, rgba(0,0,0,0.55) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.34) 0%, rgba(0,0,0,0.36) 45%, rgba(0,0,0,0.58) 100%);
     }
     .wk-hero-txt { position: relative; z-index: 1; text-align: center; padding: 0 var(--pad); color: var(--on-media); }
     .wk-hero-kicker {
@@ -1049,7 +1055,6 @@
       .about-grid    { grid-template-columns: 1fr; gap: 40px; }
       .about-photo   { aspect-ratio: 3/2; }
       .exp-grid      { grid-template-columns: repeat(3, 1fr); }
-      .tt-grid       { grid-template-columns: 1fr; }
       .test-grid     { grid-template-columns: 1fr; gap: 10px; }
       .contact-grid  { grid-template-columns: 1fr; gap: 40px; }
     }
@@ -1075,7 +1080,6 @@
       .gal.has-parent .gal-btn.gal-back { display: inline-block; }
     }
     @media (max-width: 480px) {
-      .tt-stats      { grid-template-columns: 1fr 1fr; }
       .pp-grid       { grid-template-columns: 1fr; }
     }
   </style>
@@ -1087,10 +1091,10 @@
   <button type="button" class="mob-close" id="mobClose" aria-label="Close menu">✕</button>
   <a href="#about"        onclick="closeMob()">About</a>
   <a href="#experience"   onclick="closeMob()">Experience</a>
-  <a href="#projects"     onclick="closeMob()">Project</a>
+  <span class="mob-label">Project</span>
   <a href="#photography"  onclick="closeMob()" class="mob-sub">Photography</a>
-  <a href="#video"        onclick="closeMob()" class="mob-sub">Videography</a>
-  <a href="#personal"     onclick="closeMob()" class="mob-sub">Personal Projects</a>
+  <a href="#videography"  onclick="closeMob()" class="mob-sub">Videography</a>
+  <a href="#personal-projects" onclick="closeMob()" class="mob-sub">Personal Projects</a>
   <a href="#testimonials" onclick="closeMob()">Testimonials</a>
   <a href="#contact"      onclick="closeMob()">Contact</a>
 </div>
@@ -1103,11 +1107,11 @@
       <li><a href="#about">About</a></li>
       <li><a href="#experience">Experience</a></li>
       <li class="nav-dd">
-        <a href="#projects" aria-haspopup="true">Project</a>
+        <button type="button" class="nav-dd-btn" aria-haspopup="true">Project</button>
         <ul class="nav-sub">
           <li><a href="#photography">Photography</a></li>
-          <li><a href="#video">Videography</a></li>
-          <li><a href="#personal">Personal Projects</a></li>
+          <li><a href="#videography">Videography</a></li>
+          <li><a href="#personal-projects">Personal Projects</a></li>
         </ul>
       </li>
       <li><a href="#testimonials">Testimonials</a></li>
@@ -1135,7 +1139,6 @@
   </video>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-label">Portfolio — 2026</div>
     <h1 class="hero-name rv">JULES<br>NGUYEN</h1>
     <div class="hero-meta rv d1">
       <span class="hero-role">Marketing Strategist</span>
@@ -1263,184 +1266,6 @@
   </div>
 </section>
 
-<!-- PROJECTS -->
-<section class="proj-sec" id="projects">
-  <div class="wrap">
-    <div class="proj-hd rv">
-      <span class="proj-label">Projects</span>
-      <h2 class="proj-title">Photography</h2>
-      <p class="proj-tags">Events | Landscape | Portrait | Wedding | Product Shooting</p>
-      <p class="proj-intro">
-        I work as a freelance photographer, collaborating with numerous brands on a variety of projects,
-        including product photography, wedding photography and videography, concert events, F&amp;B events,
-        as well as personal branding for clients.
-      </p>
-    </div>
-  </div>
-  <div class="proj-marquee rv d1" aria-label="Photography projects">
-    <div class="proj-track">
-      <button type="button" class="proj-tile" data-gallery="events" aria-label="Open Events gallery">
-        <img src="web-media/the-projects/covers/events-cover.jpg" alt="Jules checking a shot on her camera at an event" loading="lazy" decoding="async">
-        <span class="proj-tile-label">Events</span>
-      </button>
-      <button type="button" class="proj-tile" data-gallery="landscape" aria-label="Open Landscape gallery">
-        <img src="web-media/the-projects/photography/landscape/img-4543.jpg" alt="Tower Bridge, London, seen from the walkway" loading="lazy" decoding="async">
-        <span class="proj-tile-label">Landscape</span>
-      </button>
-      <button type="button" class="proj-tile" data-gallery="portrait" aria-label="Open Portrait gallery">
-        <img src="web-media/the-projects/photography/portrait/wilf/editedw2.jpg" alt="Business portrait of a man seated against a deep blue wall" loading="lazy" decoding="async">
-        <span class="proj-tile-label">Portrait</span>
-      </button>
-      <button type="button" class="proj-tile" data-gallery="wedding" aria-label="Open Wedding gallery">
-        <img src="web-media/the-projects/photography/wedding/raham-rosie/img-5488.jpg" alt="Couple embracing in front of a floral wedding backdrop" loading="lazy" decoding="async">
-        <span class="proj-tile-label">Wedding</span>
-      </button>
-      <button type="button" class="proj-tile" data-gallery="product" aria-label="Open Product Shooting gallery">
-        <img src="web-media/the-projects/photography/product-shooting/img-4322.jpg" alt="Instant camera styled with lemons and flowers on a woven mat" loading="lazy" decoding="async">
-        <span class="proj-tile-label">Product Shooting</span>
-      </button>
-      <button type="button" class="proj-tile" data-gallery="events" aria-hidden="true" tabindex="-1">
-        <img src="web-media/the-projects/covers/events-cover.jpg" alt="" loading="lazy" decoding="async">
-        <span class="proj-tile-label">Events</span>
-      </button>
-      <button type="button" class="proj-tile" data-gallery="landscape" aria-hidden="true" tabindex="-1">
-        <img src="web-media/the-projects/photography/landscape/img-4543.jpg" alt="" loading="lazy" decoding="async">
-        <span class="proj-tile-label">Landscape</span>
-      </button>
-      <button type="button" class="proj-tile" data-gallery="portrait" aria-hidden="true" tabindex="-1">
-        <img src="web-media/the-projects/photography/portrait/wilf/editedw2.jpg" alt="" loading="lazy" decoding="async">
-        <span class="proj-tile-label">Portrait</span>
-      </button>
-      <button type="button" class="proj-tile" data-gallery="wedding" aria-hidden="true" tabindex="-1">
-        <img src="web-media/the-projects/photography/wedding/raham-rosie/img-5488.jpg" alt="" loading="lazy" decoding="async">
-        <span class="proj-tile-label">Wedding</span>
-      </button>
-      <button type="button" class="proj-tile" data-gallery="product" aria-hidden="true" tabindex="-1">
-        <img src="web-media/the-projects/photography/product-shooting/img-4322.jpg" alt="" loading="lazy" decoding="async">
-        <span class="proj-tile-label">Product Shooting</span>
-      </button>
-    </div>
-  </div>
-  <div class="proj-dots rv d2" role="group" aria-label="Jump to a photography category">
-    <button type="button" class="proj-dot" data-target="events" aria-label="Show Events"></button>
-    <button type="button" class="proj-dot" data-target="landscape" aria-label="Show Landscape"></button>
-    <button type="button" class="proj-dot" data-target="portrait" aria-label="Show Portrait"></button>
-    <button type="button" class="proj-dot" data-target="wedding" aria-label="Show Wedding"></button>
-    <button type="button" class="proj-dot" data-target="product" aria-label="Show Product Shooting"></button>
-  </div>
-</section>
-
-<!-- VIDEO -->
-<section class="section" id="video">
-  <div class="wrap">
-    <div class="section-hd">
-      <h2 class="sec-label">Videography</h2>
-      <a href="#gallery/videos" class="sec-link">View all →</a>
-    </div>
-    <div class="vid-grid rv">
-
-      <div class="vid-card">
-        <div class="vid-thumb" data-full="web-media/morocco-v3.mp4" data-poster="web-media/morocco-v3-poster.jpg" role="button" tabindex="0" aria-label="Play Morocco film full screen">
-          <video autoplay muted loop playsinline data-sound poster="web-media/morocco-v3-hero-poster.jpg">
-            <source src="web-media/morocco-v3-hero.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="vid-meta">
-          <div class="vid-cat">Cinematic · Travel · 2024</div>
-          <div class="vid-title">Morocco</div>
-          <div class="vid-desc">A cinematic journey through the landscapes, souks, and golden light of Morocco.</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- PERSONAL PROJECTS -->
-<section class="section" id="personal">
-  <div class="wrap">
-    <div class="section-hd">
-      <h2 class="sec-label">Personal Projects</h2>
-    </div>
-    <div class="pp-grid">
-      <button type="button" class="pp-card rv" data-work="tok" aria-label="TOK — open project">
-        <span class="pp-cover"><img src="web-media/personal-projects/tok/campaign-presentation.jpg" alt="TOK campaign presentation: The Tok Tok Sound of Flavors" loading="lazy" decoding="async"></span>
-        <span class="pp-text">
-          <span class="pp-name">TOK</span>
-          <span class="pp-sub">CMO Competition · Runner-up of 450 teams</span>
-          <span class="pp-more">View project →</span>
-        </span>
-      </button>
-      <button type="button" class="pp-card rv d1" data-work="personal-branding" aria-label="Personal Branding — open project">
-        <span class="pp-cover"><img src="web-media/personal-projects/personal-branding/brand-graphic.jpg" alt="Personal brand graphic of Jules with orange shapes" loading="lazy" decoding="async"></span>
-        <span class="pp-text">
-          <span class="pp-name">Personal Branding</span>
-          <span class="pp-sub">TikTok · @thao.polyglotsomeday</span>
-          <span class="pp-more">View project →</span>
-        </span>
-      </button>
-      <button type="button" class="pp-card rv d2" data-work="beyond-marketing" aria-label="Beyond Marketing — open project">
-        <span class="pp-cover"><img src="web-media/personal-projects/beyond-marketing/starry-night-collage.jpg" alt="Jules in a Starry Night–style collage" loading="lazy" decoding="async"></span>
-        <span class="pp-text">
-          <span class="pp-name">Beyond Marketing</span>
-          <span class="pp-sub">Pixel video · Acting · MC · Drawing</span>
-          <span class="pp-more">View project →</span>
-        </span>
-      </button>
-      <button type="button" class="pp-card rv d3" data-work="freelancer" aria-label="Content Creator · Freelancer — open project">
-        <span class="pp-cover"><img src="web-media/personal-projects/freelancer/nimi/nimi-come-with-us-poster.jpg" alt="A Nimi host smiling at an art fair in London" loading="lazy" decoding="async"></span>
-        <span class="pp-text">
-          <span class="pp-name">Content Creator · Freelancer</span>
-          <span class="pp-sub">Content for clients · Nimi</span>
-          <span class="pp-more">View project →</span>
-        </span>
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- TIKTOK -->
-<section class="section" id="tiktok">
-  <div class="wrap">
-    <div class="section-hd">
-      <h2 class="sec-label">Personal Brand</h2>
-      <a href="https://www.tiktok.com/@thao.polyglotsomeday" target="_blank" rel="noopener" class="sec-link">View TikTok →</a>
-    </div>
-    <div class="tt-grid rv">
-      <div class="tt-stats">
-        <div class="tt-stat">
-          <div class="tt-n">14K</div>
-          <div class="tt-d">Followers</div>
-        </div>
-        <div class="tt-stat">
-          <div class="tt-n">137.7K</div>
-          <div class="tt-d">Total Likes</div>
-        </div>
-        <div class="tt-stat">
-          <div class="tt-n">2023</div>
-          <div class="tt-d">Year Started</div>
-        </div>
-        <div class="tt-stat">
-          <div class="tt-n">EN/JP</div>
-          <div class="tt-d">Languages</div>
-        </div>
-      </div>
-      <div class="tt-info">
-        <div class="tt-handle">@thao.polyglotsomeday</div>
-        <p class="tt-desc">
-          In 2023, I started creating content on a TikTok channel named “thao.polyglotsomeday”,
-          now with <b>14K followers and 137.7K likes</b>, focusing on <b>language learning</b> —
-          particularly through the advanced shadowing technique. The channel showcases my journey
-          to becoming a polyglot, documenting my learning process and skill development.
-        </p>
-        <a href="https://www.tiktok.com/@thao.polyglotsomeday" target="_blank" rel="noopener" class="tt-btn">
-          Visit Channel →
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- TESTIMONIALS -->
 <section class="section" id="testimonials">
   <div class="wrap">
@@ -1545,18 +1370,171 @@
   <div class="gal-grid" id="galGrid"></div>
 </div>
 <!-- COMPANY DETAIL PAGE (full-screen; opened from the Experience blocks) -->
-<!-- PHOTOGRAPHY PAGE (opened from "Photography" in the menu; the text, tiles and circles are copied from #projects) -->
-<div class="ph" id="ph" role="dialog" aria-modal="true" aria-label="Photography" hidden>
+<!-- PROJECT PAGES (opened only from Project ▾ in the menu: #photography, #videography, #personal-projects) -->
+<div class="ph" id="ph-photography" data-page="photography" role="dialog" aria-modal="true" aria-label="Photography" hidden>
   <header class="ph-hero">
     <img class="ph-bg" src="web-media/the-projects/covers/photography-hero.jpg" alt="A performer behind a red stage curtain lit with coloured light" decoding="async">
     <div class="ph-bar">
       <a href="#" class="ph-brand">Jules Nguyen</a>
       <button type="button" class="ph-x" aria-label="Close">✕</button>
     </div>
-    <h1 class="ph-title">Photography</h1>
-    <a href="#phBody" class="ph-down" aria-label="Scroll to the photography categories">Scroll<span aria-hidden="true">↓</span></a>
+    <div class="ph-head">
+      <h1 class="ph-title">Photography</h1>
+    </div>
+    <a href="#" class="ph-down" aria-label="Scroll to the photography categories">Scroll<span aria-hidden="true">↓</span></a>
   </header>
-  <div class="ph-body" id="phBody"></div>
+  <div class="ph-body">
+    <div class="wrap">
+      <div class="proj-hd rv">
+      <p class="proj-tags">Events | Landscape | Portrait | Wedding | Product Shooting</p>
+      <p class="proj-intro">
+        I work as a freelance photographer, collaborating with numerous brands on a variety of projects,
+        including product photography, wedding photography and videography, concert events, F&amp;B events,
+        as well as personal branding for clients.
+      </p>
+      </div>
+    </div>
+  <div class="proj-marquee rv d1" aria-label="Photography projects">
+    <div class="proj-track">
+      <button type="button" class="proj-tile" data-gallery="events" aria-label="Open Events gallery">
+        <img src="web-media/the-projects/covers/events-cover.jpg" alt="Jules checking a shot on her camera at an event" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Events</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="landscape" aria-label="Open Landscape gallery">
+        <img src="web-media/the-projects/photography/landscape/img-4543.jpg" alt="Tower Bridge, London, seen from the walkway" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Landscape</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="portrait" aria-label="Open Portrait gallery">
+        <img src="web-media/the-projects/photography/portrait/wilf/editedw2.jpg" alt="Business portrait of a man seated against a deep blue wall" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Portrait</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="wedding" aria-label="Open Wedding gallery">
+        <img src="web-media/the-projects/photography/wedding/raham-rosie/img-5488.jpg" alt="Couple embracing in front of a floral wedding backdrop" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Wedding</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="product" aria-label="Open Product Shooting gallery">
+        <img src="web-media/the-projects/photography/product-shooting/img-4322.jpg" alt="Instant camera styled with lemons and flowers on a woven mat" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Product Shooting</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="events" aria-hidden="true" tabindex="-1">
+        <img src="web-media/the-projects/covers/events-cover.jpg" alt="" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Events</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="landscape" aria-hidden="true" tabindex="-1">
+        <img src="web-media/the-projects/photography/landscape/img-4543.jpg" alt="" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Landscape</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="portrait" aria-hidden="true" tabindex="-1">
+        <img src="web-media/the-projects/photography/portrait/wilf/editedw2.jpg" alt="" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Portrait</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="wedding" aria-hidden="true" tabindex="-1">
+        <img src="web-media/the-projects/photography/wedding/raham-rosie/img-5488.jpg" alt="" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Wedding</span>
+      </button>
+      <button type="button" class="proj-tile" data-gallery="product" aria-hidden="true" tabindex="-1">
+        <img src="web-media/the-projects/photography/product-shooting/img-4322.jpg" alt="" loading="lazy" decoding="async">
+        <span class="proj-tile-label">Product Shooting</span>
+      </button>
+    </div>
+  </div>
+  <div class="proj-dots rv d2" role="group" aria-label="Jump to a photography category">
+    <button type="button" class="proj-dot" data-target="events" aria-label="Show Events"></button>
+    <button type="button" class="proj-dot" data-target="landscape" aria-label="Show Landscape"></button>
+    <button type="button" class="proj-dot" data-target="portrait" aria-label="Show Portrait"></button>
+    <button type="button" class="proj-dot" data-target="wedding" aria-label="Show Wedding"></button>
+    <button type="button" class="proj-dot" data-target="product" aria-label="Show Product Shooting"></button>
+  </div>
+  </div>
+</div>
+<div class="ph" id="ph-videography" data-page="videography" role="dialog" aria-modal="true" aria-label="Videography" hidden>
+  <header class="ph-hero">
+    <img class="ph-bg" src="web-media/the-projects/covers/videography-hero.jpg" alt="Jules smiling with her camera by the colourful beach huts on the seafront" decoding="async">
+    <div class="ph-bar">
+      <a href="#" class="ph-brand">Jules Nguyen</a>
+      <button type="button" class="ph-x" aria-label="Close">✕</button>
+    </div>
+    <div class="ph-head">
+      <h1 class="ph-title">Videography</h1>
+    </div>
+    <a href="#" class="ph-down" aria-label="Scroll to the films">Scroll<span aria-hidden="true">↓</span></a>
+  </header>
+  <div class="ph-body">
+    <div class="wrap">
+      <p class="ph-intro rv">Filming is something I do for fun, but it has become the way I tell stories. I capture my journeys, the adventures with friends, and the small everyday moments that make life feel like life. Behind every clip is a story, sometimes mine and sometimes someone else&rsquo;s, and I want each one to feel honest and worth watching again.</p>
+      <div class="vid-grid rv">
+      <div class="vid-card">
+        <div class="vid-thumb" data-full="web-media/morocco-v3.mp4" data-poster="web-media/morocco-v3-poster.jpg" role="button" tabindex="0" aria-label="Play Morocco film full screen">
+          <video autoplay muted loop playsinline data-sound poster="web-media/morocco-v3-hero-poster.jpg">
+            <source src="web-media/morocco-v3-hero.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="vid-meta">
+          <div class="vid-cat">Cinematic · Travel · 2024</div>
+          <div class="vid-title">Morocco</div>
+          <div class="vid-desc">A cinematic journey through the landscapes, souks, and golden light of Morocco.</div>
+        </div>
+      </div>
+      </div>
+      <div class="vf-hd rv">
+        <h2 class="sec-label">All films</h2>
+        <span class="vf-count"></span>
+      </div>
+      <div class="vf-grid" aria-label="All films"></div>
+    </div>
+  </div>
+</div>
+<div class="ph" id="ph-personal-projects" data-page="personal-projects" role="dialog" aria-modal="true" aria-label="Personal Projects" hidden>
+  <header class="ph-hero">
+    <img class="ph-bg" src="web-media/the-projects/covers/personal-projects-hero.jpg" alt="Friends walking along a grassy clifftop under big white clouds" decoding="async">
+    <div class="ph-bar">
+      <a href="#" class="ph-brand">Jules Nguyen</a>
+      <button type="button" class="ph-x" aria-label="Close">✕</button>
+    </div>
+    <div class="ph-head">
+      <h1 class="ph-title">Personal Projects</h1>
+    </div>
+    <a href="#" class="ph-down" aria-label="Scroll to the projects">Scroll<span aria-hidden="true">↓</span></a>
+  </header>
+  <div class="ph-body">
+    <div class="wrap">
+      <p class="ph-intro rv">As a marketer, I understand the importance of nurturing my creativity and continuously refining my skills, both inside and outside of my professional work. I am committed to my personal growth, seeking to develop myself in both focused and broad ways. This approach allows me to view the world from a variety of perspectives, enriching my ability to create and innovate.</p>
+    <div class="pp-grid">
+      <button type="button" class="pp-card rv" data-work="tok" aria-label="TOK — open project">
+        <span class="pp-cover"><img src="web-media/personal-projects/tok/campaign-presentation.jpg" alt="TOK campaign presentation: The Tok Tok Sound of Flavors" loading="lazy" decoding="async"></span>
+        <span class="pp-text">
+          <span class="pp-name">TOK</span>
+          <span class="pp-sub">CMO Competition · Runner-up of 450 teams</span>
+          <span class="pp-more">View project →</span>
+        </span>
+      </button>
+      <button type="button" class="pp-card rv d1" data-work="personal-branding" aria-label="Personal Branding — open project">
+        <span class="pp-cover"><img src="web-media/personal-projects/personal-branding/brand-graphic.jpg" alt="Personal brand graphic of Jules with orange shapes" loading="lazy" decoding="async"></span>
+        <span class="pp-text">
+          <span class="pp-name">Personal Branding</span>
+          <span class="pp-sub">TikTok · @thao.polyglotsomeday</span>
+          <span class="pp-more">View project →</span>
+        </span>
+      </button>
+      <button type="button" class="pp-card rv d2" data-work="beyond-marketing" aria-label="Beyond Marketing — open project">
+        <span class="pp-cover"><img src="web-media/personal-projects/beyond-marketing/starry-night-collage.jpg" alt="Jules in a Starry Night–style collage" loading="lazy" decoding="async"></span>
+        <span class="pp-text">
+          <span class="pp-name">Beyond Marketing</span>
+          <span class="pp-sub">Pixel video · Acting · MC · Drawing</span>
+          <span class="pp-more">View project →</span>
+        </span>
+      </button>
+      <button type="button" class="pp-card rv d3" data-work="freelancer" aria-label="Content Creator · Freelancer — open project">
+        <span class="pp-cover"><img src="web-media/personal-projects/freelancer/nimi/nimi-come-with-us-poster.jpg" alt="A Nimi host smiling at an art fair in London" loading="lazy" decoding="async"></span>
+        <span class="pp-text">
+          <span class="pp-name">Content Creator · Freelancer</span>
+          <span class="pp-sub">Content for clients · Nimi</span>
+          <span class="pp-more">View project →</span>
+        </span>
+      </button>
+    </div>
+    </div>
+  </div>
 </div>
 
 <div class="wk" id="wk" role="dialog" aria-modal="true" aria-labelledby="wkTitle" hidden>
@@ -1666,11 +1644,22 @@
     "h": 1280
    },
    {
-    "type": "img",
-    "src": "web-media/experiences/viem-studio/zerotoone-reel.jpg",
-    "caption": "ZeroToOne Cafe — Reel",
-    "w": 334,
-    "h": 597
+    "type": "video",
+    "src": "web-media/experiences/viem-studio/zerotoone-012vibe.mp4",
+    "poster": "web-media/experiences/viem-studio/zerotoone-012vibe-poster.jpg",
+    "caption": "ZeroToOne — 012 Vibe reel",
+    "title": "ZeroToOne — 012 Vibe reel",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "type": "video",
+    "src": "web-media/experiences/viem-studio/zerotoone-recap-2025.mp4",
+    "poster": "web-media/experiences/viem-studio/zerotoone-recap-2025-poster.jpg",
+    "caption": "ZeroToOne — 2025 recap",
+    "title": "ZeroToOne — 2025 recap",
+    "w": 720,
+    "h": 1280
    },
    {
     "type": "img",
@@ -1732,7 +1721,7 @@
   "role": "Jewellery",
   "dates": "",
   "hero": "web-media/experiences/viem-studio/aira-hero.jpg",
-  "heroPos": "50% 55%",
+  "heroPos": "50% 50%",
   "heroAlt": "AIRA gold rings and charms on a ceramic dish",
   "work": [
    {
@@ -1752,6 +1741,38 @@
     "title": "AIRA — What’s in your bag",
     "w": 720,
     "h": 1280
+   },
+   {
+    "type": "video",
+    "src": "web-media/experiences/viem-studio/aira-summers-calling.mp4",
+    "poster": "web-media/experiences/viem-studio/aira-summers-calling-poster.jpg",
+    "caption": "AIRA — Summer’s calling",
+    "title": "AIRA — Summer’s calling",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "type": "video",
+    "src": "web-media/experiences/viem-studio/aira-seashell.mp4",
+    "poster": "web-media/experiences/viem-studio/aira-seashell-poster.jpg",
+    "caption": "AIRA — Seashell",
+    "title": "AIRA — Seashell",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/viem-studio/aira-summer-aesthetic-1.jpg",
+    "caption": "AIRA — What’s your summer aesthetic?",
+    "w": 1080,
+    "h": 1350
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/viem-studio/aira-summer-aesthetic-2.jpg",
+    "caption": "AIRA — What’s your summer aesthetic? (II)",
+    "w": 1080,
+    "h": 1350
    },
    {
     "type": "img",
@@ -1869,6 +1890,15 @@
   ],
   "work": [
    {
+    "type": "video",
+    "src": "web-media/experiences/jpha/gordon-balblair-30.mp4",
+    "poster": "web-media/experiences/jpha/gordon-balblair-30-poster.jpg",
+    "caption": "Set-up shooting reel — Balblair 30",
+    "title": "Set-up shooting reel — Balblair 30",
+    "w": 720,
+    "h": 1280
+   },
+   {
     "type": "img",
     "src": "web-media/experiences/jpha/youtube-vlogs.jpg",
     "caption": "YouTube vlogs",
@@ -1897,13 +1927,6 @@
     "caption": "Email design & copywriting",
     "w": 272,
     "h": 900
-   },
-   {
-    "type": "img",
-    "src": "web-media/experiences/jpha/product-shoot.jpg",
-    "caption": "Product photo & video shoot",
-    "w": 349,
-    "h": 615
    }
   ],
   "kind": "experience",
@@ -1924,7 +1947,10 @@
     "n": "2× CTR",
     "d": "Click-through rate, with +40% website traffic"
    }
-  ]
+  ],
+  "hero": "web-media/experiences/jpha/jpha-hero.jpg",
+  "heroPos": "50% 55%",
+  "heroAlt": "Craigellachie 29 single malt whisky and its tube on a wooden stand in front of a lit shelf"
  },
  "hattie-lloyd-home": {
   "name": "Hattie Lloyd Home",
@@ -2255,6 +2281,10 @@
     "p": "In 2023, I started creating content on a TikTok channel named “thao.polyglotsomeday”, now with 14K followers and 137.7K likes. The channel showcases my journey to becoming a polyglot, documenting my learning process and skill development."
    },
    {
+    "h": "Focus",
+    "p": "The channel focuses on language learning — particularly through the advanced shadowing technique — and documents my journey to becoming a polyglot, sharing my learning process and skill development along the way."
+   },
+   {
     "h": "Why it matters",
     "p": "My TikTok channel is an extension of my personal brand — one that is rooted in creativity, passion for languages, and a commitment to education."
    }
@@ -2271,6 +2301,14 @@
    {
     "n": "1.5M",
     "d": "Views on the most-watched video"
+   },
+   {
+    "n": "2023",
+    "d": "Year started"
+   },
+   {
+    "n": "EN / JP",
+    "d": "Languages I create in"
    }
   ],
   "links": [
@@ -2488,7 +2526,7 @@
 <div class="snd-pill" id="sndPill" role="status">🔊 Tap anywhere to turn on sound</div>
 
 <!-- Gallery file lists — regenerate with: python3 tools/build-manifest.py -->
-<script type="application/json" id="media-manifest">{"events":{"title":"Events","items":[{"type":"img","src":"web-media/the-projects/photography/events/concert/img-1298.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/events/f-and-b/img-0636.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/events/f-and-b/img-0948.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/events/performance/2d5a3255.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/events/performance/img-2952.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-4078-2.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-4091-2.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-4094-2.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-7113.jpg","w":2400,"h":1799},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-7151.jpg","w":2400,"h":1800}]},"landscape":{"title":"Landscape","items":[{"type":"img","src":"web-media/the-projects/photography/landscape/135sr-2025-10-14-095805-453.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/2d5a6200.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/2d5a6286.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/2d5a6317.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/2d5a8204.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/IMG_4868.JPG","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/IMG_5077.JPG","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/IMG_5100.JPG","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/IMG_5182.JPG","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/att-eiar1g6n86esp7kpdwqoa2-9vlqnqss-jmr0dfkddj8.jpg","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/img-0595.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-0629.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-0637.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-1046.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-2468.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-3940.jpg","w":2400,"h":1602},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4169.jpg","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4186.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4210.jpg","w":2400,"h":1800},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4527.jpg","w":2400,"h":1583},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4543.jpg","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4852.jpg","w":1585,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4988.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-5951.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-6063.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-6847.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-8782.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9167.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9850.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9913.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9916.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9919.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9936.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9943.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9945.jpg","w":2400,"h":1600}]},"portrait":{"title":"Portrait","items":[{"type":"img","src":"web-media/the-projects/photography/portrait/2d5a9432.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/4efad8f9-978a-41e0-92ff-bc3fb8d7ab70.jpeg","w":1366,"h":2049},{"type":"img","src":"web-media/the-projects/photography/portrait/635037436-34418356391082956-2711221888483205317-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/portrait/636151711-34418355857749676-6056652900600450512-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/portrait/636650721-34418355884416340-2431250639980013359-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/portrait/636858230-34418356437749618-1779061394552675505-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/portrait/hf-20260802-213427-944c5196-b7c0-4388-947a-d8e4a0e172a1-1.jpg","w":1610,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/img-0249-original.jpg","w":1573,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/img-6948-original.jpg","w":1587,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/img-6991-original.jpg","w":1797,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/wilf/editedw2.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/portrait/wilf/img-1564.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/att-4v98eoh5hvq3o74m43vsqe8cgcuetncdmblm8xgxr1c.jpg","w":1439,"h":1919},{"type":"img","src":"web-media/the-projects/photography/selected/people/att-z-kg2wplptyk7okmjvegcp0dnwaaapezfgdumun2rg0.jpg","w":1080,"h":1080},{"type":"img","src":"web-media/the-projects/photography/selected/people/cover-12.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/cover-13.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0027.jpg","w":1078,"h":1620},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0047.jpg","w":1215,"h":1620},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0078.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0080-1.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0080.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0081.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0083.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0085.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0090.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0100.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0113.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0130.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0218.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0249.jpg","w":1573,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0328.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-2531.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-3880.jpg","w":1568,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-4095.jpg","w":2400,"h":1542},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-4184.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-4590.jpg","w":2400,"h":1804},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-5622.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-5799.jpg","w":1595,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-5804.jpg","w":1591,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-6946.jpg","w":1589,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7113.jpg","w":2400,"h":1798},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7130.jpg","w":1629,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7132.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7152.jpg","w":2400,"h":1800},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7163.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7294.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7314.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7315.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7316.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8376.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8378.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8380.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8848.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8849.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8875.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8876.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8957.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8966.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8995.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9063.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9088.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9098.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9166.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9708.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/relens-img-20250820165015.jpg","w":1600,"h":2400}]},"product":{"title":"Product Shooting","items":[{"type":"img","src":"web-media/the-projects/photography/product-shooting/1.jpg","w":1080,"h":1350},{"type":"img","src":"web-media/the-projects/photography/product-shooting/chloe.jpg","w":1080,"h":1350},{"type":"img","src":"web-media/the-projects/photography/product-shooting/img-4322.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/product-shooting/img-6277.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/product-shooting/img-6991-original.jpg","w":1797,"h":2400},{"type":"img","src":"web-media/the-projects/photography/product-shooting/lemon.jpg","w":1080,"h":1350}]},"videos":{"title":"Videography","items":[{"type":"video","src":"web-media/morocco-v3.mp4","poster":"web-media/morocco-v3-poster.jpg","title":"Morocco","w":1920,"h":1080},{"type":"video","src":"web-media/mallorca-postcard-2.mp4","poster":"web-media/mallorca-postcard-2-poster.jpg","title":"Mallorca Postcard","w":1920,"h":1080},{"type":"video","src":"web-media/lavender-farm-kent.mp4","poster":"web-media/lavender-farm-kent-poster.jpg","title":"Lavender Farm, Kent","w":1280,"h":720},{"type":"video","src":"web-media/the-projects/traveling-videos/a-green-day-4k.mp4","poster":"web-media/the-projects/traveling-videos/a-green-day-4k-poster.jpg","w":1280,"h":720,"title":"A Green Day"},{"type":"video","src":"web-media/the-projects/traveling-videos/all-night-copy-1.mp4","poster":"web-media/the-projects/traveling-videos/all-night-copy-1-poster.jpg","w":1280,"h":720,"title":"All Night"},{"type":"video","src":"web-media/the-projects/traveling-videos/athens-vo-tri.mp4","poster":"web-media/the-projects/traveling-videos/athens-vo-tri-poster.jpg","w":1280,"h":720,"title":"Athens"},{"type":"video","src":"web-media/the-projects/traveling-videos/grr.mp4","poster":"web-media/the-projects/traveling-videos/grr-poster.jpg","w":1920,"h":1080,"title":"Grr"},{"type":"video","src":"web-media/the-projects/traveling-videos/hasting-edit.mp4","poster":"web-media/the-projects/traveling-videos/hasting-edit-poster.jpg","w":1920,"h":1080,"title":"Hastings"},{"type":"video","src":"web-media/the-projects/traveling-videos/so-you-like-blue-copy.mp4","poster":"web-media/the-projects/traveling-videos/so-you-like-blue-copy-poster.jpg","w":1920,"h":1080,"title":"So You Like Blue"},{"type":"video","src":"web-media/the-projects/traveling-videos/sunet.mp4","poster":"web-media/the-projects/traveling-videos/sunet-poster.jpg","w":1280,"h":720,"title":"Sunset"},{"type":"video","src":"web-media/the-projects/traveling-videos/zermatt-intro.mp4","poster":"web-media/the-projects/traveling-videos/zermatt-intro-poster.jpg","w":1920,"h":1080,"title":"Zermatt"},{"type":"video","src":"web-media/the-projects/traveling-videos/zurich-finnnnal.mp4","poster":"web-media/the-projects/traveling-videos/zurich-finnnnal-poster.jpg","w":1920,"h":1080,"title":"Zurich"}]},"wedding-raham-rosie":{"title":"Raham & Rosie","parent":"wedding","items":[{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5415.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5475.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5476.jpg","w":1569,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5479.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5480.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5481.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5482.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5483.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5484.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5485.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5486.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5487.jpg","w":2400,"h":1617},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5488.jpg","w":2400,"h":1632},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5489.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-6597.jpg","w":2400,"h":1600}]},"wedding-sam-ha":{"title":"Sam & Ha","parent":"wedding","items":[{"type":"img","src":"web-media/the-projects/photography/wedding/sam-ha/2d5a1801.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-ha/2d5a1827.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-ha/2d5a1944.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-ha/2d5a2354.jpg","w":2400,"h":1600}]},"wedding-sam-linh":{"title":"Sam & Linh","parent":"wedding","items":[{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/2d5a4605.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/650361839-34352857310995247-635160039677384145-n.jpg","w":1083,"h":1625},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/650409791-34352833427664302-7271065118513884754-n.jpg","w":1322,"h":2048},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/650732973-34352815180999460-9018894141596256759-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/651591965-34352813624332949-1153090883572961566-n.jpg","w":1356,"h":2048},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/651729588-34352848264329485-8571978121797919818-n.jpg","w":1931,"h":1287},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/651766972-34352896384324673-6506119219725394446-n.jpg","w":1366,"h":2048},{"type":"video","src":"web-media/the-projects/photography/wedding/sam-linh/img-0665.mp4","poster":"web-media/the-projects/photography/wedding/sam-linh/img-0665-poster.jpg","w":1080,"h":1920}]},"wedding":{"title":"Wedding","albums":[{"key":"wedding-raham-rosie","title":"Raham & Rosie","cover":"web-media/the-projects/photography/wedding/raham-rosie/img-5488.jpg"},{"key":"wedding-sam-ha","title":"Sam & Ha","cover":"web-media/the-projects/photography/wedding/sam-ha/2d5a1801.jpg"},{"key":"wedding-sam-linh","title":"Sam & Linh","cover":"web-media/the-projects/photography/wedding/sam-linh/2d5a4605.jpg"}],"items":[]}}</script>
+<script type="application/json" id="media-manifest">{"events":{"title":"Events","items":[{"type":"img","src":"web-media/the-projects/photography/events/concert/img-1298.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/events/f-and-b/img-0636.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/events/f-and-b/img-0948.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/events/performance/2d5a3255.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/events/performance/img-2952.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-4078-2.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-4091-2.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-4094-2.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-7113.jpg","w":2400,"h":1799},{"type":"img","src":"web-media/the-projects/photography/events/technology-event/img-7151.jpg","w":2400,"h":1800}]},"landscape":{"title":"Landscape","items":[{"type":"img","src":"web-media/the-projects/photography/landscape/135sr-2025-10-14-095805-453.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/2d5a6200.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/2d5a6286.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/2d5a6317.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/2d5a8204.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/IMG_4868.JPG","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/IMG_5077.JPG","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/IMG_5100.JPG","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/IMG_5182.JPG","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/att-eiar1g6n86esp7kpdwqoa2-9vlqnqss-jmr0dfkddj8.jpg","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/img-0595.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-0629.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-0637.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-1046.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-2468.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-3940.jpg","w":2400,"h":1602},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4169.jpg","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4210.jpg","w":2400,"h":1800},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4527.jpg","w":2400,"h":1583},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4543.jpg","w":1620,"h":1080},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4852.jpg","w":1585,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-4988.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-5951.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-6063.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-6847.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-8782.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9167.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9850.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9913.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9916.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9919.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9936.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9943.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/landscape/img-9945.jpg","w":2400,"h":1600}]},"portrait":{"title":"Portrait","items":[{"type":"img","src":"web-media/the-projects/photography/portrait/2d5a9432.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/4efad8f9-978a-41e0-92ff-bc3fb8d7ab70.jpeg","w":1366,"h":2049},{"type":"img","src":"web-media/the-projects/photography/portrait/635037436-34418356391082956-2711221888483205317-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/portrait/636151711-34418355857749676-6056652900600450512-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/portrait/636650721-34418355884416340-2431250639980013359-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/portrait/636858230-34418356437749618-1779061394552675505-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/portrait/hf-20260802-213427-944c5196-b7c0-4388-947a-d8e4a0e172a1-1.jpg","w":1610,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/img-0249-original.jpg","w":1573,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/img-6948-original.jpg","w":1587,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/img-6991-original.jpg","w":1797,"h":2400},{"type":"img","src":"web-media/the-projects/photography/portrait/wilf/editedw2.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/portrait/wilf/img-1564.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/att-4v98eoh5hvq3o74m43vsqe8cgcuetncdmblm8xgxr1c.jpg","w":1439,"h":1919},{"type":"img","src":"web-media/the-projects/photography/selected/people/att-z-kg2wplptyk7okmjvegcp0dnwaaapezfgdumun2rg0.jpg","w":1080,"h":1080},{"type":"img","src":"web-media/the-projects/photography/selected/people/cover-12.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/cover-13.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0027.jpg","w":1078,"h":1620},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0047.jpg","w":1215,"h":1620},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0078.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0080-1.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0080.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0081.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0083.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0085.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0090.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0100.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0113.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0130.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0218.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0249.jpg","w":1573,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-0328.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-2531.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-3880.jpg","w":1568,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-4095.jpg","w":2400,"h":1542},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-4184.jpg","w":1920,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-4590.jpg","w":2400,"h":1804},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-5622.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-5799.jpg","w":1595,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-5804.jpg","w":1591,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-6946.jpg","w":1589,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7113.jpg","w":2400,"h":1798},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7130.jpg","w":1629,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7132.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7152.jpg","w":2400,"h":1800},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7163.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7294.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7314.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7315.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-7316.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8376.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8378.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8380.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8848.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8849.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8875.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8876.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8957.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8966.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-8995.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9063.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9088.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9098.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9166.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/img-9708.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/selected/people/relens-img-20250820165015.jpg","w":1600,"h":2400}]},"product":{"title":"Product Shooting","items":[{"type":"img","src":"web-media/the-projects/photography/product-shooting/1.jpg","w":1080,"h":1350},{"type":"img","src":"web-media/the-projects/photography/product-shooting/chloe.jpg","w":1080,"h":1350},{"type":"img","src":"web-media/the-projects/photography/product-shooting/img-4322.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/product-shooting/img-6277.jpg","w":1800,"h":2400},{"type":"img","src":"web-media/the-projects/photography/product-shooting/img-6991-original.jpg","w":1797,"h":2400},{"type":"img","src":"web-media/the-projects/photography/product-shooting/lemon.jpg","w":1080,"h":1350}]},"videos":{"title":"Videography","items":[{"type":"video","src":"web-media/morocco-v3.mp4","poster":"web-media/morocco-v3-poster.jpg","title":"Morocco","w":1920,"h":1080},{"type":"video","src":"web-media/mallorca-postcard-2.mp4","poster":"web-media/mallorca-postcard-2-poster.jpg","title":"Mallorca Postcard","w":1920,"h":1080},{"type":"video","src":"web-media/lavender-farm-kent.mp4","poster":"web-media/lavender-farm-kent-poster.jpg","title":"Lavender Farm, Kent","w":1280,"h":720},{"type":"video","src":"web-media/the-projects/traveling-videos/a-green-day-4k.mp4","poster":"web-media/the-projects/traveling-videos/a-green-day-4k-poster.jpg","w":1280,"h":720,"title":"A Green Day"},{"type":"video","src":"web-media/the-projects/traveling-videos/all-night-copy-1.mp4","poster":"web-media/the-projects/traveling-videos/all-night-copy-1-poster.jpg","w":1280,"h":720,"title":"All Night"},{"type":"video","src":"web-media/the-projects/traveling-videos/athens-vo-tri.mp4","poster":"web-media/the-projects/traveling-videos/athens-vo-tri-poster.jpg","w":1280,"h":720,"title":"Athens"},{"type":"video","src":"web-media/the-projects/traveling-videos/grr.mp4","poster":"web-media/the-projects/traveling-videos/grr-poster.jpg","w":1920,"h":1080,"title":"Grr"},{"type":"video","src":"web-media/the-projects/traveling-videos/hasting-edit.mp4","poster":"web-media/the-projects/traveling-videos/hasting-edit-poster.jpg","w":1920,"h":1080,"title":"Hastings"},{"type":"video","src":"web-media/the-projects/traveling-videos/so-you-like-blue-copy.mp4","poster":"web-media/the-projects/traveling-videos/so-you-like-blue-copy-poster.jpg","w":1920,"h":1080,"title":"So You Like Blue"},{"type":"video","src":"web-media/the-projects/traveling-videos/sunet.mp4","poster":"web-media/the-projects/traveling-videos/sunet-poster.jpg","w":1280,"h":720,"title":"Sunset"},{"type":"video","src":"web-media/the-projects/traveling-videos/zermatt-intro.mp4","poster":"web-media/the-projects/traveling-videos/zermatt-intro-poster.jpg","w":1920,"h":1080,"title":"Zermatt"},{"type":"video","src":"web-media/the-projects/traveling-videos/zurich-finnnnal.mp4","poster":"web-media/the-projects/traveling-videos/zurich-finnnnal-poster.jpg","w":1920,"h":1080,"title":"Zurich"}]},"wedding-raham-rosie":{"title":"Raham & Rosie","parent":"wedding","items":[{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/black&w.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/black&w2.jpg","w":1569,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5415.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5475.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5476.jpg","w":1569,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5479.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5480.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5481.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5482.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5483.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5484.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5485.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5486.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5487.jpg","w":2400,"h":1617},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5488.jpg","w":2400,"h":1632},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-5489.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/raham-rosie/img-6597.jpg","w":2400,"h":1600}]},"wedding-sam-ha":{"title":"Sam & Ha","parent":"wedding","items":[{"type":"img","src":"web-media/the-projects/photography/wedding/sam-ha/2d5a1801.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-ha/2d5a1827.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-ha/2d5a1944.jpg","w":1600,"h":2400},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-ha/2d5a2354.jpg","w":2400,"h":1600}]},"wedding-sam-linh":{"title":"Sam & Linh","parent":"wedding","items":[{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/2d5a4605.jpg","w":2400,"h":1600},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/650361839-34352857310995247-635160039677384145-n.jpg","w":1083,"h":1625},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/650409791-34352833427664302-7271065118513884754-n.jpg","w":1322,"h":2048},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/650732973-34352815180999460-9018894141596256759-n.jpg","w":1366,"h":2048},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/651591965-34352813624332949-1153090883572961566-n.jpg","w":1356,"h":2048},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/651729588-34352848264329485-8571978121797919818-n.jpg","w":1931,"h":1287},{"type":"img","src":"web-media/the-projects/photography/wedding/sam-linh/651766972-34352896384324673-6506119219725394446-n.jpg","w":1366,"h":2048},{"type":"video","src":"web-media/the-projects/photography/wedding/sam-linh/img-0665.mp4","poster":"web-media/the-projects/photography/wedding/sam-linh/img-0665-poster.jpg","w":1080,"h":1920}]},"wedding":{"title":"Wedding","albums":[{"key":"wedding-raham-rosie","title":"Raham & Rosie","cover":"web-media/the-projects/photography/wedding/raham-rosie/img-5488.jpg"},{"key":"wedding-sam-ha","title":"Sam & Ha","cover":"web-media/the-projects/photography/wedding/sam-ha/2d5a1801.jpg"},{"key":"wedding-sam-linh","title":"Sam & Linh","cover":"web-media/the-projects/photography/wedding/sam-linh/2d5a4605.jpg"}],"items":[]}}</script>
 
 <script>
   // ── SCROLL REVEAL ──
@@ -2548,7 +2586,7 @@
       (navigator.userActivation && navigator.userActivation.hasBeenActive);
     // while a full-screen page (gallery or company page) is open, only its own videos count
     const inScope = v => {
-      const open = ['gal', 'wk', 'ph'].map(id => document.getElementById(id)).find(o => o && !o.hidden);
+      const open = ['.gal', '.wk', '.ph'].map(sel => document.querySelector(sel + ':not([hidden])')).find(Boolean);
       return open ? open.contains(v) : !v.closest('.gal, .wk, .ph');
     };
     const showPill = on => pill.classList.toggle('show', on);
@@ -2636,7 +2674,7 @@
       v.muted = true;
       io.observe(v);
       if (canHover) {
-        const host = v.closest('.hero, .vid-card, .gal-item, .wk-item') || v;
+        const host = v.closest('.hero, .vid-card, .gal-item, .wk-item, .vf-item') || v;
         host.addEventListener('mouseenter', () => { if (eligible(v)) focus(v); });
         host.addEventListener('mouseleave', () => unfocus(v));
       }
@@ -2869,7 +2907,7 @@
       document.body.classList.remove('gal-open');
       setTimeout(() => {
         gal.hidden = true; grid.innerHTML = '';
-        if (!document.getElementById('ph').hidden) {   // back on the Photography page: keep the homepage videos asleep
+        if (document.querySelector('.ph:not([hidden])')) {   // back on a project page: keep the homepage videos asleep
           document.querySelectorAll('video[data-sound], .hero-video').forEach(v => { if (!v.closest('.gal, .wk, .ph')) v.pause(); });
           return;
         }
@@ -2995,69 +3033,100 @@
     requestAnimationFrame(tick);
     return measure;
   }
-  initStrip(document.getElementById('projects'));
 
-  // ── PHOTOGRAPHY PAGE (full-screen, hash-routed: #photography) ──
-  // Opened from "Photography" in the menu: a big photo with the title, then the same text, tiles and
-  // circles as the homepage section (copied from it, so editing the section updates both).
-  const photoPage = (() => {
-    const ph = document.getElementById('ph');
-    const body = document.getElementById('phBody');
-    let measure = null, cameFromSite = false;
-    function build() {
-      const src = document.getElementById('projects');
-      const hd = src.querySelector('.proj-hd').cloneNode(true);
-      hd.querySelectorAll('.proj-label, .proj-title').forEach(n => n.remove());   // the photo already says "Photography"
-      const wrap = document.createElement('div'); wrap.className = 'wrap'; wrap.appendChild(hd);
-      body.append(wrap, src.querySelector('.proj-marquee').cloneNode(true), src.querySelector('.proj-dots').cloneNode(true));
-      body.querySelectorAll('.rv').forEach(n => n.classList.remove('rv', 'vis', 'd1', 'd2', 'd3', 'd4'));
-      measure = initStrip(body);
+  // ── PROJECT PAGES (full-screen, hash-routed: #photography / #videography / #personal-projects) ──
+  // Opened only from Project ▾ in the menu: a big photo with the title (and a caption), then the content.
+  // Galleries and #work pages open on top of them, and closing those comes back here.
+  const projectPages = (() => {
+    const pages = {};
+    document.querySelectorAll('.ph[data-page]').forEach(el => { pages[el.dataset.page] = { el, measure: null }; });
+    let current = null, cameFromSite = false;
+
+    // Videography: every film as a tile (uncropped, muted, sound on hover/scroll like the galleries)
+    function buildFilms(el) {
+      const items = (JSON.parse(document.getElementById('media-manifest').textContent).videos || {}).items || [];
+      const grid = el.querySelector('.vf-grid');
+      el.querySelector('.vf-count').textContent = `${items.length} films`;
+      items.forEach((it, i) => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'vf-item'; b.dataset.i = i;
+        b.setAttribute('aria-label', `${it.title || 'Film ' + (i + 1)} — play full screen`);
+        if (it.w && it.h) b.style.aspectRatio = `${it.w} / ${it.h}`;
+        const v = document.createElement('video');
+        v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none';
+        v.setAttribute('playsinline', ''); v.setAttribute('muted', '');
+        if (it.poster) v.poster = it.poster;
+        v.src = it.src;
+        b.appendChild(v);
+        grid.appendChild(b);
+      });
+      grid.addEventListener('click', e => {
+        const b = e.target.closest('.vf-item');
+        if (b) lightbox.open(items, +b.dataset.i, b, 'Videography');
+      });
+      grid.querySelectorAll('video').forEach(v => sound.add(v));
     }
-    function open() {
-      if (!ph.hidden) return;
-      if (!measure) build();
+    const setup = {
+      photography: el => initStrip(el.querySelector('.ph-body')),
+      videography: el => { buildFilms(el); return () => {}; },
+    };
+
+    function open(key) {
+      const pg = pages[key];
+      if (current === key) return;
+      if (current) hide(current, true);
+      current = key;
+      const el = pg.el;
+      if (!pg.measure) pg.measure = (setup[key] || (() => () => {}))(el);
       sound.muteAll();
-      document.querySelectorAll('video[data-sound], .hero-video').forEach(v => v.pause());   // nothing plays behind the page
-      ph.hidden = false; ph.scrollTop = 0;
+      document.querySelectorAll('video[data-sound], .hero-video').forEach(v => { if (!el.contains(v)) v.pause(); });   // nothing plays behind the page
+      el.querySelectorAll('.rv').forEach(n => n.classList.add('vis'));
+      el.hidden = false; el.scrollTop = 0;
       document.body.classList.add('ph-open');
-      requestAnimationFrame(() => { ph.classList.add('open'); measure(); });
-      ph.querySelector('.ph-x').focus({ preventScroll: true });
+      requestAnimationFrame(() => { el.classList.add('open'); pg.measure(); sound.refresh(); });
+      el.querySelector('.ph-x').focus({ preventScroll: true });
     }
-    function close() {
-      if (ph.hidden) return;
-      ph.classList.remove('open');
+    function hide(key, quiet) {
+      const el = pages[key].el;
+      el.classList.remove('open');
+      el.querySelectorAll('video').forEach(v => v.pause());
+      setTimeout(() => { el.hidden = true; }, 350);
+      if (quiet) return;
+      current = null;
       document.body.classList.remove('ph-open');
       setTimeout(() => {
-        ph.hidden = true;
         document.querySelectorAll('video[data-sound], .hero-video.is-active').forEach(v => {
+          if (v.closest('.ph, .gal, .wk')) return;
           const r = v.getBoundingClientRect();
           if (r.bottom > 0 && r.top < innerHeight) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
         });
         sound.refresh();
       }, 350);
     }
-    // a gallery opened from this page sits on top of it, so the page stays open underneath
     function route(e) {
-      const h = location.hash;
-      if (h === '#photography') { if (e) cameFromSite = true; open(); }
-      else if (!(h.startsWith('#gallery/') && !ph.hidden)) close();
+      const key = location.hash.slice(1);
+      if (pages[key]) { if (e && !current) cameFromSite = true; open(key); }
+      else if (current && /^#(gallery|work)\//.test(location.hash)) { /* an overlay sits on top: keep the page */ }
+      else if (current) hide(current);
     }
     function requestClose() {
-      if (cameFromSite) history.back();
-      else { history.replaceState(null, '', location.pathname + location.search + '#projects'); close(); }
+      if (cameFromSite) { cameFromSite = false; history.back(); }
+      else { history.replaceState(null, '', location.pathname + location.search); hide(current); }
     }
-    ph.querySelector('.ph-x').addEventListener('click', requestClose);
-    ph.querySelector('.ph-brand').addEventListener('click', e => { e.preventDefault(); requestClose(); });
-    ph.querySelector('.ph-down').addEventListener('click', e => {
-      e.preventDefault();
-      ph.scrollTo({ top: ph.querySelector('.ph-hero').offsetHeight, behavior: 'smooth' });
+    Object.values(pages).forEach(({ el }) => {
+      el.querySelector('.ph-x').addEventListener('click', requestClose);
+      el.querySelector('.ph-brand').addEventListener('click', e => { e.preventDefault(); requestClose(); });
+      el.querySelector('.ph-down').addEventListener('click', e => {
+        e.preventDefault();
+        el.scrollTo({ top: el.querySelector('.ph-hero').offsetHeight, behavior: 'smooth' });
+      });
     });
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && !ph.hidden && document.getElementById('gal').hidden && document.getElementById('lb').hidden) requestClose();
+      if (e.key === 'Escape' && current && document.getElementById('gal').hidden && document.getElementById('wk').hidden && document.getElementById('lb').hidden) requestClose();
     });
     addEventListener('hashchange', route);
     route();
-    return { isOpen: () => !ph.hidden };
+    return { current: () => current };
   })();
 
   // ── COMPANY DETAIL PAGES (full-screen, hash-routed: #work/<slug>) ──
@@ -3094,10 +3163,21 @@
       const kicker = d.kicker || (isProject ? 'Personal project' : 'Experience');
 
       // pages with a "hero" photo: big image on top with the name written on it (like the Photography page)
+      heroEl.querySelectorAll('video').forEach(v => v.pause());
       heroEl.replaceChildren();
       heroEl.hidden = !d.hero;
       if (d.hero) {
-        const hi = new Image(); hi.className = 'wk-hero-bg'; hi.src = d.hero; hi.alt = d.heroAlt || ''; hi.decoding = 'async';
+        let hi;
+        if (d.heroVideo) {   // a looping, silent background film (e.g. AIRA); the poster shows until it plays
+          hi = document.createElement('video');
+          hi.muted = true; hi.loop = true; hi.playsInline = true; hi.preload = 'auto';
+          hi.setAttribute('muted', ''); hi.setAttribute('playsinline', ''); hi.setAttribute('aria-hidden', 'true');
+          hi.poster = d.heroPoster || d.hero; hi.src = d.heroVideo;
+          if (!reduced) { hi.autoplay = true; const pl = hi.play(); if (pl && pl.catch) pl.catch(() => {}); }
+        } else {
+          hi = new Image(); hi.src = d.hero; hi.alt = d.heroAlt || ''; hi.decoding = 'async';
+        }
+        hi.className = 'wk-hero-bg';
         if (d.heroPos) hi.style.objectPosition = d.heroPos;
         const ht = el('div', 'wk-hero-txt');
         ht.append(el('span', 'wk-hero-kicker', kicker), el('h2', 'wk-hero-name', d.name));
@@ -3266,6 +3346,7 @@
     function close(quiet) {
       if (wk.hidden) return;
       page.querySelectorAll('video').forEach(v => sound.remove(v));
+      heroEl.querySelectorAll('video').forEach(v => v.pause());   // AIRA's background film
       wk.classList.remove('open');
       document.body.classList.remove('gal-open');
       current = null;
