@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jules Nguyen</title>
+  <!-- night mode is the default; a visitor's own choice (sun/moon switch) is remembered on their device -->
+  <script>try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}</script>
+  <meta name="theme-color" content="#121110">
   <meta name="description" content="Jules Nguyen — a wannabe storyteller. Marketing strategist and creative content producer in London: cinematic video, photography and content that builds brands.">
   <link rel="canonical" href="https://julesnguyenstoryteller.com/">
   <meta property="og:type" content="website">
@@ -18,21 +21,51 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
+    /* Two themes. Night is the default (<html data-theme="dark">); the sun/moon switch in the nav
+       flips data-theme and remembers the choice. Every colour on the page comes from these tokens,
+       and each text colour passes WCAG AA (4.5:1) on its background in both themes. */
+    :root, :root[data-theme="light"] {
+      color-scheme: light;
       --bg:      #f7f5f0;
       --surf:    #efebe3;
       --surf2:   #e6e1d6;
       --border:  #dcd6c9;
       --text:    #1f1f1f;
-      --muted:   #6b6b6b;
-      --muted2:  #8f8a80;
-      --accent:  #15803d;
+      --text2:   #444444;   /* long intro paragraphs */
+      --muted:   #5c5c5c;
+      --muted2:  #615c54;   /* small dates / labels (was #8f8a80, too faint to read) */
+      --dot:     #837d71;   /* beige outline of the strip circles */
+      --accent:  #126b33;
       --ink:     #0a0a0a;
       --on-media: #ffffff;
+      --nav-bg:  rgba(247,245,240,0.92);
+      --lb-backdrop: rgba(247,245,240,0.45);
+      --btn-bg:  rgba(255,255,255,0.78);
+      --btn-bg-hover: #ffffff;
+      --logo-bg: #f7f5f0;   /* company logos are dark artwork, so their tile stays light in both themes */
       --max:     1160px;
       --pad:     24px;
       /* section names: Times New Roman (Tinos is its free twin for phones that don't have it) */
       --serif:   'Times New Roman', Times, 'Tinos', serif;
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg:      #121110;
+      --surf:    #1c1a17;
+      --surf2:   #26231f;
+      --border:  #37332d;
+      --text:    #e8e3da;
+      --text2:   #cfc9be;
+      --muted:   #ada79b;
+      --muted2:  #9a9488;
+      --dot:     #a59d8e;
+      --accent:  #4ade80;
+      --ink:     #f6f2eb;
+      --nav-bg:  rgba(18,17,16,0.88);
+      --lb-backdrop: rgba(10,10,9,0.55);
+      --btn-bg:  rgba(28,26,23,0.82);
+      --btn-bg-hover: #2c2925;
+      --logo-bg: #efebe3;
     }
 
     html { scroll-behavior: smooth; }
@@ -58,7 +91,7 @@
     /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(247,245,240,0.92);
+      background: var(--nav-bg);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
@@ -68,6 +101,7 @@
       display: flex; align-items: center; justify-content: space-between;
     }
     .nav-brand {
+      margin-right: auto;
       font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
       text-transform: uppercase; color: var(--ink);
     }
@@ -102,6 +136,35 @@
       background: none; border: 0;
     }
     .hamburger span { display: block; width: 18px; height: 1px; background: var(--muted); }
+    /* sun / moon switch: the knob sits behind the active mode's icon */
+    .theme-btn {
+      margin-left: 14px; flex: 0 0 auto;
+      height: 44px; min-width: 44px; padding: 0; border: 0; background: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;   /* small switch, full 44px tap area */
+    }
+    .theme-track {
+      position: relative; display: flex; align-items: center; gap: 2px;
+      padding: 2px; border-radius: 999px;
+      background: var(--surf); border: 1px solid var(--border);
+    }
+    .theme-track::before {   /* the knob */
+      content: ''; position: absolute; top: 2px; left: 2px; width: 13px; height: 13px; border-radius: 50%;
+      background: var(--ink); transition: transform 0.3s cubic-bezier(0.3, 0.7, 0.4, 1);
+    }
+    :root[data-theme="dark"] .theme-track::before { transform: translateX(15px); }
+    .theme-ic {
+      position: relative; z-index: 1; width: 13px; height: 13px;
+      display: flex; align-items: center; justify-content: center; color: var(--muted);
+      transition: color 0.3s;
+    }
+    .theme-ic svg { width: 9px; height: 9px; }
+    :root[data-theme="light"] .theme-ic.sun, :root[data-theme="dark"] .theme-ic.moon { color: var(--bg); }
+    .theme-btn:hover .theme-ic { color: var(--ink); }
+    :root[data-theme="light"] .theme-btn:hover .theme-ic.sun, :root[data-theme="dark"] .theme-btn:hover .theme-ic.moon { color: var(--bg); }
+    .theme-btn:focus-visible { outline: none; }
+    .theme-btn:focus-visible .theme-track { outline: 2px solid var(--accent); outline-offset: 2px; }
+    body { transition: background-color 0.35s ease, color 0.35s ease; }
+    @media (prefers-reduced-motion: reduce) { .theme-track::before, body { transition: none; } }
 
     /* ── HERO ── */
     .hero {
@@ -292,21 +355,21 @@
     .proj-label {
       display: block; margin-bottom: 18px;
       font-size: 12px; text-transform: uppercase;
-      letter-spacing: 0.15em; color: #666666;
+      letter-spacing: 0.15em; color: var(--muted);
     }
     .proj-title {
       font-family: var(--serif);
       font-size: clamp(16px, 2.5vw, 31px);
       font-weight: 400; line-height: 1.1;
-      letter-spacing: -0.01em; color: #0a0a0a;
+      letter-spacing: -0.01em; color: var(--ink);
       margin-bottom: 24px;
     }
     .proj-tags {
       font-size: 12px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.06em; line-height: 1.8; color: #0a0a0a;
+      letter-spacing: 0.06em; line-height: 1.8; color: var(--ink);
       margin-bottom: 18px;
     }
-    .proj-intro { max-width: 680px; font-size: 15px; line-height: 1.75; color: #444444; }
+    .proj-intro { max-width: 680px; font-size: 15px; line-height: 1.75; color: var(--text2); }
     .proj-marquee { overflow: hidden; }
     /* the strip is moved by JS (auto-slide right → left, pauses on hover, glides to a tile when a dot is pressed) */
     .proj-track { display: flex; width: max-content; will-change: transform; }
@@ -317,20 +380,20 @@
     }
     .proj-dot::before {
       content: ''; width: 12px; height: 12px; border-radius: 50%;
-      border: 1.5px solid var(--muted2); background: transparent;
+      border: 1.5px solid var(--dot); background: transparent;
       transition: background-color 0.25s ease, transform 0.25s ease;
     }
-    .proj-dot:hover::before, .proj-dot.active::before { background: var(--muted2); }
+    .proj-dot:hover::before, .proj-dot.active::before { background: var(--dot); }
     .proj-dot:focus-visible { outline: none; }
-    .proj-dot:focus-visible::before { background: var(--muted2); box-shadow: 0 0 0 3px var(--bg), 0 0 0 4.5px var(--ink); }
+    .proj-dot:focus-visible::before { background: var(--dot); box-shadow: 0 0 0 3px var(--bg), 0 0 0 4.5px var(--ink); }
     .proj-tile {
       position: relative; flex: 0 0 auto;
       width: 34vw; aspect-ratio: 16/10;
-      overflow: hidden; background: #e8e5dd;
+      overflow: hidden; background: var(--surf2);
       border: 0; padding: 0; margin: 0; cursor: pointer;
       font: inherit; color: inherit; display: block;
     }
-    .proj-tile:focus-visible { outline: 2px solid #0a0a0a; outline-offset: -4px; }
+    .proj-tile:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; }
     .proj-tile img { transition: transform 0.6s ease; }
     .proj-tile:hover img { transform: scale(1.04); }
     .proj-tile::after {
@@ -406,7 +469,7 @@
     .exp-logo {
       display: flex; align-items: center; justify-content: center;
       aspect-ratio: 1 / 1; overflow: hidden; margin-bottom: 16px;
-      background: var(--bg); border: 1px solid var(--border);
+      background: var(--logo-bg); border: 1px solid var(--border);
     }
     .exp-logo img {
       width: 62%; height: 62%; object-fit: contain;
@@ -609,7 +672,7 @@
       position: sticky; top: 0; z-index: 3;
       height: 56px; padding: 0 var(--pad);
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      background: rgba(247,245,240,0.92); backdrop-filter: blur(14px);
+      background: var(--nav-bg); backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
     }
     .gal-btn {
@@ -647,6 +710,66 @@
       background: rgba(0,0,0,0.18); transition: background 0.3s;
     }
     .gal-item:hover::after { background: rgba(0,0,0,0); }
+    /* ── PHOTOGRAPHY PAGE (full-screen, hash-routed: #photography; reference: photo + centred serif title) ── */
+    body.ph-open { overflow: hidden; }
+    .ph {
+      position: fixed; inset: 0; z-index: 250;   /* under galleries (300) so a category opens on top */
+      background: var(--bg); overflow-y: auto; overscroll-behavior: contain;
+      opacity: 0; transition: opacity 0.4s ease;
+    }
+    .ph[hidden] { display: none; }
+    .ph.open { opacity: 1; }
+    .ph-hero {
+      position: relative; height: 100vh; height: 100svh; min-height: 420px;
+      display: flex; align-items: center; justify-content: center; overflow: hidden; background: #1a0d0a;
+    }
+    .ph-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 40% 50%;
+      transform: scale(1.06); transition: transform 1.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .ph.open .ph-bg { transform: none; }
+    .ph-hero::after {   /* soft darkening so the white text always reads */
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.18) 45%, rgba(0,0,0,0.42) 100%);
+    }
+    .ph-bar {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px clamp(16px, 4vw, 52px);
+    }
+    .ph-brand {
+      font-family: var(--serif); font-size: clamp(16px, 1.8vw, 24px); letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--on-media); text-decoration: none;
+      min-height: 44px; display: inline-flex; align-items: center;
+    }
+    .ph-x {
+      width: 44px; height: 44px; border: 0; background: none; cursor: pointer;
+      color: var(--on-media); font-size: 20px; line-height: 1;
+    }
+    .ph-x:hover, .ph-brand:hover { opacity: 0.7; }
+    .ph-title {
+      position: relative; z-index: 2;
+      font-family: var(--serif); font-weight: 400; text-transform: uppercase;
+      font-size: clamp(30px, 4.6vw, 56px); letter-spacing: 0.06em; line-height: 1.1;
+      color: var(--on-media); padding: 0 0.15em 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.65);
+      opacity: 0; transform: translateY(14px); transition: opacity 0.9s ease 0.25s, transform 0.9s ease 0.25s;
+    }
+    .ph.open .ph-title { opacity: 1; transform: none; }
+    .ph-down {
+      position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 44px; min-height: 44px;
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--on-media); text-decoration: none;
+    }
+    .ph-down span { animation: phNudge 1.8s ease-in-out infinite; }
+    @keyframes phNudge { 50% { transform: translateY(5px); } }
+    .ph-body { padding: 72px 0 72px; }
+    .ph-body .proj-hd { padding-bottom: 48px; }
+    @media (prefers-reduced-motion: reduce) {
+      .ph, .ph-bg, .ph-title { transition: none; }
+      .ph-down span { animation: none; }
+    }
+
     /* ── COMPANY DETAIL PAGE (full-screen, hash-routed: #work/<slug>) ── */
     .wk {
       position: fixed; inset: 0; z-index: 300;
@@ -655,6 +778,51 @@
     }
     .wk[hidden] { display: none; }
     .wk.open { opacity: 1; }
+    /* photo header on company / client pages (VieM Studio + its clients) */
+    .wk-hero {
+      position: relative; height: 72vh; height: 72svh; min-height: 380px; max-height: 760px;
+      display: flex; align-items: center; justify-content: center; overflow: hidden; background: #111;
+    }
+    .wk-hero[hidden] { display: none; }
+    .wk .gal-title { text-transform: none; letter-spacing: 0.04em; }   /* company / client names exactly as written */
+    .wk-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .wk-hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.22) 45%, rgba(0,0,0,0.55) 100%);
+    }
+    .wk-hero-txt { position: relative; z-index: 1; text-align: center; padding: 0 var(--pad); color: var(--on-media); }
+    .wk-hero-kicker {
+      display: block; margin-bottom: 14px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.85);
+    }
+    .wk-hero-name {
+      display: inline-block; font-family: var(--serif); font-weight: 400;   /* names keep their own spelling ("the rice factory London") */
+      font-size: clamp(34px, 5.6vw, 68px); letter-spacing: 0.01em; line-height: 1.1;
+      padding: 0 0.15em 10px; border-bottom: 1px solid rgba(255,255,255,0.65);
+    }
+    .wk-hero-meta { margin-top: 14px; font-size: 13px; letter-spacing: 0.06em; color: rgba(255,255,255,0.9); }
+    .wk-hero:not([hidden]) + .wk-page { padding-top: 48px; }
+    /* client cards on the VieM Studio page: each opens its own page */
+    .wk-kids { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 12px; margin-bottom: 64px; }
+    .wk-kid {
+      display: flex; flex-direction: column; text-align: left; padding: 0; cursor: pointer;
+      background: var(--surf); border: 1px solid var(--border); font: inherit; color: inherit;
+    }
+    .wk-kid:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    .wk-kid-cover { display: block; aspect-ratio: 4 / 3; overflow: hidden; }
+    .wk-kid-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.3, 0.7, 0.4, 1); }
+    .wk-kid:hover .wk-kid-cover img, .wk-kid:focus-visible .wk-kid-cover img { transform: scale(1.05); }
+    .wk-kid-text { display: block; padding: 14px 16px 16px; }
+    .wk-kid-name { display: block; font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    .wk-kid-sector { display: block; font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+    .wk-kid-more { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); transition: color 0.2s; }
+    .wk-kid:hover .wk-kid-more { color: var(--accent); }
+    .wk-up {
+      display: inline-flex; align-items: center; min-height: 44px; margin: 8px 0 0; padding: 0 18px;
+      border: 1px solid var(--border); background: none; color: var(--ink); cursor: pointer;
+      font: inherit; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .wk-up:hover, .wk-up:focus-visible { background: var(--ink); color: var(--bg); }
     .wk-page {
       max-width: var(--max); margin: 0 auto; padding: 56px var(--pad) 96px;
       transform: translateY(24px); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -664,7 +832,7 @@
     .wk-logo {
       width: 112px; height: 112px; flex: 0 0 auto;
       display: flex; align-items: center; justify-content: center;
-      background: var(--surf); border: 1px solid var(--border);
+      background: var(--logo-bg); border: 1px solid var(--border);
     }
     .wk-logo img { width: 72%; height: 72%; object-fit: contain; }
     .wk-logo.wide img { width: 86%; height: 50%; }
@@ -812,7 +980,7 @@
     .lb {
       position: fixed; inset: 0; z-index: 500;
       display: flex; align-items: center; justify-content: center;
-      background: rgba(247,245,240,0.45);
+      background: var(--lb-backdrop);
       -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px);
       opacity: 0; transition: opacity 0.3s ease;
     }
@@ -833,11 +1001,11 @@
       position: absolute; z-index: 2;
       width: 44px; height: 44px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      background: rgba(255,255,255,0.75); border: 1px solid var(--border);
+      background: var(--btn-bg); border: 1px solid var(--border);
       color: var(--ink); font-size: 20px; line-height: 1; cursor: pointer;
       font-family: inherit; transition: background 0.2s;
     }
-    .lb-btn:hover, .lb-btn:focus-visible { background: #fff; }
+    .lb-btn:hover, .lb-btn:focus-visible { background: var(--btn-bg-hover); }
     .lb-btn[hidden] { display: none; }
     .lb-x { top: 16px; right: 16px; font-size: 16px; }
     .lb-prev { left: 16px; top: 50%; transform: translateY(-50%); }
@@ -920,7 +1088,7 @@
   <a href="#about"        onclick="closeMob()">About</a>
   <a href="#experience"   onclick="closeMob()">Experience</a>
   <a href="#projects"     onclick="closeMob()">Project</a>
-  <a href="#projects"     onclick="closeMob()" class="mob-sub">Photography</a>
+  <a href="#photography"  onclick="closeMob()" class="mob-sub">Photography</a>
   <a href="#video"        onclick="closeMob()" class="mob-sub">Videography</a>
   <a href="#personal"     onclick="closeMob()" class="mob-sub">Personal Projects</a>
   <a href="#testimonials" onclick="closeMob()">Testimonials</a>
@@ -937,7 +1105,7 @@
       <li class="nav-dd">
         <a href="#projects" aria-haspopup="true">Project</a>
         <ul class="nav-sub">
-          <li><a href="#projects">Photography</a></li>
+          <li><a href="#photography">Photography</a></li>
           <li><a href="#video">Videography</a></li>
           <li><a href="#personal">Personal Projects</a></li>
         </ul>
@@ -945,6 +1113,12 @@
       <li><a href="#testimonials">Testimonials</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <button type="button" class="theme-btn" id="themeBtn" role="switch" aria-checked="true" aria-label="Night mode">
+      <span class="theme-track">
+        <span class="theme-ic sun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></span>
+        <span class="theme-ic moon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg></span>
+      </span>
+    </button>
     <button type="button" class="hamburger" id="ham" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
@@ -1371,12 +1545,27 @@
   <div class="gal-grid" id="galGrid"></div>
 </div>
 <!-- COMPANY DETAIL PAGE (full-screen; opened from the Experience blocks) -->
+<!-- PHOTOGRAPHY PAGE (opened from "Photography" in the menu; the text, tiles and circles are copied from #projects) -->
+<div class="ph" id="ph" role="dialog" aria-modal="true" aria-label="Photography" hidden>
+  <header class="ph-hero">
+    <img class="ph-bg" src="web-media/the-projects/covers/photography-hero.jpg" alt="A performer behind a red stage curtain lit with coloured light" decoding="async">
+    <div class="ph-bar">
+      <a href="#" class="ph-brand">Jules Nguyen</a>
+      <button type="button" class="ph-x" aria-label="Close">✕</button>
+    </div>
+    <h1 class="ph-title">Photography</h1>
+    <a href="#phBody" class="ph-down" aria-label="Scroll to the photography categories">Scroll<span aria-hidden="true">↓</span></a>
+  </header>
+  <div class="ph-body" id="phBody"></div>
+</div>
+
 <div class="wk" id="wk" role="dialog" aria-modal="true" aria-labelledby="wkTitle" hidden>
   <div class="gal-bar">
     <button type="button" class="gal-btn wk-back">← Back</button>
     <div class="gal-title"><span id="wkTitle"></span></div>
     <button type="button" class="gal-btn gal-x wk-x" aria-label="Close">✕</button>
   </div>
+  <header class="wk-hero" id="wkHero" hidden></header>
   <article class="wk-page" id="wkPage"></article>
 </div>
 <!-- Company details — edit text and images here -->
@@ -1442,136 +1631,195 @@
    }
   ],
   "kind": "experience",
-  "clients": [
+  "hero": "web-media/experiences/viem-studio/viem-studio-hero.jpg",
+  "heroPos": "50% 35%",
+  "heroAlt": "Jules filming a product shoot with a camera on a tripod in the studio"
+ },
+ "zerotoone": {
+  "kind": "client",
+  "parent": "viem-studio",
+  "kicker": "VieM Studio · Client",
+  "name": "ZeroToOne",
+  "role": "F&B · Vietnamese specialty coffee, London",
+  "dates": "",
+  "hero": "web-media/experiences/viem-studio/zerotoone-hero.jpg",
+  "heroPos": "50% 50%",
+  "heroAlt": "Roasted coffee beans",
+  "lead": "Localised the brand's positioning for the London market, contributing to a 20% increase in brand awareness.",
+  "work": [
    {
-    "name": "ZeroToOne",
-    "sector": "F&B · Vietnamese specialty coffee, London",
-    "note": "Localised the brand's positioning for the London market, contributing to a 20% increase in brand awareness.",
-    "items": [
-     {
-      "type": "video",
-      "src": "web-media/experiences/viem-studio/zerotoone-ice.mp4",
-      "poster": "web-media/experiences/viem-studio/zerotoone-ice-poster.jpg",
-      "caption": "ZeroToOne — Reel",
-      "title": "ZeroToOne — Reel",
-      "w": 720,
-      "h": 1280
-     },
-     {
-      "type": "video",
-      "src": "web-media/experiences/viem-studio/zerotoone-hep-him.mp4",
-      "poster": "web-media/experiences/viem-studio/zerotoone-hep-him-poster.jpg",
-      "caption": "ZeroToOne — Reel",
-      "title": "ZeroToOne — Reel",
-      "w": 720,
-      "h": 1280
-     },
-     {
-      "type": "img",
-      "src": "web-media/experiences/viem-studio/zerotoone-reel.jpg",
-      "caption": "ZeroToOne Cafe — Reel",
-      "w": 334,
-      "h": 597
-     },
-     {
-      "type": "img",
-      "src": "web-media/experiences/viem-studio/zerotoone-instagram.jpg",
-      "caption": "ZeroToOne Cafe — Instagram",
-      "w": 289,
-      "h": 597
-     }
-    ]
+    "type": "video",
+    "src": "web-media/experiences/viem-studio/zerotoone-ice.mp4",
+    "poster": "web-media/experiences/viem-studio/zerotoone-ice-poster.jpg",
+    "caption": "ZeroToOne — Reel",
+    "title": "ZeroToOne — Reel",
+    "w": 720,
+    "h": 1280
    },
    {
-    "name": "UltraSmile Dental",
-    "sector": "Dental clinic",
-    "items": [
-     {
-      "type": "img",
-      "src": "web-media/experiences/viem-studio/ultrasmile-reel.jpg",
-      "caption": "UltraSmile Dental — Reel",
-      "w": 335,
-      "h": 597
-     },
-     {
-      "type": "img",
-      "src": "web-media/experiences/viem-studio/ultrasmile-instagram.jpg",
-      "caption": "UltraSmile Dental — Instagram",
-      "w": 289,
-      "h": 597
-     }
-    ]
+    "type": "video",
+    "src": "web-media/experiences/viem-studio/zerotoone-hep-him.mp4",
+    "poster": "web-media/experiences/viem-studio/zerotoone-hep-him-poster.jpg",
+    "caption": "ZeroToOne — Reel",
+    "title": "ZeroToOne — Reel",
+    "w": 720,
+    "h": 1280
    },
    {
-    "name": "AIRA",
-    "sector": "Jewellery",
-    "items": [
-     {
-      "type": "video",
-      "src": "web-media/experiences/viem-studio/aira-exhausted.mp4",
-      "poster": "web-media/experiences/viem-studio/aira-exhausted-poster.jpg",
-      "caption": "AIRA — Reel",
-      "title": "AIRA — Reel",
-      "w": 720,
-      "h": 1280
-     },
-     {
-      "type": "video",
-      "src": "web-media/experiences/viem-studio/aira-whats-in-your-bag.mp4",
-      "poster": "web-media/experiences/viem-studio/aira-whats-in-your-bag-poster.jpg",
-      "caption": "AIRA — What’s in your bag",
-      "title": "AIRA — What’s in your bag",
-      "w": 720,
-      "h": 1280
-     },
-     {
-      "type": "img",
-      "src": "web-media/experiences/viem-studio/aira-product.jpg",
-      "caption": "AIRA — Product content",
-      "w": 310,
-      "h": 550
-     },
-     {
-      "type": "img",
-      "src": "web-media/experiences/viem-studio/aira-instagram.jpg",
-      "caption": "AIRA — Instagram",
-      "w": 264,
-      "h": 550
-     }
-    ]
+    "type": "img",
+    "src": "web-media/experiences/viem-studio/zerotoone-reel.jpg",
+    "caption": "ZeroToOne Cafe — Reel",
+    "w": 334,
+    "h": 597
    },
    {
-    "name": "The Rice Factory London",
-    "sector": "F&B",
-    "items": [
-     {
-      "type": "video",
-      "src": "web-media/experiences/viem-studio/the-rice-factory-intro.mp4",
-      "poster": "web-media/experiences/viem-studio/the-rice-factory-intro-poster.jpg",
-      "caption": "The Rice Factory — Intro",
-      "title": "The Rice Factory — Intro",
-      "w": 720,
-      "h": 1280
-     },
-     {
-      "type": "video",
-      "src": "web-media/experiences/viem-studio/the-rice-factory-chicken-karaage.mp4",
-      "poster": "web-media/experiences/viem-studio/the-rice-factory-chicken-karaage-poster.jpg",
-      "caption": "The Rice Factory — Chicken Karaage",
-      "title": "The Rice Factory — Chicken Karaage",
-      "w": 720,
-      "h": 1280
-     },
-     {
-      "type": "video",
-      "src": "web-media/experiences/viem-studio/the-rice-factory-yuho-sharing.mp4",
-      "poster": "web-media/experiences/viem-studio/the-rice-factory-yuho-sharing-poster.jpg",
-      "caption": "The Rice Factory — Yuho sharing",
-      "title": "The Rice Factory — Yuho sharing",
-      "w": 720,
-      "h": 1280
-     }
-    ]
+    "type": "img",
+    "src": "web-media/experiences/viem-studio/zerotoone-instagram.jpg",
+    "caption": "ZeroToOne Cafe — Instagram",
+    "w": 289,
+    "h": 597
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/viem-studio/zerotoone-valentine.jpg",
+    "caption": "ZeroToOne — Valentine gift set",
+    "w": 849,
+    "h": 849
+   }
+  ]
+ },
+ "ultrasmile-dental": {
+  "kind": "client",
+  "parent": "viem-studio",
+  "kicker": "VieM Studio · Client",
+  "name": "UltraSmile Dental",
+  "role": "Dental clinic",
+  "dates": "",
+  "hero": "web-media/experiences/viem-studio/ultrasmile-hero.jpg",
+  "heroPos": "30% 22%",
+  "heroAlt": "Dentist at work in the UltraSmile clinic",
+  "work": [
+   {
+    "type": "video",
+    "src": "web-media/experiences/viem-studio/ultrasmile-reel.mp4",
+    "poster": "web-media/experiences/viem-studio/ultrasmile-reel-poster.jpg",
+    "caption": "UltraSmile Dental — Reel",
+    "title": "UltraSmile Dental — Reel",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/viem-studio/ultrasmile-reel.jpg",
+    "caption": "UltraSmile Dental — Reel",
+    "w": 335,
+    "h": 597
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/viem-studio/ultrasmile-instagram.jpg",
+    "caption": "UltraSmile Dental — Instagram",
+    "w": 289,
+    "h": 597
+   }
+  ]
+ },
+ "aira": {
+  "kind": "client",
+  "parent": "viem-studio",
+  "kicker": "VieM Studio · Client",
+  "name": "AIRA",
+  "role": "Jewellery",
+  "dates": "",
+  "hero": "web-media/experiences/viem-studio/aira-hero.jpg",
+  "heroPos": "50% 55%",
+  "heroAlt": "AIRA gold rings and charms on a ceramic dish",
+  "work": [
+   {
+    "type": "video",
+    "src": "web-media/experiences/viem-studio/aira-exhausted.mp4",
+    "poster": "web-media/experiences/viem-studio/aira-exhausted-poster.jpg",
+    "caption": "AIRA — Reel",
+    "title": "AIRA — Reel",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "type": "video",
+    "src": "web-media/experiences/viem-studio/aira-whats-in-your-bag.mp4",
+    "poster": "web-media/experiences/viem-studio/aira-whats-in-your-bag-poster.jpg",
+    "caption": "AIRA — What’s in your bag",
+    "title": "AIRA — What’s in your bag",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/viem-studio/aira-product.jpg",
+    "caption": "AIRA — Product content",
+    "w": 310,
+    "h": 550
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/viem-studio/aira-instagram.jpg",
+    "caption": "AIRA — Instagram",
+    "w": 264,
+    "h": 550
+   }
+  ]
+ },
+ "the-rice-factory-london": {
+  "kind": "client",
+  "parent": "viem-studio",
+  "kicker": "VieM Studio · Client",
+  "name": "the rice factory London",
+  "role": "F&B",
+  "dates": "",
+  "hero": "web-media/experiences/viem-studio/the-rice-factory-hero.jpg",
+  "heroPos": "50% 45%",
+  "heroAlt": "Three onigiri on a wooden board",
+  "work": [
+   {
+    "type": "video",
+    "src": "web-media/experiences/viem-studio/the-rice-factory-intro.mp4",
+    "poster": "web-media/experiences/viem-studio/the-rice-factory-intro-poster.jpg",
+    "caption": "the rice factory London — Intro",
+    "title": "the rice factory London — Intro",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "type": "video",
+    "src": "web-media/experiences/viem-studio/the-rice-factory-chicken-karaage.mp4",
+    "poster": "web-media/experiences/viem-studio/the-rice-factory-chicken-karaage-poster.jpg",
+    "caption": "the rice factory London — Chicken Karaage",
+    "title": "the rice factory London — Chicken Karaage",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "type": "video",
+    "src": "web-media/experiences/viem-studio/the-rice-factory-yuho-sharing.mp4",
+    "poster": "web-media/experiences/viem-studio/the-rice-factory-yuho-sharing-poster.jpg",
+    "caption": "the rice factory London — Yuho sharing",
+    "title": "the rice factory London — Yuho sharing",
+    "w": 720,
+    "h": 1280
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/viem-studio/the-rice-factory-bento.jpg",
+    "caption": "the rice factory London — Bento shoot",
+    "w": 2400,
+    "h": 1600
+   },
+   {
+    "type": "img",
+    "src": "web-media/experiences/viem-studio/the-rice-factory-onigiri.jpg",
+    "caption": "the rice factory London — Onigiri shoot",
+    "w": 2400,
+    "h": 1600
    }
   ]
  },
@@ -2300,8 +2548,8 @@
       (navigator.userActivation && navigator.userActivation.hasBeenActive);
     // while a full-screen page (gallery or company page) is open, only its own videos count
     const inScope = v => {
-      const open = ['gal', 'wk'].map(id => document.getElementById(id)).find(o => o && !o.hidden);
-      return open ? open.contains(v) : !v.closest('.gal, .wk');
+      const open = ['gal', 'wk', 'ph'].map(id => document.getElementById(id)).find(o => o && !o.hidden);
+      return open ? open.contains(v) : !v.closest('.gal, .wk, .ph');
     };
     const showPill = on => pill.classList.toggle('show', on);
     // hero clips: the sequence script owns their playback; only the clip on screen can have sound
@@ -2621,6 +2869,10 @@
       document.body.classList.remove('gal-open');
       setTimeout(() => {
         gal.hidden = true; grid.innerHTML = '';
+        if (!document.getElementById('ph').hidden) {   // back on the Photography page: keep the homepage videos asleep
+          document.querySelectorAll('video[data-sound], .hero-video').forEach(v => { if (!v.closest('.gal, .wk, .ph')) v.pause(); });
+          return;
+        }
         // resume homepage videos that are on screen
         document.querySelectorAll('video[data-sound]').forEach(v => {
           const r = v.getBoundingClientRect();
@@ -2669,11 +2921,12 @@
   })();
 
   // ── PHOTOGRAPHY STRIP: slides right → left on its own; the 5 dots glide a category's tile to the centre ──
-  (() => {
-    const marquee = document.querySelector('.proj-marquee');
+  // used twice: the homepage section and the full-screen Photography page. Returns a re-measure function.
+  function initStrip(scope) {
+    const marquee = scope.querySelector('.proj-marquee');
     const track = marquee && marquee.querySelector('.proj-track');
-    const dots = [...document.querySelectorAll('.proj-dot')];
-    if (!track || !dots.length) return;
+    const dots = [...scope.querySelectorAll('.proj-dot')];
+    if (!track || !dots.length) return () => {};
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const tiles = [...track.querySelectorAll('.proj-tile')].filter(t => !reduced || !t.hasAttribute('aria-hidden'));
     const PACE = 45000;            // ms to slide one full set of tiles (same pace as the old CSS animation)
@@ -2717,7 +2970,7 @@
     if (reduced) {                 // no auto-slide: the strip is scrolled by hand, the dots jump
       marquee.addEventListener('scroll', () => setActive(nearest()), { passive: true });
       setActive(nearest());
-      return;
+      return measure;
     }
     marquee.addEventListener('mouseenter', () => { hover = true; });
     marquee.addEventListener('mouseleave', () => { hover = false; });
@@ -2740,6 +2993,71 @@
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
+    return measure;
+  }
+  initStrip(document.getElementById('projects'));
+
+  // ── PHOTOGRAPHY PAGE (full-screen, hash-routed: #photography) ──
+  // Opened from "Photography" in the menu: a big photo with the title, then the same text, tiles and
+  // circles as the homepage section (copied from it, so editing the section updates both).
+  const photoPage = (() => {
+    const ph = document.getElementById('ph');
+    const body = document.getElementById('phBody');
+    let measure = null, cameFromSite = false;
+    function build() {
+      const src = document.getElementById('projects');
+      const hd = src.querySelector('.proj-hd').cloneNode(true);
+      hd.querySelectorAll('.proj-label, .proj-title').forEach(n => n.remove());   // the photo already says "Photography"
+      const wrap = document.createElement('div'); wrap.className = 'wrap'; wrap.appendChild(hd);
+      body.append(wrap, src.querySelector('.proj-marquee').cloneNode(true), src.querySelector('.proj-dots').cloneNode(true));
+      body.querySelectorAll('.rv').forEach(n => n.classList.remove('rv', 'vis', 'd1', 'd2', 'd3', 'd4'));
+      measure = initStrip(body);
+    }
+    function open() {
+      if (!ph.hidden) return;
+      if (!measure) build();
+      sound.muteAll();
+      document.querySelectorAll('video[data-sound], .hero-video').forEach(v => v.pause());   // nothing plays behind the page
+      ph.hidden = false; ph.scrollTop = 0;
+      document.body.classList.add('ph-open');
+      requestAnimationFrame(() => { ph.classList.add('open'); measure(); });
+      ph.querySelector('.ph-x').focus({ preventScroll: true });
+    }
+    function close() {
+      if (ph.hidden) return;
+      ph.classList.remove('open');
+      document.body.classList.remove('ph-open');
+      setTimeout(() => {
+        ph.hidden = true;
+        document.querySelectorAll('video[data-sound], .hero-video.is-active').forEach(v => {
+          const r = v.getBoundingClientRect();
+          if (r.bottom > 0 && r.top < innerHeight) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+        });
+        sound.refresh();
+      }, 350);
+    }
+    // a gallery opened from this page sits on top of it, so the page stays open underneath
+    function route(e) {
+      const h = location.hash;
+      if (h === '#photography') { if (e) cameFromSite = true; open(); }
+      else if (!(h.startsWith('#gallery/') && !ph.hidden)) close();
+    }
+    function requestClose() {
+      if (cameFromSite) history.back();
+      else { history.replaceState(null, '', location.pathname + location.search + '#projects'); close(); }
+    }
+    ph.querySelector('.ph-x').addEventListener('click', requestClose);
+    ph.querySelector('.ph-brand').addEventListener('click', e => { e.preventDefault(); requestClose(); });
+    ph.querySelector('.ph-down').addEventListener('click', e => {
+      e.preventDefault();
+      ph.scrollTo({ top: ph.querySelector('.ph-hero').offsetHeight, behavior: 'smooth' });
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !ph.hidden && document.getElementById('gal').hidden && document.getElementById('lb').hidden) requestClose();
+    });
+    addEventListener('hashchange', route);
+    route();
+    return { isOpen: () => !ph.hidden };
   })();
 
   // ── COMPANY DETAIL PAGES (full-screen, hash-routed: #work/<slug>) ──
@@ -2764,6 +3082,7 @@
       return n;
     };
 
+    const heroEl = document.getElementById('wkHero');
     function render(slug) {
       const d = data[slug];
       if (!d) return false;
@@ -2771,9 +3090,23 @@
       page.replaceChildren();
       current = slug;
       titleEl.textContent = d.name;
-
-      // header: logo, name, role · dates
       const isProject = d.kind === 'project';
+      const kicker = d.kicker || (isProject ? 'Personal project' : 'Experience');
+
+      // pages with a "hero" photo: big image on top with the name written on it (like the Photography page)
+      heroEl.replaceChildren();
+      heroEl.hidden = !d.hero;
+      if (d.hero) {
+        const hi = new Image(); hi.className = 'wk-hero-bg'; hi.src = d.hero; hi.alt = d.heroAlt || ''; hi.decoding = 'async';
+        if (d.heroPos) hi.style.objectPosition = d.heroPos;
+        const ht = el('div', 'wk-hero-txt');
+        ht.append(el('span', 'wk-hero-kicker', kicker), el('h2', 'wk-hero-name', d.name));
+        const hm = el('p', 'wk-hero-meta', d.role + (d.dates ? '  ·  ' + d.dates : ''));
+        ht.appendChild(hm);
+        heroEl.append(hi, ht);
+      }
+
+      // header: logo, name, role · dates (skipped when the photo header already shows them)
       const hd = el('header', 'wk-hd');
       if (d.logo) {
         const logo = el('div', 'wk-logo' + (d.logoStyle === 'wide' ? ' wide' : ''));
@@ -2782,13 +3115,13 @@
         hd.appendChild(logo);
       }
       const txt = el('div');
-      txt.append(el('span', 'wk-kicker', d.kicker || (isProject ? 'Personal project' : 'Experience')), el('h2', 'wk-name', d.name));
+      txt.append(el('span', 'wk-kicker', kicker), el('h2', 'wk-name', d.name));
       const meta = el('p', 'wk-meta');
       meta.appendChild(el('b', null, d.role));
       if (d.dates) meta.appendChild(document.createTextNode('  ·  ' + d.dates));
       txt.appendChild(meta);
       hd.appendChild(txt);
-      page.appendChild(hd);
+      if (!d.hero) page.appendChild(hd);
 
       if (d.lead) page.appendChild(el('p', 'wk-lead', d.lead));
       if (d.partners) {
@@ -2830,7 +3163,7 @@
       body.appendChild(main);
       if (side.children.length) body.appendChild(side);
       else body.style.gridTemplateColumns = '1fr';
-      page.appendChild(body);
+      if (main.children.length || side.children.length) page.appendChild(body);   // client pages may have no story text
 
       // one clickable tile (photo or muted looping video); `list` says which gallery it belongs to
       const tile = (it, i, list) => {
@@ -2854,6 +3187,27 @@
       };
 
       // clients: one block per client, each with its own small gallery
+      const kids = Object.keys(data).filter(k => data[k].parent === slug);
+      if (kids.length) {
+        const ch = el('div', 'wk-work-hd');
+        ch.append(el('h3', null, 'Clients'), el('span', null, `${kids.length} clients · tap one to open`));
+        page.appendChild(ch);
+        const grid = el('div', 'wk-kids');
+        kids.forEach(k => {
+          const c = data[k];
+          const b = el('button', 'wk-kid'); b.type = 'button'; b.dataset.child = k;
+          b.setAttribute('aria-label', `${c.name} — open client page`);
+          const cv = el('span', 'wk-kid-cover');
+          const ci = new Image(); ci.src = c.hero; ci.alt = ''; ci.loading = 'lazy'; ci.decoding = 'async';
+          if (c.heroPos) ci.style.objectPosition = c.heroPos;
+          cv.appendChild(ci);
+          const tx = el('span', 'wk-kid-text');
+          tx.append(el('span', 'wk-kid-name', c.name), el('span', 'wk-kid-sector', c.role), el('span', 'wk-kid-more', 'View client →'));
+          b.append(cv, tx);
+          grid.appendChild(b);
+        });
+        page.appendChild(grid);
+      }
       if (d.clients && d.clients.length) {
         const ch = el('div', 'wk-work-hd');
         ch.append(el('h3', null, 'Clients'), el('span', null, `${d.clients.length} client${d.clients.length > 1 ? 's' : ''}`));
@@ -2881,6 +3235,10 @@
         page.appendChild(grid);
       }
 
+      if (d.parent && data[d.parent]) {
+        const up = el('button', 'wk-up', `← All ${data[d.parent].name} clients`); up.type = 'button'; up.dataset.up = d.parent;
+        page.appendChild(up);
+      }
       // previous / next company
       const order = orderOf(d.kind || 'experience');
       const k = order.indexOf(slug);
@@ -2925,11 +3283,15 @@
     function route() {
       const m = location.hash.match(/^#work\/([\w-]+)$/);
       if (m && m[1] === 'nimi') { history.replaceState(history.state, '', '#work/freelancer'); m[1] = 'freelancer'; }  // Nimi now lives inside Freelancer
-      if (m && data[m[1]]) { if (m[1] !== current) open(m[1]); } else close();
+      if (m && data[m[1]]) {
+        if (m[1] === current) return;
+        if (wk.hidden) open(m[1]);
+        else { render(m[1]); wk.scrollTop = 0; page.querySelectorAll('.wk-item').forEach(n => itemObs.observe(n)); page.querySelectorAll('video').forEach(v => sound.add(v)); }
+      } else close();
     }
     const depth = () => (history.state && history.state.wkDepth) || 0;
     function go(slug, replace) {
-      const st = { wkDepth: replace ? Math.max(depth(), 1) : depth() + 1 };
+      const st = { wkDepth: replace ? depth() : depth() + 1 };   // replacing keeps the same number of steps to undo
       if (replace) history.replaceState(st, '', '#work/' + slug);
       else history.pushState(st, '', '#work/' + slug);
       route();
@@ -2957,6 +3319,10 @@
       if (e.target.closest('a[href^="#gallery/"]')) { close(true); return; }
       const nav = e.target.closest('[data-goto]');
       if (nav) { go(nav.dataset.goto, true); return; }
+      const kid = e.target.closest('[data-child]');
+      if (kid) { go(kid.dataset.child); return; }                 // new history step, so Back returns here
+      const up = e.target.closest('[data-up]');
+      if (up) { if (depth() > 1) history.back(); else go(up.dataset.up, true); return; }
       const item = e.target.closest('.wk-item');
       if (!item || !current) return;
       const d = data[current];
@@ -2966,7 +3332,7 @@
         lightbox.open(c.items, +item.dataset.i, item, `${d.name} — ${c.name}`);
       } else lightbox.open(d.work, +item.dataset.i, item, d.name);
     });
-    wk.querySelector('.wk-back').addEventListener('click', requestClose);
+    wk.querySelector('.wk-back').addEventListener('click', () => { if (depth() > 1) history.back(); else requestClose(); });
     wk.querySelector('.wk-x').addEventListener('click', requestClose);
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && !wk.hidden && document.getElementById('lb').hidden) requestClose();
@@ -2982,6 +3348,25 @@
     document.getElementById('mobMenu').classList.add('open');
   });
   document.getElementById('mobClose').addEventListener('click', closeMob);
+
+  // ── DAY / NIGHT SWITCH (night is the default; the choice is remembered on this device) ──
+  (() => {
+    const root = document.documentElement;
+    const btn = document.getElementById('themeBtn');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    const sync = () => {
+      const dark = root.dataset.theme !== 'light';
+      btn.setAttribute('aria-checked', String(dark));
+      btn.title = dark ? 'Switch to day mode' : 'Switch to night mode';
+      if (meta) meta.content = dark ? '#121110' : '#f7f5f0';
+    };
+    btn.addEventListener('click', () => {
+      root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+      try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+      sync();
+    });
+    sync();
+  })();
 
   // ── NAV ACTIVE STATE ──
   const navAs = document.querySelectorAll('.nav-links a');
